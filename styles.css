@@ -70,7 +70,7 @@
   z-index: 490;
   bottom: 0;
   right: 0;
-  background-color: #454545;
+  background-color: #545454;
   overflow-x: hidden;
 }
 
@@ -79,4 +79,24 @@
   color: white;
   font-weight: bold;
   text-align: center;
+}
+
+.config-panel-section {
+  border: none;
+  min-height: 45px;
+  padding: 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: 2px solid;
+  border-top-color: #383838;
+  border-bottom-color: #6b6b6b;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+#config-panel-element-information {
+  display: flex;
+  flex-direction: column;
 }
