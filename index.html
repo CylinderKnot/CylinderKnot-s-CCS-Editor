@@ -61,29 +61,44 @@
                 <input type="checkbox" name="visible_layer" id="visible_tiles" value="tiles" />
               </td>
               <td>
-                <button>Tiles</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_tiles">Tiles</button>
+              </td>
+            </tr>
+            <tr id="dropdown_tiles" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Tiles (not yet implemented)</p>
               </td>
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_rapids" value="rapids" />
+                <input type="radio" name="selected_layer" id="selected_rapids_paths" value="rapids_paths" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_rapids" value="rapids" />
+                <input type="checkbox" name="visible_layer" id="visible_rapids_paths" value="rapids_paths" />
               </td>
               <td>
-                <button>Rapids</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_rapids_paths">Rapids Paths</button>
+              </td>
+            </tr>
+            <tr id="dropdown_rapids_paths" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Rapids Paths (not yet implemented)</p>
               </td>
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_conveyors" value="conveyors" />
+                <input type="radio" name="selected_layer" id="selected_conveyor_belts" value="conveyor_belts" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_conveyors" value="conveyors" />
+                <input type="checkbox" name="visible_layer" id="visible_conveyor_belts" value="conveyor_belts" />
               </td>
               <td>
-                <button>Conveyors</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_conveyor_belts">Conveyor Belts</button>
+              </td>
+            </tr>
+            <tr id="dropdown_conveyor_belts" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Conveyors (not yet implemented)</p>
               </td>
             </tr>
             <tr>
@@ -94,7 +109,18 @@
                 <input type="checkbox" name="visible_layer" id="visible_candies_blockers" value="candies_blockers" />
               </td>
               <td>
-                <button>Candies and Blockers</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_candies_blockers">Candies and Blockers</button>
+              </td>
+            </tr>
+            <tr id="dropdown_candies_blockers" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Colors (not yet implemented)</p>
+                <p>Candies (not yet implemented)</p>
+                <p>Ingredients/Sprinks (not yet implemented)</p>
+                <p>Blockers (not yet implemented)</p>
+                <p>Frog (not yet implemented)</p>
+                <p>Large Blockers (not yet implemented)</p>
+                <p>Bonbon Blitzes (not yet implemented)</p>
               </td>
             </tr>
             <tr>
@@ -105,7 +131,14 @@
                 <input type="checkbox" name="visible_layer" id="visible_encasings" value="encasings" />
               </td>
               <td>
-                <button>Encasings</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_encasings">Encasings</button>
+              </td>
+            </tr>
+            <tr id="dropdown_encasings" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Regular Encasings (not yet implemented)</p>
+                <p>Sour Skulls (not yet implemented)</p>
+                <p>Wonderful Wrappers (not yet implemented)</p>
               </td>
             </tr>
             <tr>
@@ -116,7 +149,12 @@
                 <input type="checkbox" name="visible_layer" id="visible_order_locks" value="order_locks" />
               </td>
               <td>
-                <button>Order Locks</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_order_locks">Order Locks</button>
+              </td>
+            </tr>
+            <tr id="dropdown_order_locks" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Order Locks (not yet implemented)</p>
               </td>
             </tr>
             <tr>
@@ -127,7 +165,15 @@
                 <input type="checkbox" name="visible_layer" id="visible_walls" value="walls" />
               </td>
               <td>
-                <button>Walls</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_walls">Walls</button>
+              </td>
+            </tr>
+            <tr id="dropdown_walls" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Candy Cane Fences (not yet implemented)</p>
+                <p>Candy Cane Curls (not yet implemented)</p>
+                <p>Licorice Fences (not yet implemented)</p>
+                <p>Licorice Curls (not yet implemented)</p>
               </td>
             </tr>
             <tr>
@@ -138,7 +184,12 @@
                 <input type="checkbox" name="visible_layer" id="visible_crystals" value="crystals" />
               </td>
               <td>
-                <button>Crystals</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_crystals">Crystals</button>
+              </td>
+            </tr>
+            <tr id="dropdown_crystals" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Crystals (not yet implemented)</p>
               </td>
             </tr>
             <tr>
@@ -149,7 +200,13 @@
                 <input type="checkbox" name="visible_layer" id="visible_portals_exits" value="portals_exits" />
               </td>
               <td>
-                <button>Portals and Exits</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_portals_exits">Portals and Exits</button>
+              </td>
+            </tr>
+            <tr id="dropdown_portals_exits" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Portals (not yet implemented)</p>
+                <p>Ingredient/Sprink Exits (not yet implemented)</p>
               </td>
             </tr>
             <tr>
@@ -160,7 +217,12 @@
                 <input type="checkbox" name="visible_layer" id="visible_dispensers" value="dispensers" />
               </td>
               <td>
-                <button>Dispensers</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_dispensers">Dispensers</button>
+              </td>
+            </tr>
+            <tr id="dropdown_dispensers" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Dispensers (not yet implemented)</p>
               </td>
             </tr>
           </tbody>
