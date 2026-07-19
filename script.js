@@ -6,6 +6,7 @@ const layers = [
   "conveyors",
   "candies/blockers",
   "encasings",
+  "orderLocks",
   "walls",
   "crystals",
   "portals/exits",
