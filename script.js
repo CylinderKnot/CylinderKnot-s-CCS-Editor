@@ -6,10 +6,10 @@ const layers = [
   "conveyors",
   "candies/blockers",
   "encasings",
-  "dispensers",
   "walls",
   "crystals",
   "portals/exits",
+  "dispensers",
   "selectionImage"
 ]
 

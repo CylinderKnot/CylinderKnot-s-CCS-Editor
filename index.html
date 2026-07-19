@@ -14,5 +14,154 @@
 
     <img src="backgrounds/bg1.png" id="background" draggable="false" />
 
+    <!-- The entire main screen (top bar, side panels, editor area) -->
+    <div id="main">
+
+      <!-- Navbar at the top -->
+      <div class="navbar">
+        <div class="navbar-item-container">
+          <div class="navbar-flex">
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR</p>
+          </div>
+          <div class="navbar-flex">
+            <button>Add</button>
+            <button>Edit</button>
+            <button>Delete</button>
+          </div>
+          <div class="navbar-flex">
+            <button>Import</button>
+            <button>Export</button>
+          </div>
+          <div class="navbar-flex">
+            <button>GitHub</button>
+            <button>Credits</button>
+          </div>
+          <div class="navbar-flex">
+            <button>Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layers panel at the left -->
+      <div class="layers-panel">
+        <table>
+          <thead>
+            <tr class="layers-panel-header">
+              <th>Selected</th>
+              <th>Visible</th>
+              <th class="layers-panel-header-layers-column">LAYERS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_tiles" value="tiles" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_tiles" value="tiles" />
+              </td>
+              <td>
+                <button>Tiles</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_rapids" value="rapids" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_rapids" value="rapids" />
+              </td>
+              <td>
+                <button>Rapids</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_conveyors" value="conveyors" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_conveyors" value="conveyors" />
+              </td>
+              <td>
+                <button>Conveyors</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_candies_blockers" value="candies_blockers" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_candies_blockers" value="candies_blockers" />
+              </td>
+              <td>
+                <button>Candies and Blockers</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_encasings" value="encasings" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_encasings" value="encasings" />
+              </td>
+              <td>
+                <button>Encasings</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_walls" value="walls" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_walls" value="walls" />
+              </td>
+              <td>
+                <button>Walls</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_crystals" value="crystals" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_crystals" value="crystals" />
+              </td>
+              <td>
+                <button>Crystals</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_portals_exits" value="portals_exits" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_portals_exits" value="portals_exits" />
+              </td>
+              <td>
+                <button>Portals and Exits</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_dispensers" value="dispensers" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_dispensers" value="dispensers" />
+              </td>
+              <td>
+                <button>Dispensers</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Config panel at the right -->
+      <div class="config-panel">
+        
+      </div>
+
+    </div>
+
   </body>
 </html>
