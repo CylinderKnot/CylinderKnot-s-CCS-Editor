@@ -73,3 +73,10 @@
   background-color: #454545;
   overflow-x: hidden;
 }
+
+.config-panel-header {
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
