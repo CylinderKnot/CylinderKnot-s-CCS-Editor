@@ -82,11 +82,13 @@
   color: #ddd;
 }
 
-.dropdown-contents-section-label {
-  color: #ddd;
+.elements-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.level-area {
+.board-area {
   margin: 0;
   position: absolute;
   top: 50%;
