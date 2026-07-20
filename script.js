@@ -49,27 +49,19 @@ function createNewBoard() {
   for (let i = 0; i < currentBoardRows; i++) {
     for (let j = 0; j < currentBoardColumns; j++) {
       tilesLayerContents[i][j] = 'regular_tile';
-      // TODO: candiesBlockersLayerContents and dispensersLayerContents
+      rapidsPathsLayerContents[i][j] = 'empty';
+      conveyorBeltsLayerContents[i][j] = 'empty';
+      candiesBlockersLayerContents[i][j] = 'empty';
+      encasingsLayerContents[i][j] = 'empty';
+      orderLocksLayerContents[i][j] = 'empty';
+      wallsLayerContents[i][j] = 'empty';
+      crystalsLayerContents[i][j] = 'empty';
+      portalsExitsLayerContents[i][j] = 'empty';
+      dispensersLayerContents[i][j] = 'empty';
     }
   }
 
-  // Get board table element
-  let boardTable = document.getElementById('board');
-  boardTable.innerHTML = "";
-
-  // Add rows and columns to board table
-  for (let i = 0; i < currentBoardRows; i++) {
-    let boardRow = document.createElement('tr');
-    boardTable.appendChild(boardRow);
-
-    for (let j = 0; j < currentBoardColumns; j++) {
-      let rowCell = document.createElement('td');
-
-      // ...
-
-      boardRow.appendChild(rowCell);
-    }
-  }
+  renderNewBoardFromLayers();
 
   // for (let i = 0; i < currentBoardRows; i++) {
   //   let row = document.createElement('tr');
@@ -98,6 +90,33 @@ function initializeLayerDimensions(array) {
   return array;
 }
 
+function renderNewBoardFromLayers() {
+  // Get board table element
+  let boardTable = document.getElementById('board');
+  boardTable.innerHTML = "";
+
+  // Add rows and columns to board table
+  for (let i = 0; i < currentBoardRows; i++) {
+    let boardRow = document.createElement('tr');
+    boardTable.appendChild(boardRow);
+
+    for (let j = 0; j < currentBoardColumns; j++) {
+      let rowCell = document.createElement('td');
+
+      let image = document.createElement('img');
+
+      // only do tilesLayerContents for now
+      if (tilesLayerContents[i][j] !== 'empty') {
+        image.setAttribute('draggable', false);
+        image.src = `elements/tiles/${tilesLayerContents[i][j]}.png`;
+        rowCell.appendChild(image);
+      }
+
+      boardRow.appendChild(rowCell);
+    }
+  }
+}
+
 // more stuff here
 
 function toggleDropdown(object) {
@@ -110,3 +129,21 @@ function toggleDropdown(object) {
     dropdownContents.style.display = "none";
   }
 }
+
+// Populate each layers dropdown with images
+document.querySelectorAll(".select-element").forEach(function(element) {
+  const elementName = element.getAttribute('element');
+  const parent = element.parentElement;
+
+  const button = document.createElement('button');
+  const layer = element.getAttribute('gamelayer');
+
+  let image = button.appendChild(document.createElement('img'));
+  image.classList.add('selectionImage');
+  image.src = `elements/${layer}/${elementName}.png`;
+
+  // handle clicking on new elements...
+
+  element.remove();
+  parent.appendChild(button);
+});
