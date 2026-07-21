@@ -82,16 +82,22 @@
   color: #ddd;
 }
 
-.dropdown-contents-section-label {
-  color: #ddd;
+.elements-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.level-area {
-  margin: 0;
+.element-selected {
+  background-color: hsla(0, 0%, 100%, 0.565);
+  border-radius: 5px;
+}
+
+.board-area {
   position: absolute;
+  left: 50%;
   top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
 }
 
 .config-panel {
