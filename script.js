@@ -7,17 +7,19 @@ const currentBoardColumns = DEFAULT_BOARD_COLUMNS;
 
 const BOARD_LAYERS = [
   "tiles",
-  "rapidsPaths",
-  "conveyorBelts",
-  "candiesBlockers",
+  "rapids_paths",
+  "conveyor_belts",
+  "candies_blockers",
   "encasings",
-  "orderLocks",
+  "order_locks",
   "walls",
   "crystals",
-  "portalsExits",
+  "portals_exits",
   "dispensers",
-  "selectionImage"
+  "selection_image"
 ];
+
+let currentLayer = 'tiles';
 
 let tilesLayerContents = [[]];
 let rapidsPathsLayerContents = [[]];
@@ -29,6 +31,10 @@ let wallsLayerContents = [[]];
 let crystalsLayerContents = [[]];
 let portalsExitsLayerContents = [[]];
 let dispensersLayerContents = [[]];
+
+let currentlySelectedElement = 'regular_tile';
+
+let isMouseDown = false;
 
 function createNewBoard() {
   // tilesLayerContents = [...Array(currentBoardRows)].map(e => Array(currentBoardColumns));
@@ -85,6 +91,10 @@ function createNewBoard() {
 
 createNewBoard();
 
+document.addEventListener('mouseup', function() {
+  isMouseDown = false;
+}, true);
+
 function initializeLayerDimensions(array) {
   array = [...Array(currentBoardRows)].map(e => Array(currentBoardColumns));
   return array;
@@ -102,6 +112,36 @@ function renderNewBoardFromLayers() {
 
     for (let j = 0; j < currentBoardColumns; j++) {
       let rowCell = document.createElement('td');
+      rowCell.setAttribute("pos-row", i);
+      rowCell.setAttribute("pos-col", j);
+
+      // handle mouse-over of tile
+      rowCell.onmouseover = function(event) {
+        event.preventDefault();
+        if (isMouseDown) {
+          updateTile(this);
+        }
+      }
+
+      // allow for updating tile
+      rowCell.onmousedown = function(event) {
+        event.preventDefault();
+        if (event.button === 0) {
+          event.preventDefault();
+          isMouseDown = true;
+          updateTile(this);
+        }
+      }
+
+      // handle mouse-away from tile
+      rowCell.onmouseout = function(event) {
+        event.preventDefault();
+        try {
+
+        } catch {
+
+        }
+      }
 
       let image = document.createElement('img');
 
@@ -130,6 +170,38 @@ function toggleDropdown(object) {
   }
 }
 
+function updateSelection(object, element, layer) {
+  try {
+    document.querySelector(".element-selected").classList.remove("element-selected");
+  } catch {
+
+  }
+
+  // set current element
+  object.classList.add("element-selected");
+  currentlySelectedElement = element;
+  console.log(`current element is ${currentlySelectedElement}`);
+
+  // set current layer
+  let layerRadio = document.getElementById(`selected_${layer}`);
+  layerRadio.checked = true;
+  currentLayer = layer;
+  console.log(`current layer is ${currentLayer}`);
+
+  // enable current layer's visibility if it's disabled
+}
+
+function updateTile(object) {
+  let row = Number(object.getAttribute('pos-row'));
+  let column = Number(object.getAttribute('pos-col'));
+
+  if (currentLayer = 'tiles') {
+    tilesLayerContents[row][column] = currentlySelectedElement;
+  }
+
+  renderNewBoardFromLayers();
+}
+
 // Populate each layers dropdown with images
 document.querySelectorAll(".select-element").forEach(function(element) {
   const elementName = element.getAttribute('element');
@@ -143,6 +215,7 @@ document.querySelectorAll(".select-element").forEach(function(element) {
   image.src = `elements/${layer}/${elementName}.png`;
 
   // handle clicking on new elements...
+  button.setAttribute('onclick', `updateSelection(this, \"${elementName}\", \"${layer}\")`);
 
   element.remove();
   parent.appendChild(button);
