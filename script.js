@@ -68,25 +68,6 @@ function createNewBoard() {
   }
 
   renderNewBoardFromLayers();
-
-  // for (let i = 0; i < currentBoardRows; i++) {
-  //   let row = document.createElement('tr');
-  //   boardTable.appendChild(row);
-
-  //   for (let j = 0; j < currentBoardColumns; j++) {
-  //     let object = document.createElement('td');
-  //     object.setAttribute('style', 'position: relative; left: 0; top: 0;');
-  //     object.setAttribute('pos-row', i);
-  //     object.setAttribute('pos-col', j);
-
-  //     let image = document.createElement('img');
-  //     image.setAttribute('draggable', false);
-  //     image.src = 'elements/tiles/regular_tile.png';
-  //     image.classList.remove('default');
-
-  //     row.appendChild(object);
-  //   }
-  // }
 }
 
 createNewBoard();
@@ -142,8 +123,6 @@ function renderNewBoardFromLayers() {
 
         }
       }
-
-      // let image = document.createElement('img');
 
       // tiles
       if (tilesLayerContents[i][j] !== 'empty') {
