@@ -143,14 +143,24 @@ function renderNewBoardFromLayers() {
         }
       }
 
-      let image = document.createElement('img');
+      // let image = document.createElement('img');
 
-      // only do tilesLayerContents for now
+      // tiles
       if (tilesLayerContents[i][j] !== 'empty') {
+        let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/tiles/${tilesLayerContents[i][j]}.png`;
         rowCell.appendChild(image);
       }
+      // rapids paths, TODO
+      // conveyors belts, TODO
+      // candies blockers
+      if (candiesBlockersLayerContents[i][j] !== 'empty') {
+        let image = document.createElement('img');
+        image.setAttribute('draggable', false);
+        image.src = `elements/candies_blockers/${candiesBlockersLayerContents[i][j]}.png`
+        rowCell.appendChild(image);
+      } 
 
       boardRow.appendChild(rowCell);
     }
@@ -195,8 +205,13 @@ function updateTile(object) {
   let row = Number(object.getAttribute('pos-row'));
   let column = Number(object.getAttribute('pos-col'));
 
-  if (currentLayer = 'tiles') {
+  if (currentLayer === 'tiles') {
     tilesLayerContents[row][column] = currentlySelectedElement;
+  }
+  // rapids_paths: TODO
+  // conveyor_belts: TODO
+  if (currentLayer === 'candies_blockers') {
+    candiesBlockersLayerContents[row][column] = currentlySelectedElement;
   }
 
   renderNewBoardFromLayers();
