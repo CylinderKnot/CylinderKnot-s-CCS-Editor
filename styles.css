@@ -100,6 +100,22 @@
   transform: translate(-50%, -50%);
 }
 
+.board-area td {
+  position: relative;
+  width: 72px;
+  height: 64px;
+}
+
+.board-area td img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .config-panel {
   height: 95%;
   width: 20%;
