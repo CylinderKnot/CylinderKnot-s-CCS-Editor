@@ -57,7 +57,7 @@ function createNewBoard() {
       tilesLayerContents[i][j] = 'regular_tile';
       rapidsPathsLayerContents[i][j] = 'empty';
       conveyorBeltsLayerContents[i][j] = 'empty';
-      candiesBlockersLayerContents[i][j] = 'empty';
+      candiesBlockersLayerContents[i][j] = 'candy_random';
       encasingsLayerContents[i][j] = 'empty';
       orderLocksLayerContents[i][j] = 'empty';
       wallsLayerContents[i][j] = 'empty';
