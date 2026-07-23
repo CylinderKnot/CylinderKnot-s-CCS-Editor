@@ -57,7 +57,7 @@ function createNewBoard() {
       tilesLayerContents[i][j] = 'regular_tile';
       rapidsPathsLayerContents[i][j] = 'empty';
       conveyorBeltsLayerContents[i][j] = 'empty';
-      candiesBlockersLayerContents[i][j] = 'empty';
+      candiesBlockersLayerContents[i][j] = 'candy_random';
       encasingsLayerContents[i][j] = 'empty';
       orderLocksLayerContents[i][j] = 'empty';
       wallsLayerContents[i][j] = 'empty';
@@ -68,25 +68,6 @@ function createNewBoard() {
   }
 
   renderNewBoardFromLayers();
-
-  // for (let i = 0; i < currentBoardRows; i++) {
-  //   let row = document.createElement('tr');
-  //   boardTable.appendChild(row);
-
-  //   for (let j = 0; j < currentBoardColumns; j++) {
-  //     let object = document.createElement('td');
-  //     object.setAttribute('style', 'position: relative; left: 0; top: 0;');
-  //     object.setAttribute('pos-row', i);
-  //     object.setAttribute('pos-col', j);
-
-  //     let image = document.createElement('img');
-  //     image.setAttribute('draggable', false);
-  //     image.src = 'elements/tiles/regular_tile.png';
-  //     image.classList.remove('default');
-
-  //     row.appendChild(object);
-  //   }
-  // }
 }
 
 createNewBoard();
@@ -143,14 +124,22 @@ function renderNewBoardFromLayers() {
         }
       }
 
-      let image = document.createElement('img');
-
-      // only do tilesLayerContents for now
+      // tiles
       if (tilesLayerContents[i][j] !== 'empty') {
+        let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/tiles/${tilesLayerContents[i][j]}.png`;
         rowCell.appendChild(image);
       }
+      // rapids paths, TODO
+      // conveyors belts, TODO
+      // candies blockers
+      if (candiesBlockersLayerContents[i][j] !== 'empty') {
+        let image = document.createElement('img');
+        image.setAttribute('draggable', false);
+        image.src = `elements/candies_blockers/${candiesBlockersLayerContents[i][j]}.png`
+        rowCell.appendChild(image);
+      } 
 
       boardRow.appendChild(rowCell);
     }
@@ -195,8 +184,13 @@ function updateTile(object) {
   let row = Number(object.getAttribute('pos-row'));
   let column = Number(object.getAttribute('pos-col'));
 
-  if (currentLayer = 'tiles') {
+  if (currentLayer === 'tiles') {
     tilesLayerContents[row][column] = currentlySelectedElement;
+  }
+  // rapids_paths: TODO
+  // conveyor_belts: TODO
+  if (currentLayer === 'candies_blockers') {
+    candiesBlockersLayerContents[row][column] = currentlySelectedElement;
   }
 
   renderNewBoardFromLayers();

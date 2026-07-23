@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.4
+You can now draw candies and most 1x1 blockers!
+- Candies and blockers can now be selected from the Layers panel. Colors and gumball machines are not yet implemented.
+- Accidentally fixed some of the spacing in the board area
+- Resized the element buttons and their images in the Layers panel to display much more consistently
+- On first load, the board is now also fully populated with random-colored candies.
+
 ## 0.0.3
 You can now draw tiles!
 - Selecting an element in a dropdown in the Layers panel will automatically select the elements's layer. (Still haven't implemented anything other than tile drawing)
