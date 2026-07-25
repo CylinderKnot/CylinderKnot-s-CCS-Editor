@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.5
+You can now choose whether you draw or delete elements!
+- Two drawing modes have been implemented: Draw and Delete
+- Draw is for drawing elements on the board, and Delete is for removing them
+- Edit mode is not implemented right now
+- The layer selection radio buttons are now functional (they're useful for Edit and Delete modes)
+- Added checks to ensure that impossible board layouts cannot be achieved (e.g. candies on top of empty spaces)
+
 ## 0.0.4
 You can now draw candies and most 1x1 blockers!
 - Candies and blockers can now be selected from the Layers panel. Colors and gumball machines are not yet implemented.

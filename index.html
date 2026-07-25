@@ -24,9 +24,12 @@
             <p class="title-text">CYLINDERKNOT'S CCS EDITOR</p>
           </div>
           <div class="navbar-flex">
-            <button>Add</button>
-            <button>Edit</button>
-            <button>Delete</button>
+            <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
+            <label for="drawing-mode-add">Draw</label>
+            <input type="radio" name="drawing-mode" id="drawing-mode-edit" onclick="selectDrawingMode(this)" value="edit" />
+            <label for="drawing-mode-edit">Edit</label>
+            <input type="radio" name="drawing-mode" id="drawing-mode-delete" onclick="selectDrawingMode(this)" value="delete" />
+            <label for="drawing-mode-delete">Delete</label>
           </div>
           <div class="navbar-flex">
             <button>Import</button>
@@ -55,7 +58,7 @@
           <tbody>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_tiles" value="tiles" />
+                <input type="radio" name="selected_layer" id="selected_tiles" onclick="selectLayerViaRadio(this)" value="tiles" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_tiles" value="tiles" />
@@ -78,7 +81,7 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_rapids_paths" value="rapids_paths" />
+                <input type="radio" name="selected_layer" id="selected_rapids_paths" onclick="selectLayerViaRadio(this)" value="rapids_paths" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_rapids_paths" value="rapids_paths" />
@@ -94,7 +97,7 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_conveyor_belts" value="conveyor_belts" />
+                <input type="radio" name="selected_layer" id="selected_conveyor_belts" onclick="selectLayerViaRadio(this)" value="conveyor_belts" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_conveyor_belts" value="conveyor_belts" />
@@ -110,7 +113,7 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_candies_blockers" value="candies_blockers" />
+                <input type="radio" name="selected_layer" id="selected_candies_blockers" onclick="selectLayerViaRadio(this)" value="candies_blockers" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_candies_blockers" value="candies_blockers" />
@@ -214,7 +217,7 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_encasings" value="encasings" />
+                <input type="radio" name="selected_layer" id="selected_encasings" onclick="selectLayerViaRadio(this)" value="encasings" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_encasings" value="encasings" />
@@ -232,7 +235,7 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_order_locks" value="order_locks" />
+                <input type="radio" name="selected_layer" id="selected_order_locks" onclick="selectLayerViaRadio(this)" value="order_locks" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_order_locks" value="order_locks" />
@@ -248,7 +251,7 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_walls" value="walls" />
+                <input type="radio" name="selected_layer" id="selected_walls" onclick="selectLayerViaRadio(this)" value="walls" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_walls" value="walls" />
@@ -267,7 +270,7 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_crystals" value="crystals" />
+                <input type="radio" name="selected_layer" id="selected_crystals" onclick="selectLayerViaRadio(this)" value="crystals" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_crystals" value="crystals" />
@@ -283,7 +286,7 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_portals_exits" value="portals_exits" />
+                <input type="radio" name="selected_layer" id="selected_portals_exits" onclick="selectLayerViaRadio(this)" value="portals_exits" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_portals_exits" value="portals_exits" />
@@ -300,7 +303,7 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_dispensers" value="dispensers" />
+                <input type="radio" name="selected_layer" id="selected_dispensers" onclick="selectLayerViaRadio(this)" value="dispensers" />
               </td>
               <td>
                 <input type="checkbox" name="visible_layer" id="visible_dispensers" value="dispensers" />
