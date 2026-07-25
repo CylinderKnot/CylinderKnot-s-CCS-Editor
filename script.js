@@ -211,16 +211,44 @@ function updateTile(object) {
   let row = Number(object.getAttribute('pos-row'));
   let column = Number(object.getAttribute('pos-col'));
 
-  if (currentLayer === 'tiles' && layerOfCurrentlySelectedElement === 'tiles') {
-    tilesLayerContents[row][column] = currentlySelectedElement;
+  if (currentDrawingMode === 'draw') {
+    drawElement(row, column);
   }
-  // rapids_paths: TODO
-  // conveyor_belts: TODO
-  if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers') {
-    candiesBlockersLayerContents[row][column] = currentlySelectedElement;
+  if (currentDrawingMode === 'delete') {
+    deleteElement(row, column);
   }
 
   renderNewBoardFromLayers();
+}
+
+function drawElement(row, column) {
+  if (currentLayer === 'tiles' && layerOfCurrentlySelectedElement === 'tiles') {
+    tilesLayerContents[row][column] = currentlySelectedElement;
+  }
+
+  // rapids_paths: TODO
+
+  // conveyor_belts: TODO
+  
+  if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers') {
+    // only add something if a tile is present
+    if (tilesLayerContents[row][column] !== 'empty') {
+      candiesBlockersLayerContents[row][column] = currentlySelectedElement;
+    }
+  }
+}
+
+function deleteElement(row, column) {
+  // if you're deleting a tile, delete everything above it as well!
+  if (currentLayer === 'tiles') {
+    tilesLayerContents[row][column] = 'empty';
+    candiesBlockersLayerContents[row][column] = 'empty';
+  }
+
+  // if you're deleting a candy or a blocker, keep the tile below. some encasings may have to be deleted
+  if (currentLayer === 'candies_blockers') {
+    candiesBlockersLayerContents[row][column] = 'empty';
+  }
 }
 
 // Populate each layers dropdown with images
