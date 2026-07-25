@@ -22,7 +22,7 @@ const BOARD_LAYERS = [
 let currentLayer = 'tiles';
 let layerOfCurrentlySelectedElement = 'tiles';
 
-let currentDrawingMode = 'add';
+let currentDrawingMode = 'draw';
 
 let tilesLayerContents = [[]];
 let rapidsPathsLayerContents = [[]];
@@ -46,7 +46,7 @@ function initializeSelectedLayerRadio() {
 initializeSelectedLayerRadio();
 
 function initializeDrawingMode() {
-  document.getElementById('drawing-mode-add').checked = true;
+  document.getElementById('drawing-mode-draw').checked = true;
 }
 
 initializeDrawingMode();
