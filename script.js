@@ -20,6 +20,7 @@ const BOARD_LAYERS = [
 ];
 
 let currentLayer = 'tiles';
+let layerOfCurrentlySelectedElement = 'tiles';
 
 let tilesLayerContents = [[]];
 let rapidsPathsLayerContents = [[]];
@@ -35,6 +36,12 @@ let dispensersLayerContents = [[]];
 let currentlySelectedElement = 'regular_tile';
 
 let isMouseDown = false;
+
+function initializeSelectedLayerRadio() {
+  document.getElementById('selected_tiles').checked = true;
+}
+
+initializeSelectedLayerRadio();
 
 function createNewBoard() {
   // tilesLayerContents = [...Array(currentBoardRows)].map(e => Array(currentBoardColumns));
@@ -148,6 +155,11 @@ function renderNewBoardFromLayers() {
 
 // more stuff here
 
+function selectLayerViaRadio(object) {
+  currentLayer = object.getAttribute('value');
+  console.log(`clicked radio to set current layer to ${currentLayer}`);
+}
+
 function toggleDropdown(object) {
   let dropdownButtonId = object.getAttribute("associd");
   let dropdownContents = document.getElementById(dropdownButtonId);
@@ -175,7 +187,9 @@ function updateSelection(object, element, layer) {
   let layerRadio = document.getElementById(`selected_${layer}`);
   layerRadio.checked = true;
   currentLayer = layer;
+  layerOfCurrentlySelectedElement = layer;
   console.log(`current layer is ${currentLayer}`);
+  console.log(`layer of currently selected element is ${layerOfCurrentlySelectedElement}`)
 
   // enable current layer's visibility if it's disabled
 }
@@ -184,12 +198,12 @@ function updateTile(object) {
   let row = Number(object.getAttribute('pos-row'));
   let column = Number(object.getAttribute('pos-col'));
 
-  if (currentLayer === 'tiles') {
+  if (currentLayer === 'tiles' && layerOfCurrentlySelectedElement === 'tiles') {
     tilesLayerContents[row][column] = currentlySelectedElement;
   }
   // rapids_paths: TODO
   // conveyor_belts: TODO
-  if (currentLayer === 'candies_blockers') {
+  if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers') {
     candiesBlockersLayerContents[row][column] = currentlySelectedElement;
   }
 
