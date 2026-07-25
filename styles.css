@@ -40,6 +40,10 @@
   height: 100%;
 }
 
+.navbar-flex label {
+  color: white;
+}
+
 .title-text {
   color: white;
 }

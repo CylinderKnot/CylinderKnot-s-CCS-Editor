@@ -22,6 +22,8 @@ const BOARD_LAYERS = [
 let currentLayer = 'tiles';
 let layerOfCurrentlySelectedElement = 'tiles';
 
+let currentDrawingMode = 'add';
+
 let tilesLayerContents = [[]];
 let rapidsPathsLayerContents = [[]];
 let conveyorBeltsLayerContents = [[]];
@@ -42,6 +44,12 @@ function initializeSelectedLayerRadio() {
 }
 
 initializeSelectedLayerRadio();
+
+function initializeDrawingMode() {
+  document.getElementById('drawing-mode-add').checked = true;
+}
+
+initializeDrawingMode();
 
 function createNewBoard() {
   // tilesLayerContents = [...Array(currentBoardRows)].map(e => Array(currentBoardColumns));
@@ -154,6 +162,11 @@ function renderNewBoardFromLayers() {
 }
 
 // more stuff here
+
+function selectDrawingMode(object) {
+  currentDrawingMode = object.getAttribute('value');
+  console.log(`clicked radio to set current drawing mode to ${currentDrawingMode}`)
+}
 
 function selectLayerViaRadio(object) {
   currentLayer = object.getAttribute('value');
