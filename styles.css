@@ -131,6 +131,11 @@
   object-fit: contain;
 }
 
+.board-area td img.board-dispenser {
+  top: -48px;
+  opacity: 0.75;
+}
+
 .config-panel {
   height: 95%;
   width: 20%;

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.6
+Small update - you can now draw and delete dispensers!
+- Can't edit what's in them yet
+
 ## 0.0.5
 You can now choose whether you draw or delete elements!
 - Two drawing modes have been implemented: Draw and Delete

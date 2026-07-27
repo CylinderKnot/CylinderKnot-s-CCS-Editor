@@ -19,6 +19,28 @@ const BOARD_LAYERS = [
   "selection_image"
 ];
 
+const VISUAL_LAYERS = [
+  'tiles',
+  'rapids_paths',
+  'rapids_paths_dispensers',
+  'conveyor_belts',
+  'conveyor_portals',
+  'candies_blockers',
+  'encasings',
+  'order_locks',
+  'order_locks_icons',
+  'walls_up',
+  'walls_down',
+  'walls_left',
+  'walls_right',
+  'crystals',
+  'portals',
+  'exits',
+  'dispensers',
+  'dispensers_elements',
+  'selection_image'
+]
+
 let currentLayer = 'tiles';
 let layerOfCurrentlySelectedElement = 'tiles';
 
@@ -34,6 +56,7 @@ let wallsLayerContents = [[]];
 let crystalsLayerContents = [[]];
 let portalsExitsLayerContents = [[]];
 let dispensersLayerContents = [[]];
+let dispensersElementsLayerContents = [[]];
 
 let currentlySelectedElement = 'regular_tile';
 
@@ -52,8 +75,6 @@ function initializeDrawingMode() {
 initializeDrawingMode();
 
 function createNewBoard() {
-  // tilesLayerContents = [...Array(currentBoardRows)].map(e => Array(currentBoardColumns));
-
   // Initialize layer dimensions
   tilesLayerContents = initializeLayerDimensions(tilesLayerContents);
   rapidsPathsLayerContents = initializeLayerDimensions(rapidsPathsLayerContents);
@@ -65,6 +86,7 @@ function createNewBoard() {
   crystalsLayerContents = initializeLayerDimensions(crystalsLayerContents);
   portalsExitsLayerContents = initializeLayerDimensions(portalsExitsLayerContents);
   dispensersLayerContents = initializeLayerDimensions(dispensersLayerContents);
+  dispensersElementsLayerContents = initializeLayerDimensions(dispensersElementsLayerContents);
 
   // Populate layers with default elements
   for (let i = 0; i < currentBoardRows; i++) {
@@ -79,6 +101,14 @@ function createNewBoard() {
       crystalsLayerContents[i][j] = 'empty';
       portalsExitsLayerContents[i][j] = 'empty';
       dispensersLayerContents[i][j] = 'empty';
+      if (i === 0) {
+        dispensersLayerContents[i][j] = 'dispenser';
+        // dispensersElements here
+        dispensersElementsLayerContents[i][j] = [];
+      } else {
+        dispensersLayerContents[i][j] = 'empty';
+        dispensersElementsLayerContents[i][j] = [];
+      }
     }
   }
 
@@ -152,9 +182,22 @@ function renderNewBoardFromLayers() {
       if (candiesBlockersLayerContents[i][j] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
-        image.src = `elements/candies_blockers/${candiesBlockersLayerContents[i][j]}.png`
+        image.src = `elements/candies_blockers/${candiesBlockersLayerContents[i][j]}.png`;
         rowCell.appendChild(image);
-      } 
+      }
+      // encasings
+      // order locks
+      // walls
+      // crystals
+      // portals exits
+      // dispensers
+      if (dispensersLayerContents[i][j] !== 'empty') {
+        let image = document.createElement('img');
+        image.setAttribute('draggable', false);
+        image.src = `elements/dispensers/${dispensersLayerContents[i][j]}.png`;
+        image.classList.add('board-dispenser');
+        rowCell.appendChild(image);
+      }
 
       boardRow.appendChild(rowCell);
     }
@@ -236,6 +279,12 @@ function drawElement(row, column) {
       candiesBlockersLayerContents[row][column] = currentlySelectedElement;
     }
   }
+
+  if (currentLayer === 'dispensers' && layerOfCurrentlySelectedElement === 'dispensers') {
+    if (tilesLayerContents[row][column] !== 'empty') {
+      dispensersLayerContents[row][column] = currentlySelectedElement;
+    }
+  }
 }
 
 function deleteElement(row, column) {
@@ -243,11 +292,19 @@ function deleteElement(row, column) {
   if (currentLayer === 'tiles') {
     tilesLayerContents[row][column] = 'empty';
     candiesBlockersLayerContents[row][column] = 'empty';
+    dispensersLayerContents[row][column] = 'empty';
+    dispensersElementsLayerContents[row][column] = [];
   }
 
   // if you're deleting a candy or a blocker, keep the tile below. some encasings may have to be deleted
   if (currentLayer === 'candies_blockers') {
     candiesBlockersLayerContents[row][column] = 'empty';
+  }
+
+  // if you're deleting a dispenser, keep everything below. delete the spawn elements as well
+  if (currentLayer === 'dispensers') {
+    dispensersLayerContents[row][column] = 'empty';
+    dispensersElementsLayerContents[row][column] = [];
   }
 }
 
