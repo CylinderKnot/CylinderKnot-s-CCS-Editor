@@ -108,6 +108,11 @@
   border-radius: 5px;
 }
 
+.dispenser-element-selected {
+  background-color: hsla(0, 0%, 100%, 0.565);
+  border-radius: 5px;
+}
+
 .board-area {
   position: absolute;
   left: 50%;

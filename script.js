@@ -197,6 +197,8 @@ function renderNewBoardFromLayers() {
         image.src = `elements/dispensers/${dispensersLayerContents[i][j]}.png`;
         image.classList.add('board-dispenser');
         rowCell.appendChild(image);
+
+
       }
 
       boardRow.appendChild(rowCell);
@@ -250,6 +252,16 @@ function updateSelection(object, element, layer) {
   // enable current layer's visibility if it's disabled
 }
 
+function updateDispenserElementSelection(object, element, layer) {
+  if (object.classList.contains('dispenser-element-selected')) {
+    object.classList.remove('dispenser-element-selected');
+    console.log(`dispenser element ${element} no longer selected`);
+  } else {
+    object.classList.add('dispenser-element-selected');
+    console.log(`selected dispenser element ${element}`);
+  }
+}
+
 function updateTile(object) {
   let row = Number(object.getAttribute('pos-row'));
   let column = Number(object.getAttribute('pos-col'));
@@ -283,6 +295,15 @@ function drawElement(row, column) {
   if (currentLayer === 'dispensers' && layerOfCurrentlySelectedElement === 'dispensers') {
     if (tilesLayerContents[row][column] !== 'empty') {
       dispensersLayerContents[row][column] = currentlySelectedElement;
+
+      const selectedDispenserElements = document.querySelectorAll('.dispenser-element-selected');
+      console.log(selectedDispenserElements.length);
+      dispensersElementsLayerContents[row][column] = [];
+      selectedDispenserElements.forEach(function(element) {
+        console.log('ding');
+        console.log(element.getAttribute('element'));
+        dispensersElementsLayerContents[row][column].push(element.getAttribute('element'));
+      });
     }
   }
 }
@@ -322,6 +343,26 @@ document.querySelectorAll(".select-element").forEach(function(element) {
 
   // handle clicking on new elements...
   button.setAttribute('onclick', `updateSelection(this, \"${elementName}\", \"${layer}\")`);
+
+  element.remove();
+  parent.appendChild(button);
+});
+
+// Populate dispenser elements with images
+document.querySelectorAll('.select-dispenser-element').forEach(function(element) {
+  const elementName = element.getAttribute('element');
+  const parent = element.parentElement;
+
+  const button = document.createElement('button');
+  button.setAttribute('element', elementName);
+  const layer = element.getAttribute('gamelayer');
+
+  let image = button.appendChild(document.createElement('img'));
+  image.classList.add('selectionImage');
+  image.src = `elements/${layer}/${elementName}.png`;
+
+  // handle clicking on new elements
+  button.setAttribute('onclick', `updateDispenserElementSelection(this, "${elementName}", "${layer}")`);
 
   element.remove();
   parent.appendChild(button);
