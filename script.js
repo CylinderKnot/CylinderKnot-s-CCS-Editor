@@ -197,8 +197,6 @@ function renderNewBoardFromLayers() {
         image.classList.add('board-dispenser');
         rowCell.appendChild(image);
 
-        console.log(`space ${i}, ${j}: number of elements to render is ${dispensersElementsLayerContents[i][j].length}`);
-
         let dispenserElementsContainer = rowCell.appendChild(document.createElement('div'));
         dispenserElementsContainer.classList.add('board-dispenser-elements-container');
 
@@ -305,7 +303,6 @@ function drawElement(row, column) {
       dispensersLayerContents[row][column] = currentlySelectedElement;
 
       const selectedDispenserElements = document.querySelectorAll('.dispenser-element-selected');
-      console.log(selectedDispenserElements.length);
       dispensersElementsLayerContents[row][column] = [];
       selectedDispenserElements.forEach(function(element) {
         dispensersElementsLayerContents[row][column].push(element.getAttribute('element'));
