@@ -141,12 +141,51 @@
   opacity: 0.75;
 }
 
+.board-area td .board-dispenser-elements-container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  pointer-events: none;
+  left: 5;
+  margin: 0;
+  padding: 0;
+  max-width: 64px;
+  height: 20px;
+  bottom: 100%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 2),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 2) ~ img {
+  max-width: 50%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 3),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 3) ~ img {
+  max-width: 33%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 7),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 7) ~ img {
+  max-width: 25%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 13),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 13) ~ img {
+  max-width: 20%;
+}
+
 .board-area td img.board-dispenser-element {
-  top: -24px;
-  width: 30%;
-  height: 30%;
-  object-fit: contain;
-  display: inline-block;
+  max-width: 60%;
+  margin: 0;
+  padding: 0;
+  z-index: 11;
+  flex-shrink: 1;
+  flex-grow: 0;
+  flex-basis: auto;
+  position: static;
 }
 
 .config-panel {

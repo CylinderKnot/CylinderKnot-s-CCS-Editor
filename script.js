@@ -200,12 +200,15 @@ function renderNewBoardFromLayers() {
 
         console.log(`space ${i}, ${j}: number of elements to render is ${dispensersElementsLayerContents[i][j].length}`);
 
+        let dispenserElementsContainer = rowCell.appendChild(document.createElement('div'));
+        dispenserElementsContainer.classList.add('board-dispenser-elements-container');
+
         for (let k = 0; k < dispensersElementsLayerContents[i][j].length; k++) {
           let dispenserElementImage = document.createElement('img');
           dispenserElementImage.setAttribute('draggable', false);
           dispenserElementImage.src = `elements/dispensers/${dispensersElementsLayerContents[i][j][k]}.png`;
           dispenserElementImage.classList.add('board-dispenser-element');
-          rowCell.appendChild(dispenserElementImage);
+          dispenserElementsContainer.appendChild(dispenserElementImage);
         }
       }
 
