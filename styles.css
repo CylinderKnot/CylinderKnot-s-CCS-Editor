@@ -108,6 +108,11 @@
   border-radius: 5px;
 }
 
+.dispenser-element-selected {
+  background-color: hsla(0, 0%, 100%, 0.565);
+  border-radius: 5px;
+}
+
 .board-area {
   position: absolute;
   left: 50%;
@@ -134,6 +139,61 @@
 .board-area td img.board-dispenser {
   top: -48px;
   opacity: 0.75;
+  pointer-events: none;
+}
+
+.board-area td .board-dispenser-elements-container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  pointer-events: none;
+  left: 5;
+  margin: 0;
+  padding: 0;
+  max-width: 64px;
+  height: 20px;
+  bottom: 100%;
+  width: 100%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 1),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 1) ~ img {
+  max-width: 100%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 2),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 2) ~ img {
+  max-width: 50%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 3),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 3) ~ img {
+  max-width: 33%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 7),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 7) ~ img {
+  max-width: 25%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 13),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 13) ~ img {
+  max-width: 20%;
+}
+
+.board-area td img.board-dispenser-element {
+  max-width: 60%;
+  margin: 0;
+  padding: 0;
+  z-index: 11;
+  flex-shrink: 1;
+  flex-grow: 0;
+  flex-basis: auto;
+  position: static;
+  pointer-events: none;
 }
 
 .config-panel {

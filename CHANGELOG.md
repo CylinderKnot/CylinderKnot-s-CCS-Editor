@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.7
+Large update - part 2 of drawing and deleting dispensers
+- You can now change the contents of dispensers. This was surprisingly tedious.
+- Fixed an oversight that led to dispensers intercepting clicks
+
 ## 0.0.6
 Small update - you can now draw and delete dispensers!
 - Can't edit what's in them yet

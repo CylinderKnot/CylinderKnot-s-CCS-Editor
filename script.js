@@ -101,13 +101,12 @@ function createNewBoard() {
       crystalsLayerContents[i][j] = 'empty';
       portalsExitsLayerContents[i][j] = 'empty';
       dispensersLayerContents[i][j] = 'empty';
+      dispensersElementsLayerContents[i][j] = [];
       if (i === 0) {
         dispensersLayerContents[i][j] = 'dispenser';
-        // dispensersElements here
-        dispensersElementsLayerContents[i][j] = [];
+        dispensersElementsLayerContents[i][j].push('dispenser_candy_spawn');
       } else {
         dispensersLayerContents[i][j] = 'empty';
-        dispensersElementsLayerContents[i][j] = [];
       }
     }
   }
@@ -197,6 +196,17 @@ function renderNewBoardFromLayers() {
         image.src = `elements/dispensers/${dispensersLayerContents[i][j]}.png`;
         image.classList.add('board-dispenser');
         rowCell.appendChild(image);
+
+        let dispenserElementsContainer = rowCell.appendChild(document.createElement('div'));
+        dispenserElementsContainer.classList.add('board-dispenser-elements-container');
+
+        for (let k = 0; k < dispensersElementsLayerContents[i][j].length; k++) {
+          let dispenserElementImage = document.createElement('img');
+          dispenserElementImage.setAttribute('draggable', false);
+          dispenserElementImage.src = `elements/dispensers/${dispensersElementsLayerContents[i][j][k]}.png`;
+          dispenserElementImage.classList.add('board-dispenser-element');
+          dispenserElementsContainer.appendChild(dispenserElementImage);
+        }
       }
 
       boardRow.appendChild(rowCell);
@@ -250,6 +260,14 @@ function updateSelection(object, element, layer) {
   // enable current layer's visibility if it's disabled
 }
 
+function updateDispenserElementSelection(object, element, layer) {
+  if (object.classList.contains('dispenser-element-selected')) {
+    object.classList.remove('dispenser-element-selected');
+  } else {
+    object.classList.add('dispenser-element-selected');
+  }
+}
+
 function updateTile(object) {
   let row = Number(object.getAttribute('pos-row'));
   let column = Number(object.getAttribute('pos-col'));
@@ -283,6 +301,12 @@ function drawElement(row, column) {
   if (currentLayer === 'dispensers' && layerOfCurrentlySelectedElement === 'dispensers') {
     if (tilesLayerContents[row][column] !== 'empty') {
       dispensersLayerContents[row][column] = currentlySelectedElement;
+
+      const selectedDispenserElements = document.querySelectorAll('.dispenser-element-selected');
+      dispensersElementsLayerContents[row][column] = [];
+      selectedDispenserElements.forEach(function(element) {
+        dispensersElementsLayerContents[row][column].push(element.getAttribute('element'));
+      });
     }
   }
 }
@@ -322,6 +346,26 @@ document.querySelectorAll(".select-element").forEach(function(element) {
 
   // handle clicking on new elements...
   button.setAttribute('onclick', `updateSelection(this, \"${elementName}\", \"${layer}\")`);
+
+  element.remove();
+  parent.appendChild(button);
+});
+
+// Populate dispenser elements with images
+document.querySelectorAll('.select-dispenser-element').forEach(function(element) {
+  const elementName = element.getAttribute('element');
+  const parent = element.parentElement;
+
+  const button = document.createElement('button');
+  button.setAttribute('element', elementName);
+  const layer = element.getAttribute('gamelayer');
+
+  let image = button.appendChild(document.createElement('img'));
+  image.classList.add('selectionImage');
+  image.src = `elements/${layer}/${elementName}.png`;
+
+  // handle clicking on new elements
+  button.setAttribute('onclick', `updateDispenserElementSelection(this, "${elementName}", "${layer}")`);
 
   element.remove();
   parent.appendChild(button);
