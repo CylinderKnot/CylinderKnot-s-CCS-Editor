@@ -198,7 +198,15 @@ function renderNewBoardFromLayers() {
         image.classList.add('board-dispenser');
         rowCell.appendChild(image);
 
+        console.log(`space ${i}, ${j}: number of elements to render is ${dispensersElementsLayerContents[i][j].length}`);
 
+        for (let k = 0; k < dispensersElementsLayerContents[i][j].length; k++) {
+          let dispenserElementImage = document.createElement('img');
+          dispenserElementImage.setAttribute('draggable', false);
+          dispenserElementImage.src = `elements/dispensers/${dispensersElementsLayerContents[i][j][k]}.png`;
+          dispenserElementImage.classList.add('board-dispenser-element');
+          rowCell.appendChild(dispenserElementImage);
+        }
       }
 
       boardRow.appendChild(rowCell);
@@ -255,10 +263,8 @@ function updateSelection(object, element, layer) {
 function updateDispenserElementSelection(object, element, layer) {
   if (object.classList.contains('dispenser-element-selected')) {
     object.classList.remove('dispenser-element-selected');
-    console.log(`dispenser element ${element} no longer selected`);
   } else {
     object.classList.add('dispenser-element-selected');
-    console.log(`selected dispenser element ${element}`);
   }
 }
 
@@ -300,8 +306,6 @@ function drawElement(row, column) {
       console.log(selectedDispenserElements.length);
       dispensersElementsLayerContents[row][column] = [];
       selectedDispenserElements.forEach(function(element) {
-        console.log('ding');
-        console.log(element.getAttribute('element'));
         dispensersElementsLayerContents[row][column].push(element.getAttribute('element'));
       });
     }

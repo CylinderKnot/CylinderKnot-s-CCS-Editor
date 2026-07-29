@@ -141,6 +141,14 @@
   opacity: 0.75;
 }
 
+.board-area td img.board-dispenser-element {
+  top: -24px;
+  width: 30%;
+  height: 30%;
+  object-fit: contain;
+  display: inline-block;
+}
+
 .config-panel {
   height: 95%;
   width: 20%;
