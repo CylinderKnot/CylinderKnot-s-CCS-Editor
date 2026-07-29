@@ -139,6 +139,7 @@
 .board-area td img.board-dispenser {
   top: -48px;
   opacity: 0.75;
+  pointer-events: none;
 }
 
 .board-area td .board-dispenser-elements-container {
@@ -155,6 +156,12 @@
   max-width: 64px;
   height: 20px;
   bottom: 100%;
+  width: 100%;
+}
+
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 1),
+.board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 1) ~ img {
+  max-width: 100%;
 }
 
 .board-area td .board-dispenser-elements-container img:first-child:nth-last-child(n + 2),
@@ -186,6 +193,7 @@
   flex-grow: 0;
   flex-basis: auto;
   position: static;
+  pointer-events: none;
 }
 
 .config-panel {

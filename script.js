@@ -101,13 +101,12 @@ function createNewBoard() {
       crystalsLayerContents[i][j] = 'empty';
       portalsExitsLayerContents[i][j] = 'empty';
       dispensersLayerContents[i][j] = 'empty';
+      dispensersElementsLayerContents[i][j] = [];
       if (i === 0) {
         dispensersLayerContents[i][j] = 'dispenser';
-        // dispensersElements here
-        dispensersElementsLayerContents[i][j] = [];
+        dispensersElementsLayerContents[i][j].push('dispenser_candy_spawn');
       } else {
         dispensersLayerContents[i][j] = 'empty';
-        dispensersElementsLayerContents[i][j] = [];
       }
     }
   }
