@@ -169,7 +169,7 @@ function renderNewBoardFromLayers() {
       }
 
       // tiles
-      if (tilesLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_tiles').checked && tilesLayerContents[i][j] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/tiles/${tilesLayerContents[i][j]}.png`;
@@ -178,7 +178,7 @@ function renderNewBoardFromLayers() {
       // rapids paths, TODO
       // conveyors belts, TODO
       // candies blockers
-      if (candiesBlockersLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_candies_blockers').checked && candiesBlockersLayerContents[i][j] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/candies_blockers/${candiesBlockersLayerContents[i][j]}.png`;
@@ -190,7 +190,7 @@ function renderNewBoardFromLayers() {
       // crystals
       // portals exits
       // dispensers
-      if (dispensersLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_dispensers').checked && dispensersLayerContents[i][j] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/dispensers/${dispensersLayerContents[i][j]}.png`;
@@ -224,6 +224,10 @@ function selectDrawingMode(object) {
 function selectLayerViaRadio(object) {
   currentLayer = object.getAttribute('value');
   console.log(`clicked radio to set current layer to ${currentLayer}`);
+}
+
+function updateLayerVisibilities() {
+  renderNewBoardFromLayers();
 }
 
 function toggleDropdown(object) {
@@ -283,7 +287,7 @@ function updateTile(object) {
 }
 
 function drawElement(row, column) {
-  if (currentLayer === 'tiles' && layerOfCurrentlySelectedElement === 'tiles') {
+  if (currentLayer === 'tiles' && layerOfCurrentlySelectedElement === 'tiles' && document.getElementById('visible_tiles').checked) {
     tilesLayerContents[row][column] = currentlySelectedElement;
   }
 
@@ -291,14 +295,14 @@ function drawElement(row, column) {
 
   // conveyor_belts: TODO
   
-  if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers') {
+  if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
     // only add something if a tile is present
     if (tilesLayerContents[row][column] !== 'empty') {
       candiesBlockersLayerContents[row][column] = currentlySelectedElement;
     }
   }
 
-  if (currentLayer === 'dispensers' && layerOfCurrentlySelectedElement === 'dispensers') {
+  if (currentLayer === 'dispensers' && layerOfCurrentlySelectedElement === 'dispensers' && document.getElementById('visible_dispensers')) {
     if (tilesLayerContents[row][column] !== 'empty') {
       dispensersLayerContents[row][column] = currentlySelectedElement;
 
@@ -313,7 +317,7 @@ function drawElement(row, column) {
 
 function deleteElement(row, column) {
   // if you're deleting a tile, delete everything above it as well!
-  if (currentLayer === 'tiles') {
+  if (currentLayer === 'tiles' && document.getElementById('visible_tiles').checked) {
     tilesLayerContents[row][column] = 'empty';
     candiesBlockersLayerContents[row][column] = 'empty';
     dispensersLayerContents[row][column] = 'empty';
@@ -321,12 +325,12 @@ function deleteElement(row, column) {
   }
 
   // if you're deleting a candy or a blocker, keep the tile below. some encasings may have to be deleted
-  if (currentLayer === 'candies_blockers') {
+  if (currentLayer === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
     candiesBlockersLayerContents[row][column] = 'empty';
   }
 
   // if you're deleting a dispenser, keep everything below. delete the spawn elements as well
-  if (currentLayer === 'dispensers') {
+  if (currentLayer === 'dispensers' && document.getElementById('visible_dispensers').checked) {
     dispensersLayerContents[row][column] = 'empty';
     dispensersElementsLayerContents[row][column] = [];
   }

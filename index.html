@@ -21,7 +21,7 @@
       <div class="navbar">
         <div class="navbar-item-container">
           <div class="navbar-flex">
-            <p class="title-text">CYLINDERKNOT'S CCS EDITOR</p>
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.0.8</p>
           </div>
           <div class="navbar-flex">
             <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
@@ -61,7 +61,7 @@
                 <input type="radio" name="selected_layer" id="selected_tiles" onclick="selectLayerViaRadio(this)" value="tiles" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_tiles" value="tiles" />
+                <input type="checkbox" name="visible_layer" id="visible_tiles" onclick="updateLayerVisibilities()" value="tiles" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_tiles">Tiles</button>
@@ -84,7 +84,7 @@
                 <input type="radio" name="selected_layer" id="selected_rapids_paths" onclick="selectLayerViaRadio(this)" value="rapids_paths" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_rapids_paths" value="rapids_paths" />
+                <input type="checkbox" name="visible_layer" id="visible_rapids_paths" onclick="updateLayerVisibilities()" value="rapids_paths" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_rapids_paths">Rapids Paths</button>
@@ -100,7 +100,7 @@
                 <input type="radio" name="selected_layer" id="selected_conveyor_belts" onclick="selectLayerViaRadio(this)" value="conveyor_belts" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_conveyor_belts" value="conveyor_belts" />
+                <input type="checkbox" name="visible_layer" id="visible_conveyor_belts" onclick="updateLayerVisibilities()" value="conveyor_belts" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_conveyor_belts">Conveyor Belts</button>
@@ -116,7 +116,7 @@
                 <input type="radio" name="selected_layer" id="selected_candies_blockers" onclick="selectLayerViaRadio(this)" value="candies_blockers" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_candies_blockers" value="candies_blockers" />
+                <input type="checkbox" name="visible_layer" id="visible_candies_blockers" onclick="updateLayerVisibilities()" value="candies_blockers" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_candies_blockers">Candies and Blockers</button>
@@ -220,7 +220,7 @@
                 <input type="radio" name="selected_layer" id="selected_encasings" onclick="selectLayerViaRadio(this)" value="encasings" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_encasings" value="encasings" />
+                <input type="checkbox" name="visible_layer" id="visible_encasings" onclick="updateLayerVisibilities()" value="encasings" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_encasings">Encasings</button>
@@ -238,7 +238,7 @@
                 <input type="radio" name="selected_layer" id="selected_order_locks" onclick="selectLayerViaRadio(this)" value="order_locks" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_order_locks" value="order_locks" />
+                <input type="checkbox" name="visible_layer" id="visible_order_locks" onclick="updateLayerVisibilities()" value="order_locks" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_order_locks">Order Locks</button>
@@ -254,7 +254,7 @@
                 <input type="radio" name="selected_layer" id="selected_walls" onclick="selectLayerViaRadio(this)" value="walls" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_walls" value="walls" />
+                <input type="checkbox" name="visible_layer" id="visible_walls" onclick="updateLayerVisibilities()" value="walls" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_walls">Walls</button>
@@ -273,7 +273,7 @@
                 <input type="radio" name="selected_layer" id="selected_crystals" onclick="selectLayerViaRadio(this)" value="crystals" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_crystals" value="crystals" />
+                <input type="checkbox" name="visible_layer" id="visible_crystals" onclick="updateLayerVisibilities()" value="crystals" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_crystals">Crystals</button>
@@ -289,7 +289,7 @@
                 <input type="radio" name="selected_layer" id="selected_portals_exits" onclick="selectLayerViaRadio(this)" value="portals_exits" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_portals_exits" value="portals_exits" />
+                <input type="checkbox" name="visible_layer" id="visible_portals_exits" onclick="updateLayerVisibilities()" value="portals_exits" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_portals_exits">Portals and Exits</button>
@@ -306,7 +306,7 @@
                 <input type="radio" name="selected_layer" id="selected_dispensers" onclick="selectLayerViaRadio(this)" value="dispensers" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_dispensers" value="dispensers" />
+                <input type="checkbox" name="visible_layer" id="visible_dispensers" onclick="updateLayerVisibilities()" value="dispensers" checked />
               </td>
               <td>
                 <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_dispensers">Dispensers</button>
