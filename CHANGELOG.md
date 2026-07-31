@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.8
+The layer visibility update:
+- Layer visibility can now be toggled (this does not change any underlying data).
+- To reduce confusion, layers that are not visible cannot be modified in any way.
+- Added the version number to the top bar
+
 ## 0.0.7
 Large update - part 2 of drawing and deleting dispensers
 - You can now change the contents of dispensers. This was surprisingly tedious.
