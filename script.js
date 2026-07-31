@@ -169,7 +169,7 @@ function renderNewBoardFromLayers() {
       }
 
       // tiles
-      if (tilesLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_tiles').checked && tilesLayerContents[i][j] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/tiles/${tilesLayerContents[i][j]}.png`;
@@ -178,7 +178,7 @@ function renderNewBoardFromLayers() {
       // rapids paths, TODO
       // conveyors belts, TODO
       // candies blockers
-      if (candiesBlockersLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_candies_blockers').checked && candiesBlockersLayerContents[i][j] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/candies_blockers/${candiesBlockersLayerContents[i][j]}.png`;
@@ -190,7 +190,7 @@ function renderNewBoardFromLayers() {
       // crystals
       // portals exits
       // dispensers
-      if (dispensersLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_dispensers').checked && dispensersLayerContents[i][j] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/dispensers/${dispensersLayerContents[i][j]}.png`;
@@ -224,6 +224,10 @@ function selectDrawingMode(object) {
 function selectLayerViaRadio(object) {
   currentLayer = object.getAttribute('value');
   console.log(`clicked radio to set current layer to ${currentLayer}`);
+}
+
+function updateLayerVisibilities() {
+  renderNewBoardFromLayers();
 }
 
 function toggleDropdown(object) {
