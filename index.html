@@ -349,7 +349,6 @@
       </div>
 
       <!-- Board in the middle -->
-      <!-- trust me bro. it's going to be in the middle -->
       <div class="board-area" width="100px" style="top:56%">
         <table id="board" cellspacing="0"></table>
       </div>
@@ -361,6 +360,58 @@
         </div>
         <div class="config-panel-section" id="config-panel-game-mode">
           <p>level types go here</p>
+          <label class="game-mode-label" for="game-mode-moves-option" onclick="selectMode()">
+            <img src="ui/game_mode_moves.png" />
+            <input id="game-mode-moves-option" type="radio" name="game-mode" value="Classic moves" />
+          </label> 
+          <label class="game-mode-label" for="game-mode-jelly-option" onclick="selectMode()">
+            <img src="ui/game_mode_jelly.png" />
+            <input id="game-mode-jelly-option" type="radio" name="game-mode" value="Light up" />
+          </label>
+          <label class="game-mode-label" for="game-mode-ingredients-option" onclick="selectMode()">
+            <img src="ui/game_mode_ingredients.png" />
+            <input id="game-mode-ingredients-option" type="radio" name="game-mode" value="Drop down" />
+          </label>
+          <label class="game-mode-label" for="game-mode-order-option" onclick="selectMode()">
+            <img src="ui/game_mode_order.png" />
+            <input id="game-mode-order-option" type="radio" name="game-mode" value="Order" />
+          </label>
+          <label class="game-mode-label" for="game-mode-timed-option" onclick="selectMode()">
+            <img src="ui/game_mode_timed.png" />
+            <input id="game-mode-timed-option" type="radio" name="game-mode" value="Classic" />
+          </label>
+          <label class="game-mode-label" for="game-mode-rainbow-rapids-option" onclick="selectMode()">
+            <img src="ui/game_mode_rainbow_rapids.png" />
+            <input id="game-mode-rainbow-rapids-option" type="radio" name="game-mode" value="Rainbow Rapids" />
+          </label>
+          <label class="game-mode-label" for="game-mode-jelly-order-option" onclick="selectMode()">
+            <img src="ui/game_mode_jelly_order.png" />
+            <input id="game-mode-jelly-order-option" type="radio" name="game-mode" value="Jelly Order" />
+          </label>
+          <label class="game-mode-label" for="game-mode-jelly-ingredients-option" onclick="selectMode()">
+            <img src="ui/game_mode_jelly_ingredients.png" />
+            <input id="game-mode-jelly-ingredients-option" type="radio" name="game-mode" value="Jelly Drop down" />
+          </label>
+          <label class="game-mode-label" for="game-mode-order-ingredients-option" onclick="selectMode()">
+            <img src="ui/game_mode_order_ingredients.png" />
+            <input id="game-mode-order-ingredients-option" type="radio" name="game-mode" value="Order Drop Down" />
+          </label>
+          <label class="game-mode-label" for="game-mode-rainbow-rapids-jelly-option" onclick="selectMode()">
+            <img src="ui/game_mode_rainbow_rapids_jelly.png" />
+            <input id="game-mode-rainbow-rapids-jelly-option" type="radio" name="game-mode" value="Rainbow Rapids Jelly" />
+          </label>
+          <label class="game-mode-label" for="game-mode-rainbow-rapids-ingredients-option" onclick="selectMode()">
+            <img src="ui/game_mode_rainbow_rapids_ingredients.png" />
+            <input id="game-mode-rainbow-rapids-ingredients-option" type="radio" name="game-mode" value="Rainbow Rapids Drop Down" />
+          </label>
+          <label class="game-mode-label" for="game-mode-rainbow-rapids-order-option" onclick="selectMode()">
+            <img src="ui/game_mode_rainbow_rapids_order.png" />
+            <input id="game-mode-rainbow-rapids-order-option" type="radio" name="game-mode" value="Rainbow Rapids Order" />
+          </label>
+          <label class="game-mode-label" for="game-mode-jelly-timed-option" onclick="selectMode()">
+            <img src="ui/game_mode_jelly_timed.png" />
+            <input id="game-mode-jelly-timed-option" type="radio" name="game-mode" value="Jelly Time" />
+          </label>
         </div>
         <div class="config-panel-section" id="config-panel-number-of-moves">
           <p>moves input goes here</p>
