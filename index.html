@@ -21,7 +21,7 @@
       <div class="navbar">
         <div class="navbar-item-container">
           <div class="navbar-flex">
-            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.0.8</p>
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.0.9</p>
           </div>
           <div class="navbar-flex">
             <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
@@ -349,7 +349,6 @@
       </div>
 
       <!-- Board in the middle -->
-      <!-- trust me bro. it's going to be in the middle -->
       <div class="board-area" width="100px" style="top:56%">
         <table id="board" cellspacing="0"></table>
       </div>
@@ -360,7 +359,74 @@
           <p class="config-panel-header">LEVEL INFORMATION</p>
         </div>
         <div class="config-panel-section" id="config-panel-game-mode">
-          <p>level types go here</p>
+          <p>Game mode</p>
+          <div class="game-modes-container">
+            <label class="game-mode-label" for="game-mode-moves-option">
+              <img src="ui/game_mode_moves.png" />
+              <div class="break"></div>
+              <input id="game-mode-moves-option" type="radio" name="game-mode" value="Classic moves" onclick="selectGameMode()" />
+            </label> 
+            <label class="game-mode-label" for="game-mode-jelly-option">
+              <img src="ui/game_mode_jelly.png" />
+              <div class="break"></div>
+              <input id="game-mode-jelly-option" type="radio" name="game-mode" value="Light up" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-ingredients-option">
+              <img src="ui/game_mode_ingredients.png" />
+              <div class="break"></div>
+              <input id="game-mode-ingredients-option" type="radio" name="game-mode" value="Drop down" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-order-option">
+              <img src="ui/game_mode_order.png" />
+              <div class="break"></div>
+              <input id="game-mode-order-option" type="radio" name="game-mode" value="Order" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-timed-option">
+              <img src="ui/game_mode_timed.png" />
+              <div class="break"></div>
+              <input id="game-mode-timed-option" type="radio" name="game-mode" value="Classic" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-rainbow-rapids-option">
+              <img src="ui/game_mode_rainbow_rapids.png" />
+              <div class="break"></div>
+              <input id="game-mode-rainbow-rapids-option" type="radio" name="game-mode" value="Rainbow Rapids" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-jelly-order-option">
+              <img src="ui/game_mode_jelly_order.png" />
+              <div class="break"></div>
+              <input id="game-mode-jelly-order-option" type="radio" name="game-mode" value="Jelly Order" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-jelly-ingredients-option">
+              <img src="ui/game_mode_jelly_ingredients.png" />
+              <div class="break"></div>
+              <input id="game-mode-jelly-ingredients-option" type="radio" name="game-mode" value="Jelly Drop down" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-order-ingredients-option">
+              <img src="ui/game_mode_order_ingredients.png" />
+              <div class="break"></div>
+              <input id="game-mode-order-ingredients-option" type="radio" name="game-mode" value="Order Drop Down" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-rainbow-rapids-jelly-option">
+              <img src="ui/game_mode_rainbow_rapids_jelly.png" />
+              <div class="break"></div>
+              <input id="game-mode-rainbow-rapids-jelly-option" type="radio" name="game-mode" value="Rainbow Rapids Jelly" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-rainbow-rapids-ingredients-option">
+              <img src="ui/game_mode_rainbow_rapids_ingredients.png" />
+              <div class="break"></div>
+              <input id="game-mode-rainbow-rapids-ingredients-option" type="radio" name="game-mode" value="Rainbow Rapids Drop Down" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-rainbow-rapids-order-option">
+              <img src="ui/game_mode_rainbow_rapids_order.png" />
+              <div class="break"></div>
+              <input id="game-mode-rainbow-rapids-order-option" type="radio" name="game-mode" value="Rainbow Rapids Order" onclick="selectGameMode()" />
+            </label>
+            <label class="game-mode-label" for="game-mode-jelly-timed-option">
+              <img src="ui/game_mode_jelly_timed.png" />
+              <div class="break"></div>
+              <input id="game-mode-jelly-timed-option" type="radio" name="game-mode" value="Jelly Time" onclick="selectGameMode()" />
+            </label>
+          </div>
         </div>
         <div class="config-panel-section" id="config-panel-number-of-moves">
           <p>moves input goes here</p>

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.9
+Part 1 of game mode selection:
+- You can now select the game mode of the level. Moves/time and objectives have not been implemented yet.
+
 ## 0.0.8
 The layer visibility update:
 - Layer visibility can now be toggled (this does not change any underlying data).

@@ -229,6 +229,34 @@
   border-right-color: transparent;
 }
 
+.config-panel-section p {
+  color: #ddd;
+}
+
+.break {
+  flex-basis: 100%;
+}
+
+.game-modes-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.game-mode-label {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
+#config-panel-game-mode img {
+  max-width: 30px;
+  max-height: 30px;
+}
+
 #config-panel-element-information {
   display: flex;
   flex-direction: column;
