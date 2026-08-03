@@ -62,6 +62,8 @@ let currentlySelectedElement = 'regular_tile';
 
 let isMouseDown = false;
 
+let gameMode = "Classic moves";
+
 function initializeSelectedLayerRadio() {
   document.getElementById('selected_tiles').checked = true;
 }
@@ -73,6 +75,12 @@ function initializeDrawingMode() {
 }
 
 initializeDrawingMode();
+
+function initializeGameMode() {
+  document.getElementById('game-mode-moves-option').checked = true;
+}
+
+initializeGameMode();
 
 function createNewBoard() {
   // Initialize layer dimensions
@@ -374,3 +382,10 @@ document.querySelectorAll('.select-dispenser-element').forEach(function(element)
   element.remove();
   parent.appendChild(button);
 });
+
+function selectGameMode() {
+  gameMode = document.querySelector('input[name="game-mode"]:checked').getAttribute('value');
+  console.log(`game mode is now ${gameMode}`);
+
+  // I'll take care of the Moves/Time and Requirements sections when I get to them
+}
