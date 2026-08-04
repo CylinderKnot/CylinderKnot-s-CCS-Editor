@@ -442,7 +442,6 @@
         </div>
         <div class="config-panel-section" id="config-panel-preferred-colors">
           <p>Preferred colors</p>
-          <div class="break"></div>
           <div id="preferred-colors-container">
             <button value="0" class="preferred-color-selected" onclick="togglePreferredColor(this)">
               <img class="selectionImage" src="ui/colors/blue.png" />
@@ -465,7 +464,33 @@
           </div>
         </div>
         <div class="config-panel-section" id="config-panel-target-scores">
-          <p>target scores go here</p>
+          <p>Target scores</p>
+          <table>
+            <tr>
+              <td>
+                <p>1 star:</p>
+              </td>
+              <td>
+                <input type="number" name="1-star-score" id="1-star-score" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>2 stars:</p>
+              </td>
+              <td>
+                <input type="number" name="2-star-score" id="2-star-score" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>3 stars:</p>
+              </td>
+              <td>
+                <input type="number" name="3-star-score" id="3-star-score" />
+              </td>
+            </tr>
+          </table>
         </div>
         <div id="config-panel-level-requirements-header">
           <p class="config-panel-header">REQUIREMENTS</p>

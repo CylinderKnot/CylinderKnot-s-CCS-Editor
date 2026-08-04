@@ -237,6 +237,11 @@
   flex-basis: 100%;
 }
 
+#config-panel-game-mode {
+  display: flex;
+  flex-direction: column;
+}
+
 #game-modes-container {
   display: flex;
   flex-direction: row;
@@ -255,6 +260,11 @@
 #config-panel-game-mode img {
   max-width: 30px;
   max-height: 30px;
+}
+
+#config-panel-preferred-colors {
+  display: flex;
+  flex-direction: column;
 }
 
 #preferred-colors-container {
@@ -277,6 +287,11 @@
 .preferred-color-selected {
   background-color: hsla(0, 0%, 100%, 0.565);
   border-radius: 5px;
+}
+
+#config-panel-target-scores {
+  display: flex;
+  flex-direction: column;
 }
 
 #config-panel-element-information {
