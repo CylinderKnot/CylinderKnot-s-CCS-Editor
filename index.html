@@ -360,82 +360,109 @@
         </div>
         <div class="config-panel-section" id="config-panel-game-mode">
           <p>Game mode</p>
-          <div class="game-modes-container">
+          <div id="game-modes-container">
             <label class="game-mode-label" for="game-mode-moves-option">
-              <img src="ui/game_mode_moves.png" />
+              <img src="ui/game_modes/moves_level.png" />
               <div class="break"></div>
               <input id="game-mode-moves-option" type="radio" name="game-mode" value="Classic moves" onclick="selectGameMode()" />
             </label> 
             <label class="game-mode-label" for="game-mode-jelly-option">
-              <img src="ui/game_mode_jelly.png" />
+              <img src="ui/game_modes/jelly_level.png" />
               <div class="break"></div>
               <input id="game-mode-jelly-option" type="radio" name="game-mode" value="Light up" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-ingredients-option">
-              <img src="ui/game_mode_ingredients.png" />
+              <img src="ui/game_modes/ingredients_level.png" />
               <div class="break"></div>
               <input id="game-mode-ingredients-option" type="radio" name="game-mode" value="Drop down" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-order-option">
-              <img src="ui/game_mode_order.png" />
+              <img src="ui/game_modes/order_level.png" />
               <div class="break"></div>
               <input id="game-mode-order-option" type="radio" name="game-mode" value="Order" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-timed-option">
-              <img src="ui/game_mode_timed.png" />
+              <img src="ui/game_modes/timed_level.png" />
               <div class="break"></div>
               <input id="game-mode-timed-option" type="radio" name="game-mode" value="Classic" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-rainbow-rapids-option">
-              <img src="ui/game_mode_rainbow_rapids.png" />
+              <img src="ui/game_modes/rainbow_rapids_level.png" />
               <div class="break"></div>
               <input id="game-mode-rainbow-rapids-option" type="radio" name="game-mode" value="Rainbow Rapids" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-jelly-order-option">
-              <img src="ui/game_mode_jelly_order.png" />
+              <img src="ui/game_modes/jelly_order_level.png" />
               <div class="break"></div>
               <input id="game-mode-jelly-order-option" type="radio" name="game-mode" value="Jelly Order" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-jelly-ingredients-option">
-              <img src="ui/game_mode_jelly_ingredients.png" />
+              <img src="ui/game_modes/jelly_ingredients_level.png" />
               <div class="break"></div>
               <input id="game-mode-jelly-ingredients-option" type="radio" name="game-mode" value="Jelly Drop down" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-order-ingredients-option">
-              <img src="ui/game_mode_order_ingredients.png" />
+              <img src="ui/game_modes/order_ingredients_level.png" />
               <div class="break"></div>
               <input id="game-mode-order-ingredients-option" type="radio" name="game-mode" value="Order Drop Down" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-rainbow-rapids-jelly-option">
-              <img src="ui/game_mode_rainbow_rapids_jelly.png" />
+              <img src="ui/game_modes/rainbow_rapids_jelly_level.png" />
               <div class="break"></div>
               <input id="game-mode-rainbow-rapids-jelly-option" type="radio" name="game-mode" value="Rainbow Rapids Jelly" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-rainbow-rapids-ingredients-option">
-              <img src="ui/game_mode_rainbow_rapids_ingredients.png" />
+              <img src="ui/game_modes/rainbow_rapids_ingredients_level.png" />
               <div class="break"></div>
               <input id="game-mode-rainbow-rapids-ingredients-option" type="radio" name="game-mode" value="Rainbow Rapids Drop Down" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-rainbow-rapids-order-option">
-              <img src="ui/game_mode_rainbow_rapids_order.png" />
+              <img src="ui/game_modes/rainbow_rapids_order_level.png" />
               <div class="break"></div>
               <input id="game-mode-rainbow-rapids-order-option" type="radio" name="game-mode" value="Rainbow Rapids Order" onclick="selectGameMode()" />
             </label>
             <label class="game-mode-label" for="game-mode-jelly-timed-option">
-              <img src="ui/game_mode_jelly_timed.png" />
+              <img src="ui/game_modes/jelly_timed_level.png" />
               <div class="break"></div>
               <input id="game-mode-jelly-timed-option" type="radio" name="game-mode" value="Jelly Time" onclick="selectGameMode()" />
             </label>
           </div>
         </div>
         <div class="config-panel-section" id="config-panel-number-of-moves">
-          <p>moves input goes here</p>
+          <p>
+            Number of moves:
+            <input type="number" name="number-of-moves" id="number-of-moves" />
+          </p>
         </div>
         <div class="config-panel-section" id="config-panel-amount-of-time" style="display: none">
-          <p>time input goes here</p>
+          <p>
+            Time (seconds):
+            <input type="number" name="amount-of-time" id="amount-of-time" />
+          </p>
         </div>
-        <div class="config-panel-section" id="config-panel-spawning-colors">
-          <p>spawning colors go here</p>
+        <div class="config-panel-section" id="config-panel-preferred-colors">
+          <p>Preferred colors</p>
+          <div class="break"></div>
+          <div id="preferred-colors-container">
+            <button value="0" class="preferred-color-selected" onclick="togglePreferredColor(this)">
+              <img class="selectionImage" src="ui/colors/blue.png" />
+            </button>
+            <button value="1" class="preferred-color-selected" onclick="togglePreferredColor(this)">
+              <img class="selectionImage" src="ui/colors/green.png" />
+            </button>
+            <button value="2" class="preferred-color-selected" onclick="togglePreferredColor(this)">
+              <img class="selectionImage" src="ui/colors/orange.png" />
+            </button>
+            <button value="3" class="preferred-color-selected" onclick="togglePreferredColor(this)">
+              <img class="selectionImage" src="ui/colors/purple.png" />
+            </button>
+            <button value="4" class="preferred-color-selected" onclick="togglePreferredColor(this)">
+              <img class="selectionImage" src="ui/colors/red.png" />
+            </button>
+            <button value="5" onclick="togglePreferredColor(this)">
+              <img class="selectionImage" src="ui/colors/yellow.png" />
+            </button>
+          </div>
         </div>
         <div class="config-panel-section" id="config-panel-target-scores">
           <p>target scores go here</p>
