@@ -91,6 +91,20 @@ function initializeMovesAndTime() {
 
 initializeMovesAndTime();
 
+function initializeTargetScores() {
+  document.getElementById('1-star-score').value = '';
+  document.getElementById('2-star-score').value = '';
+  document.getElementById('3-star-score').value = '';
+}
+
+initializeTargetScores();
+
+function initializeAllowStartingBoosters() {
+  document.getElementById('allow-starting-boosters').checked = true;
+}
+
+initializeAllowStartingBoosters();
+
 function createNewBoard() {
   // Initialize layer dimensions
   tilesLayerContents = initializeLayerDimensions(tilesLayerContents);
