@@ -64,6 +64,8 @@ let isMouseDown = false;
 
 let gameMode = "Classic moves";
 
+let preferredColors = [0, 1, 2, 3, 4];
+
 function initializeSelectedLayerRadio() {
   document.getElementById('selected_tiles').checked = true;
 }
@@ -81,6 +83,27 @@ function initializeGameMode() {
 }
 
 initializeGameMode();
+
+function initializeMovesAndTime() {
+  document.getElementById('number-of-moves').value = '';
+  document.getElementById('amount-of-time').value = '';
+}
+
+initializeMovesAndTime();
+
+function initializeTargetScores() {
+  document.getElementById('1-star-score').value = '';
+  document.getElementById('2-star-score').value = '';
+  document.getElementById('3-star-score').value = '';
+}
+
+initializeTargetScores();
+
+function initializeAllowStartingBoosters() {
+  document.getElementById('allow-starting-boosters').checked = true;
+}
+
+initializeAllowStartingBoosters();
 
 function createNewBoard() {
   // Initialize layer dimensions
@@ -387,5 +410,28 @@ function selectGameMode() {
   gameMode = document.querySelector('input[name="game-mode"]:checked').getAttribute('value');
   console.log(`game mode is now ${gameMode}`);
 
-  // I'll take care of the Moves/Time and Requirements sections when I get to them
+  if (gameMode === 'Classic' || gameMode === 'Jelly Time') {
+    document.getElementById('config-panel-number-of-moves').style.display = 'none';
+    document.getElementById('config-panel-amount-of-time').style.display = '';
+  } else {
+    document.getElementById('config-panel-number-of-moves').style.display = '';
+    document.getElementById('config-panel-amount-of-time').style.display = 'none';
+  }
+
+  // I'll take care of the Requirements section when I get around to it
+}
+
+function togglePreferredColor(object) {
+  const colorNumber = Number(object.getAttribute('value'));
+
+  if (!preferredColors.includes(colorNumber)) {
+    if (!object.classList.contains('preferred-color-selected')) {
+      object.classList.add('preferred-color-selected');
+    }
+
+    preferredColors.push(colorNumber);
+  } else {
+    object.classList.remove('preferred-color-selected');
+    preferredColors.splice(preferredColors.indexOf(colorNumber), 1);
+  }
 }

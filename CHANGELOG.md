@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.10
+Part 2 of game mode selection:
+- The moves/time section now updates based on the game mode.
+- Preferred colors can now be selected.
+- Target scores can now be specified.
+- You can now toggle whether starting boosters are allowed.
+- Additionally made element buttons smaller (affects both left and right panels)
+
 ## 0.0.9
 Part 1 of game mode selection:
 - You can now select the game mode of the level. Moves/time and objectives have not been implemented yet.
