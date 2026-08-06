@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.11
+You can now specify requirements for beating the level!
+- The Requirements section updates based on the selected level type.
+- You can specify orders and ingredients as well as their amounts.
+- It's not fancy, but it's functional. (I don't want level type changes to nuke specified requirements.)
+
 ## 0.0.10
 Part 2 of game mode selection:
 - The moves/time section now updates based on the game mode.
