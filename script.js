@@ -111,7 +111,7 @@ const orderCodes = {
   '42': 'Color cluster hits'
 };
 
-const ingredients = ['Cherries', 'Hazelnuts'];
+const ingredients = ['Hazelnuts', 'Cherries'];
 
 function initializeSelectedLayerRadio() {
   document.getElementById('selected_tiles').checked = true;
