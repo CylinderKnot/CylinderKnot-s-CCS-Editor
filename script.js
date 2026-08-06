@@ -66,6 +66,53 @@ let gameMode = "Classic moves";
 
 let preferredColors = [0, 1, 2, 3, 4];
 
+const orderCodes = {
+  '1': 'Red candies',
+  '2': 'Blue candies',
+  '3': 'Yellow candies',
+  '4': 'Orange candies',
+  '5': 'Purple candies',
+  '6': 'Green candies',
+  '7': 'Wrapped candies',
+  '8': 'Striped candies',
+  '9': 'Color bombs',
+  '10': 'Striped + striped',
+  '11': 'Striped + wrapped',
+  '12': 'Striped + color bomb',
+  '13': 'Color bomb + color bomb',
+  '14': 'Wrapped + color bomb',
+  '15': 'Wrapped + wrapped',
+  '16': 'Chocolate squares',
+  '17': 'Frosting layers',
+  '18': 'Licorice shells',
+  '19': 'Licorice swirls',
+  '20': 'Bombs',
+  '21': 'Jelly fish',
+  '22': 'Cake bombs',
+  '23': 'Mystery candies',
+  '24': 'Magic mixers',
+  '25': 'Toffee swirls',
+  '26': 'Dark chocolate squares',
+  '27': 'Candy cane curl layers',
+  '28': 'Crystal candy layers',
+  '29': 'Rainbow twist layers',
+  '30': 'Frog uses',
+  '31': 'Sugar coat layers',
+  '32': 'Bubblegum pop layers',
+  '33': 'Licorice curl layers',
+  '34': 'Sour skull hits',
+  '35': 'Bonbon blitz charges',
+  '36': 'Jelly jars',
+  '37': 'Candy cobras',
+  '38': 'Wonderful wrappers',
+  '39': 'Gumballs',
+  '40': 'Mall-o-matics',
+  '41': 'Citrus chew hits',
+  '42': 'Color cluster hits'
+};
+
+const ingredients = ['Cherries', 'Hazelnuts'];
+
 function initializeSelectedLayerRadio() {
   document.getElementById('selected_tiles').checked = true;
 }
@@ -104,6 +151,52 @@ function initializeAllowStartingBoosters() {
 }
 
 initializeAllowStartingBoosters();
+
+function initializeOrderRequirementDropdowns() {
+  let orderDropdowns = document.querySelectorAll('.order-requirement-dropdown');
+  for (let i = 0; i < orderDropdowns.length; i++) {
+    Object.keys(orderCodes).forEach(function(key) {
+      let option = document.createElement('option');
+      option.value = key;
+      option.innerHTML = orderCodes[key];
+      orderDropdowns[i].appendChild(option);
+    })
+  }
+}
+
+initializeOrderRequirementDropdowns();
+
+function initializeOrderRequirementAmounts() {
+  let orderRequirements = document.querySelectorAll('.order-requirement-amount');
+  for (let i = 0; i < orderRequirements.length; i++) {
+    orderRequirements[i].value = '0';
+  }
+}
+
+initializeOrderRequirementAmounts();
+
+function initializeIngredientRequirementDropdowns() {
+  let ingredientDropdowns = document.querySelectorAll('.ingredient-requirement-dropdown');
+  for (let i = 0; i < ingredientDropdowns.length; i++) {
+    ingredients.forEach(function(ingredient) {
+      let option = document.createElement('option');
+      option.value = ingredient;
+      option.innerHTML = ingredient;
+      ingredientDropdowns[i].appendChild(option);
+    })
+  }
+}
+
+initializeIngredientRequirementDropdowns();
+
+function initializeIngredientRequirementAmounts() {
+  let ingredientRequirements = document.querySelectorAll('.ingredient-requirement-amount');
+  for (let i = 0; i < ingredientRequirements.length; i++) {
+    ingredientRequirements[i].value = '0';
+  }
+}
+
+initializeIngredientRequirementAmounts();
 
 function createNewBoard() {
   // Initialize layer dimensions
@@ -452,8 +545,4 @@ function updateRequirementsSections() {
     document.getElementById('config-panel-no-requirements').style.display = 'none';
     document.getElementById('config-panel-ingredients-requirements').style.display = '';
   }
-}
-
-function addRequirement(requirementType) {
-  
 }

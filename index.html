@@ -506,9 +506,49 @@
         </div>
         <div class="config-panel-section" id="config-panel-orders-requirements" style="display: none;">
           <p>Orders:</p>
+          <table id="orders-table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body">
+              <tr>
+                <td><select class="order-requirement-dropdown"><option>none</option></select></td>
+                <td><input type="number" class="order-requirement-amount" name="order-amount-1" id="order-amount-1" /></td>
+              </tr>
+              <tr>
+                <td><select class="order-requirement-dropdown"><option>none</option></select></td>
+                <td><input type="number" class="order-requirement-amount" name="order-amount-2" id="order-amount-2" /></td>
+              </tr>
+              <tr>
+                <td><select class="order-requirement-dropdown"><option>none</option></select></td>
+                <td><input type="number" class="order-requirement-amount" name="order-amount-3" id="order-amount-3" /></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div class="config-panel-section" id="config-panel-ingredients-requirements" style="display: none;">
           <p>Ingredients:</p>
+          <table id="ingredients-table">
+            <thead>
+              <tr>
+                <th>Ingredient</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody id="ingredients-table-body">
+              <tr>
+                <td><select class="ingredient-requirement-dropdown"><option>none</option></select></td>
+                <td><input type="number" class="ingredient-requirement-amount" name="ingredient-amount-1" id="ingredient-amount-1" /></td>
+              </tr>
+              <tr>
+                <td><select class="ingredient-requirement-dropdown"><option>none</option></select></td>
+                <td><input type="number" class="ingredient-requirement-amount" name="ingredient-amount-2" id="ingredient-amount-2" /></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div id="config-panel-element-information-header">
           <p class="config-panel-header">ELEMENT INFORMATION</p>
