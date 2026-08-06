@@ -294,6 +294,20 @@
   flex-direction: column;
 }
 
+#config-panel-orders-requirements {
+  display: flex;
+  flex-direction: column;
+}
+
+#config-panel-ingredients-requirements {
+  display: flex;
+  flex-direction: column;
+}
+
+.config-panel-section thead th {
+  color: #ddd;
+}
+
 #config-panel-element-information {
   display: flex;
   flex-direction: column;
