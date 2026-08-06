@@ -418,7 +418,7 @@ function selectGameMode() {
     document.getElementById('config-panel-amount-of-time').style.display = 'none';
   }
 
-  // I'll take care of the Requirements section when I get around to it
+  updateRequirementsSections();
 }
 
 function togglePreferredColor(object) {
@@ -434,4 +434,26 @@ function togglePreferredColor(object) {
     object.classList.remove('preferred-color-selected');
     preferredColors.splice(preferredColors.indexOf(colorNumber), 1);
   }
+}
+
+function updateRequirementsSections() {
+  const hasOrderRequirements = ['Order', 'Jelly Order', 'Order Drop Down', 'Rainbow Rapids Order'];
+  const hasIngredientRequirements = ['Drop down', 'Jelly Drop down', 'Order Drop Down', 'Rainbow Rapids Drop Down'];
+
+  document.getElementById('config-panel-no-requirements').style.display = '';
+  document.getElementById('config-panel-orders-requirements').style.display = 'none';
+  document.getElementById('config-panel-ingredients-requirements').style.display = 'none';
+  
+  if (hasOrderRequirements.includes(gameMode)) {
+    document.getElementById('config-panel-no-requirements').style.display = 'none';
+    document.getElementById('config-panel-orders-requirements').style.display = '';
+  }
+  if (hasIngredientRequirements.includes(gameMode)) {
+    document.getElementById('config-panel-no-requirements').style.display = 'none';
+    document.getElementById('config-panel-ingredients-requirements').style.display = '';
+  }
+}
+
+function addRequirement(requirementType) {
+  
 }
