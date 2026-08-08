@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.12
+You can now specify element spawning information!
+- Most spawning elements have been implemented.
+
 ## 0.0.11
 You can now specify requirements for beating the level!
 - The Requirements section updates based on the selected level type.

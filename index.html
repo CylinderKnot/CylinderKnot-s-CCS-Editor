@@ -21,7 +21,7 @@
       <div class="navbar">
         <div class="navbar-item-container">
           <div class="navbar-flex">
-            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.0.11</p>
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.0.12</p>
           </div>
           <div class="navbar-flex">
             <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
@@ -554,8 +554,295 @@
           <p class="config-panel-header">ELEMENT INFORMATION</p>
         </div>
         <div class="config-panel-section" id="config-panel-element-information">
-          <p>dispensers and other related information go here</p>
-          <p>oh dear</p>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Horizontal striped candies</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="striped-horizontal-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="striped-horizontal-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Vertical striped candies</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="striped-vertical-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="striped-vertical-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Either direction striped candies</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="striped-either-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="striped-either-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Wrapped candies</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="wrapped-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="wrapped-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Jelly fish</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="jelly-fish-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="jelly-fish-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Color bombs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="color-bomb-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="color-bomb-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Lucky candies</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="lucky-candy-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="lucky-candy-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Time candies</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="time-candy-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="time-candy-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Keys</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="key-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="key-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Ingredients</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td>Maximum</td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="ingredient-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="ingredient-spawn-interval" /></td>
+                <td><input type="number" class="spawn-information-input" id="ingredient-spawn-maximum" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Licorice swirls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="licorice-swirl-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="licorice-swirl-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Bombs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td>Duration</td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="bomb-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="bomb-spawn-interval" /></td>
+                <td><input type="number" class="spawn-information-input" id="bomb-spawn-duration" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Toffee swirls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td>Layers</td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="toffee-swirl-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="toffee-swirl-spawn-interval" /></td>
+                <td><input type="number" class="spawn-information-input" id="toffee-swirl-spawn-layers" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Sugar coats</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td>Layers</td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="sugar-coat-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="sugar-coat-spawn-interval" /></td>
+                <td><input type="number" class="spawn-information-input" id="sugar-coat-spawn-layers" /></td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- <table>
+            <thead>
+              <tr>
+                <th colspan="3">Mystery candies</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="mystery-candy-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="mystery-candy-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table> -->
+
+          <!-- and also do moves candies -->
+          
         </div>
       </div>
 

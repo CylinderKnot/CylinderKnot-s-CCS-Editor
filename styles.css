@@ -312,3 +312,16 @@
   display: flex;
   flex-direction: column;
 }
+
+#config-panel-element-information table {
+  padding-bottom: 10px;
+}
+
+#config-panel-element-information td {
+  color: #ddd;
+  width: 33%;
+}
+
+#config-panel-element-information .spawn-information-input {
+  width: 100%;
+}

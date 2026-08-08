@@ -198,6 +198,15 @@ function initializeIngredientRequirementAmounts() {
 
 initializeIngredientRequirementAmounts();
 
+function initializeElementInformationInputs() {
+  let spawnInformationInputs = document.querySelectorAll('.spawn-information-input');
+  for (let i = 0; i < spawnInformationInputs.length; i++) {
+    spawnInformationInputs[i].value = '';
+  }
+}
+
+initializeElementInformationInputs();
+
 function createNewBoard() {
   // Initialize layer dimensions
   tilesLayerContents = initializeLayerDimensions(tilesLayerContents);
