@@ -36,7 +36,7 @@ const VISUAL_LAYERS = [
   'walls_right',
   'crystals',
   'portals',
-  'ingredientexits',
+  'ingredient_exits',
   'dispensers',
   'dispensers_elements',
   'selection_image'
