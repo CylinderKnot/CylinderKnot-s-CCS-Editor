@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.13
+You can now add and remove ingredient exits!
+- Separated the portals/exits layer into two separate layers
+- Added the ability to draw and delete ingredient exits
+- Fixed the rest of the spacing in the board area (no more unsightly lines)
+
 ## 0.0.12
 You can now specify element spawning information!
 - Most spawning elements have been implemented.
