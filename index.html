@@ -21,7 +21,7 @@
       <div class="navbar">
         <div class="navbar-item-container">
           <div class="navbar-flex">
-            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.0.12</p>
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.0.13</p>
           </div>
           <div class="navbar-flex">
             <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
@@ -286,19 +286,37 @@
             </tr>
             <tr>
               <td>
-                <input type="radio" name="selected_layer" id="selected_portals_exits" onclick="selectLayerViaRadio(this)" value="portals_exits" />
+                <input type="radio" name="selected_layer" id="selected_portals" onclick="selectLayerViaRadio(this)" value="portals" />
               </td>
               <td>
-                <input type="checkbox" name="visible_layer" id="visible_portals_exits" onclick="updateLayerVisibilities()" value="portals_exits" checked />
+                <input type="checkbox" name="visible_layer" id="visible_portals" onclick="updateLayerVisibilities()" value="portals" checked />
               </td>
               <td>
-                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_portals_exits">Portals and Exits</button>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_portals">Portals</button>
               </td>
             </tr>
-            <tr id="dropdown_portals_exits" class="dropdown-contents" style="display: none">
+            <tr id="dropdown_portals" class="dropdown-contents" style="display: none">
               <td colspan="3">
                 <p>Portals (not yet implemented)</p>
-                <p>Ingredient/Sprink Exits (not yet implemented)</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" name="selected_layer" id="selected_ingredient_exits" onclick="selectLayerViaRadio(this)" value="ingredient_exits" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_ingredient_exits" onclick="updateLayerVisibilities()" value="ingredient_exits" checked />
+              </td>
+              <td>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_ingredient_exits">Ingredient Exits</button>
+              </td>
+            </tr>
+            <tr id="dropdown_ingredient_exits" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Ingredient/Sprink Exits</p>
+                <div class="elements-container">
+                  <div class="select-element" element="ingredient_exit" gamelayer="ingredient_exits"></div>
+                </div>
               </td>
             </tr>
             <tr>
@@ -350,7 +368,7 @@
 
       <!-- Board in the middle -->
       <div class="board-area" width="100px" style="top:56%">
-        <table id="board" cellspacing="0"></table>
+        <table id="board" cellspacing="0" cellpadding="0"></table>
       </div>
 
       <!-- Config panel at the right -->

@@ -14,7 +14,8 @@ const BOARD_LAYERS = [
   "order_locks",
   "walls",
   "crystals",
-  "portals_exits",
+  "portals",
+  "ingredient_exits",
   "dispensers",
   "selection_image"
 ];
@@ -35,7 +36,7 @@ const VISUAL_LAYERS = [
   'walls_right',
   'crystals',
   'portals',
-  'exits',
+  'ingredient_exits',
   'dispensers',
   'dispensers_elements',
   'selection_image'
@@ -54,7 +55,8 @@ let encasingsLayerContents = [[]];
 let orderLocksLayerContents = [[]];
 let wallsLayerContents = [[]];
 let crystalsLayerContents = [[]];
-let portalsExitsLayerContents = [[]];
+let portalsLayerContents = [[]];
+let ingredientExitsLayerContents = [[]];
 let dispensersLayerContents = [[]];
 let dispensersElementsLayerContents = [[]];
 
@@ -217,7 +219,8 @@ function createNewBoard() {
   orderLocksLayerContents = initializeLayerDimensions(orderLocksLayerContents);
   wallsLayerContents = initializeLayerDimensions(wallsLayerContents);
   crystalsLayerContents = initializeLayerDimensions(crystalsLayerContents);
-  portalsExitsLayerContents = initializeLayerDimensions(portalsExitsLayerContents);
+  portalsLayerContents = initializeLayerDimensions(portalsLayerContents);
+  ingredientExitsLayerContents = initializeLayerDimensions(ingredientExitsLayerContents);
   dispensersLayerContents = initializeLayerDimensions(dispensersLayerContents);
   dispensersElementsLayerContents = initializeLayerDimensions(dispensersElementsLayerContents);
 
@@ -232,7 +235,8 @@ function createNewBoard() {
       orderLocksLayerContents[i][j] = 'empty';
       wallsLayerContents[i][j] = 'empty';
       crystalsLayerContents[i][j] = 'empty';
-      portalsExitsLayerContents[i][j] = 'empty';
+      portalsLayerContents[i][j] = 'empty';
+      ingredientExitsLayerContents[i][j] = 'empty';
       dispensersLayerContents[i][j] = 'empty';
       dispensersElementsLayerContents[i][j] = [];
       if (i === 0) {
@@ -321,7 +325,16 @@ function renderNewBoardFromLayers() {
       // order locks
       // walls
       // crystals
-      // portals exits
+      // portals
+      // exits
+      if (document.getElementById('visible_ingredient_exits').checked && ingredientExitsLayerContents[i][j] !== 'empty') {
+        let image = document.createElement('img');
+        image.setAttribute('draggable', false);
+        image.src = `elements/ingredient_exits/${ingredientExitsLayerContents[i][j]}.png`;
+        image.classList.add('ingredient-exit');
+        rowCell.appendChild(image);
+      }
+
       // dispensers
       if (document.getElementById('visible_dispensers').checked && dispensersLayerContents[i][j] !== 'empty') {
         let image = document.createElement('img');
@@ -435,6 +448,12 @@ function drawElement(row, column) {
     }
   }
 
+  if (currentLayer === 'ingredient_exits' && layerOfCurrentlySelectedElement === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
+    if (tilesLayerContents[row][column] !== 'empty') {
+      ingredientExitsLayerContents[row][column] = currentlySelectedElement;
+    }
+  }
+
   if (currentLayer === 'dispensers' && layerOfCurrentlySelectedElement === 'dispensers' && document.getElementById('visible_dispensers')) {
     if (tilesLayerContents[row][column] !== 'empty') {
       dispensersLayerContents[row][column] = currentlySelectedElement;
@@ -453,6 +472,7 @@ function deleteElement(row, column) {
   if (currentLayer === 'tiles' && document.getElementById('visible_tiles').checked) {
     tilesLayerContents[row][column] = 'empty';
     candiesBlockersLayerContents[row][column] = 'empty';
+    ingredientExitsLayerContents[row][column] = 'empty';
     dispensersLayerContents[row][column] = 'empty';
     dispensersElementsLayerContents[row][column] = [];
   }
@@ -460,6 +480,11 @@ function deleteElement(row, column) {
   // if you're deleting a candy or a blocker, keep the tile below. some encasings may have to be deleted
   if (currentLayer === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
     candiesBlockersLayerContents[row][column] = 'empty';
+  }
+
+  // if you're deleting an ingredient exit, delete only the ingredient exit
+  if (currentLayer === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
+    ingredientExitsLayerContents[row][column] = 'empty';
   }
 
   // if you're deleting a dispenser, keep everything below. delete the spawn elements as well
