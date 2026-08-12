@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.14
+You can now add and remove simple encasings!
+- Licorice locks, marmalade, sugar chests, and sugar coats can be added and removed from the board.
+- Sugar coats check for whether the candy or blocker beneath them can be sugar coated.
+
 ## 0.0.13
 You can now add and remove ingredient exits!
 - Separated the portals/exits layer into two separate layers
