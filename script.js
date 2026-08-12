@@ -476,6 +476,11 @@ function drawElement(row, column) {
     // only add something if a tile is present
     if (tilesLayerContents[row][column] !== 'empty') {
       candiesBlockersLayerContents[row][column] = currentlySelectedElement;
+
+      // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
+      if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
+        encasingsLayerContents[row][column] = 'empty';
+      }
     }
   }
 
@@ -524,9 +529,14 @@ function deleteElement(row, column) {
     dispensersElementsLayerContents[row][column] = [];
   }
 
-  // if you're deleting a candy or a blocker, keep the tile below. some encasings may have to be deleted? dunno
+  // if you're deleting a candy or a blocker, keep the tile below
   if (currentLayer === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
     candiesBlockersLayerContents[row][column] = 'empty';
+
+    // however, if sugar coats are present, remove them as well
+    if (encasingsLayerContents[row][column].includes('sugar_coat_')) {
+      encasingsLayerContents[row][column] = 'empty';
+    }
   }
 
   // if you're deleting an encasing, delete only the encasing
