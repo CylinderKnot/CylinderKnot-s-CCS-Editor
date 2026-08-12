@@ -40,7 +40,32 @@ const VISUAL_LAYERS = [
   'dispensers',
   'dispensers_elements',
   'selection_image'
-]
+];
+
+const SUGAR_COATABLE = [
+  'candy_random', 'candy_blue', 'candy_green', 'candy_orange', 'candy_purple', 'candy_red', 'candy_yellow',
+  'striped_horizontal_random', 'striped_horizontal_blue', 'striped_horizontal_green', 'striped_horizontal_orange', 'striped_horizontal_purple', 'striped_horizontal_red', 'striped_horizontal_yellow',
+  'striped_vertical_random', 'striped_vertical_blue', 'striped_vertical_green', 'striped_vertical_orange', 'striped_vertical_purple', 'striped_vertical_red', 'striped_vertical_yellow',
+  'wrapped_random', 'wrapped_blue', 'wrapped_green', 'wrapped_orange', 'wrapped_purple', 'wrapped_red', 'wrapped_yellow',
+  'bomb_random', 'bomb_blue', 'bomb_green', 'bomb_orange', 'bomb_purple', 'bomb_red', 'bomb_yellow',
+  'key_random', 'key_blue', 'key_green', 'key_orange', 'key_purple', 'key_red', 'key_yellow',
+  'lucky_candy_random', 'lucky_candy_blue', 'lucky_candy_green', 'lucky_candy_orange', 'lucky_candy_purple', 'lucky_candy_red', 'lucky_candy_yellow',
+  'jelly_fish_random', 'jelly_fish_blue', 'jelly_fish_green', 'jelly_fish_orange', 'jelly_fish_purple', 'jelly_fish_red', 'jelly_fish_yellow',
+  'jelly_fish_striped_random', 'jelly_fish_striped_blue', 'jelly_fish_striped_green', 'jelly_fish_striped_orange', 'jelly_fish_striped_purple', 'jelly_fish_striped_red', 'jelly_fish_striped_yellow',
+  'jelly_fish_wrapped_random', 'jelly_fish_wrapped_blue', 'jelly_fish_wrapped_green', 'jelly_fish_wrapped_orange', 'jelly_fish_wrapped_purple', 'jelly_fish_wrapped_red', 'jelly_fish_wrapped_yellow',
+  'jelly_fish_color_bomb_random', 'jelly_fish_color_bomb_blue', 'jelly_fish_color_bomb_green', 'jelly_fish_color_bomb_orange', 'jelly_fish_color_bomb_purple', 'jelly_fish_color_bomb_red', 'jelly_fish_color_bomb_yellow',
+  'color_bomb',
+  'coconut_wheel',
+  'ufo',
+  'hazelnut',
+  'cherry',
+  'licorice_swirl',
+  'toffee_swirl_1',
+  'toffee_swirl_2',
+  'toffee_swirl_3',
+  'toffee_swirl_4',
+  'toffee_swirl_5',
+];
 
 let currentLayer = 'tiles';
 let layerOfCurrentlySelectedElement = 'tiles';
@@ -322,6 +347,12 @@ function renderNewBoardFromLayers() {
         rowCell.appendChild(image);
       }
       // encasings
+      if (document.getElementById('visible_encasings').checked && encasingsLayerContents[i][j] !== 'empty') {
+        let image = document.createElement('img');
+        image.setAttribute('draggable', false);
+        image.src = `elements/encasings/${encasingsLayerContents[i][j]}.png`;
+        rowCell.appendChild(image);
+      }
       // order locks
       // walls
       // crystals
@@ -448,6 +479,21 @@ function drawElement(row, column) {
     }
   }
 
+  if (currentLayer === 'encasings' && layerOfCurrentlySelectedElement === 'encasings' && document.getElementById('visible_encasings').checked) {
+    // only add something if a tile is present
+    if (tilesLayerContents[row][column] !== 'empty') {
+      // sugar coat not selected? just add it
+      if (!currentlySelectedElement.includes('sugar_coat_')) {
+        encasingsLayerContents[row][column] = currentlySelectedElement;
+      } else {
+        // if sugar coat is selected:
+        if (SUGAR_COATABLE.includes(candiesBlockersLayerContents[row][column])) {
+          encasingsLayerContents[row][column] = currentlySelectedElement;
+        }
+      }
+    }
+  }
+
   if (currentLayer === 'ingredient_exits' && layerOfCurrentlySelectedElement === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
     if (tilesLayerContents[row][column] !== 'empty') {
       ingredientExitsLayerContents[row][column] = currentlySelectedElement;
@@ -472,14 +518,20 @@ function deleteElement(row, column) {
   if (currentLayer === 'tiles' && document.getElementById('visible_tiles').checked) {
     tilesLayerContents[row][column] = 'empty';
     candiesBlockersLayerContents[row][column] = 'empty';
+    encasingsLayerContents[row][column] = 'empty';
     ingredientExitsLayerContents[row][column] = 'empty';
     dispensersLayerContents[row][column] = 'empty';
     dispensersElementsLayerContents[row][column] = [];
   }
 
-  // if you're deleting a candy or a blocker, keep the tile below. some encasings may have to be deleted
+  // if you're deleting a candy or a blocker, keep the tile below. some encasings may have to be deleted? dunno
   if (currentLayer === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
     candiesBlockersLayerContents[row][column] = 'empty';
+  }
+
+  // if you're deleting an encasing, delete only the encasing
+  if (currentLayer === 'encasings' && document.getElementById('visible_encasings').checked) {
+    encasingsLayerContents[row][column] = 'empty';
   }
 
   // if you're deleting an ingredient exit, delete only the ingredient exit
