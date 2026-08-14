@@ -33,7 +33,7 @@
           </div>
           <div class="navbar-flex">
             <button>Import</button>
-            <button>Export</button>
+            <button onclick="displayExportLevelPopup()">Export</button>
           </div>
           <div class="navbar-flex">
             <button>GitHub</button>
@@ -873,6 +873,17 @@
 
           <!-- and also do moves candies -->
           
+        </div>
+      </div>
+
+      <!-- Export popup -->
+      <div id="export-menu" style="display: none;">
+        <div class="popup">
+          <label for="export-field">Level code:</label>
+          <textarea id="export-field" name="export-field" readonly></textarea>
+          <label for="export-warnings">Warnings:</label>
+          <textarea id="export-warnings" name="export-warnings" readonly></textarea>
+          <button onclick="document.getElementById('export-menu').style.display='none'">Close</button>
         </div>
       </div>
 

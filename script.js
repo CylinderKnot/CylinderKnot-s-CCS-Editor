@@ -642,3 +642,13 @@ function updateRequirementsSections() {
     document.getElementById('config-panel-ingredients-requirements').style.display = '';
   }
 }
+
+function exportLevel() {
+  return 'for testing purposes';
+}
+
+function displayExportLevelPopup() {
+  let levelJson = exportLevel();
+  document.getElementById('export-field').value = levelJson;
+  document.getElementById('export-menu').style.display = 'block';
+}
