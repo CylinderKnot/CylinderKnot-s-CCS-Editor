@@ -669,7 +669,7 @@ function exportLevel() {
         'coconut_wheel': '043',
         'ufo': '061',
         'hazelnut': '126',
-        'cherry': '127',
+        'cherry': '125',
         'frosting_1': '019', 'frosting_2': '020', 'frosting_3': '021', 'frosting_4': '022', 'frosting_5': '023',
         'bubblegum_pop_1': '159', 'bubblegum_pop_2': '160', 'bubblegum_pop_3': '161', 'bubblegum_pop_4': '162', 'bubblegum_pop_5': '163',
         'toffee_swirl_1': '079', 'toffee_swirl_2': '080', 'toffee_swirl_3': '081', 'toffee_swirl_4': '082', 'toffee_swirl_5': '083',
@@ -830,10 +830,151 @@ function exportLevel() {
   level['evilSpawnerElements'] = [0];
   level['evilSpawnerCount'] = 0;
 
-  
+  const stripedHorizontalMin = document.getElementById('striped-horizontal-spawn-minimum').value;
+  if (stripedHorizontalMin !== '') {
+    level['stripedRowCandyMax'] = Number(stripedHorizontalMin);
+  }
+  const stripedHorizontalInterval = document.getElementById('striped-horizontal-spawn-interval').value;
+  if (stripedHorizontalInterval !== '') {
+    level['stripedRowCandySpawn'] = Number(stripedHorizontalInterval);
+  }
+
+  const stripedVerticalMin = document.getElementById('striped-vertical-spawn-minimum').value;
+  if (stripedVerticalMin !== '') {
+    level['stripedColumnCandyMax'] = Number(stripedVerticalMin);
+  }
+  const stripedVerticalInterval = document.getElementById('striped-vertical-spawn-interval').value;
+  if (stripedVerticalInterval !== '') {
+    level['stripedColumnCandySpawn'] = Number(stripedVerticalInterval);
+  }
+
+  const stripedEitherMin = document.getElementById('striped-either-spawn-minimum').value;
+  if (stripedEitherMin !== '') {
+    level['stripedCandyMax'] = Number(stripedEitherMin);
+  }
+  const stripedEitherInterval = document.getElementById('striped-either-spawn-interval').value;
+  if (stripedEitherInterval !== '') {
+    level['stripedCandySpawn'] = Number(stripedEitherInterval);
+  }
+
+  const wrappedMin = document.getElementById('wrapped-spawn-minimum').value;
+  if (wrappedMin !== '') {
+    level['wrappedCandyMax'] = Number(wrappedMin);
+  }
+  const wrappedInterval = document.getElementById('wrapped-spawn-interval').value;
+  if (wrappedInterval !== '') {
+    level['wrappedCandySpawn'] = Number(wrappedInterval);
+  }
+
+  const jellyFishMin = document.getElementById('jelly-fish-spawn-minimum').value;
+  if (jellyFishMin !== '') {
+    level['fishMax'] = Number(jellyFishMin);
+  }
+  const jellyFishInterval = document.getElementById('jelly-fish-spawn-interval').value;
+  if (jellyFishInterval !== '') {
+    level['fishSpawn'] = Number(jellyFishInterval);
+  }
+
+  const colorBombMin = document.getElementById('color-bomb-spawn-minimum').value;
+  if (colorBombMin !== '') {
+    level['colorBombMax'] = Number(colorBombMin);
+  }
+  const colorBombInterval = document.getElementById('color-bomb-spawn-interval').value;
+  if (colorBombInterval !== '') {
+    level['colorBombSpawn'] = Number(colorBombInterval);
+  }
+
+  const luckyCandyMin = document.getElementById('lucky-candy-spawn-minimum').value;
+  if (luckyCandyMin !== '') {
+    level['luckyCandyMax'] = Number(luckyCandyMin);
+  }
+  const luckyCandyInterval = document.getElementById('lucky-candy-spawn-interval').value;
+  if (luckyCandyInterval !== '') {
+    level['luckyCandySpawn'] = Number(luckyCandyInterval);
+  }
+
+  const timeCandyMin = document.getElementById('time-candy-spawn-minimum').value;
+  if (timeCandyMin !== '') {
+    level['timeCandyMax'] = Number(timeCandyMin);
+  }
+  const timeCandyInterval = document.getElementById('time-candy-spawn-interval').value;
+  if (timeCandyInterval !== '') {
+    level['timeCandySpawn'] = Number(timeCandyInterval);
+  }
+
+  const keyMin = document.getElementById('key-spawn-minimum').value;
+  if (keyMin !== '') {
+    level['mulockCandyMax'] = Number(keyMin);
+  }
+  const keyInterval = document.getElementById('key-spawn-interval').value;
+  if (keyInterval !== '') {
+    level['mulockCandySpawn'] = Number(keyInterval);
+  }
+
+  const hasIngredientsGameMode = (gameMode === 'Drop down' || gameMode === 'Jelly Drop down' || gameMode === 'Order Drop Down' || gameMode === 'Rainbow Rapids Drop Down');
+
+  const ingredientMin = document.getElementById('ingredient-spawn-minimum').value;
+  if (hasIngredientsGameMode) {
+    level['numIngredientsOnScreen'] = Number(ingredientMin) || 0;
+  }
+  const ingredientInterval = document.getElementById('ingredient-spawn-interval').value;
+  if (hasIngredientsGameMode) {
+    level['ingredientSpawnDensity'] = Number(ingredientInterval) || 0;
+  }
+  const ingredientMax = document.getElementById('ingredient-spawn-maximum').value;
+  if (hasIngredientsGameMode) {
+    level['maxNumIngredientsOnScreen'] = Number(ingredientMax) || 0;
+  }
+
+  const licoriceSwirlMin = document.getElementById('licorice-swirl-spawn-minimum').value;
+  if (licoriceSwirlMin !== '') {
+    level['licoriceMax'] = Number(licoriceSwirlMin);
+  }
+  const licoriceSwirlInterval = document.getElementById('licorice-swirl-spawn-interval').value;
+  if (licoriceSwirlInterval !== '') {
+    level['licoriceSpawn'] = Number(licoriceSwirlInterval);
+  }
+
+  const bombMin = document.getElementById('bomb-spawn-minimum').value;
+  if (bombMin !== '') {
+    level['pepperCandyMax'] = Number(bombMin);
+  }
+  const bombInterval = document.getElementById('bomb-spawn-interval').value;
+  if (bombInterval !== '') {
+    level['pepperCandySpawn'] = Number(bombInterval);
+  }
+  const bombDuration = document.getElementById('bomb-spawn-duration').value;
+  if (bombDuration !== '') {
+    level['pepperCandyExplosionTurns'] = Number(bombDuration);
+  }
+
+  const toffeeSwirlMin = document.getElementById('toffee-swirl-spawn-minimum').value;
+  if (toffeeSwirlMin !== '') {
+    level['fallingIcingMax'] = Number(toffeeSwirlMin);
+  }
+  const toffeeSwirlInterval = document.getElementById('toffee-swirl-spawn-interval').value;
+  if (toffeeSwirlInterval !== '') {
+    level['fallingIcingSpawn'] = Number(toffeeSwirlInterval);
+  }
+  const toffeeSwirlLayers = document.getElementById('toffee-swirl-spawn-layers').value;
+  if (toffeeSwirlLayers !== '') {
+    level['fallingIcingLevel'] = Number(toffeeSwirlLayers);
+  }
+
+  const sugarCoatMin = document.getElementById('sugar-coat-spawn-minimum').value;
+  if (sugarCoatMin !== '') {
+    level['shieldMax'] = Number(sugarCoatMin);
+  }
+  const sugarCoatInterval = document.getElementById('sugar-coat-spawn-interval').value;
+  if (sugarCoatInterval !== '') {
+    level['shieldSpawn'] = Number(sugarCoatInterval);
+  }
+  const sugarCoatLayers = document.getElementById('sugar-coat-spawn-layers').value;
+  if (sugarCoatLayers !== '') {
+    level['shieldLevel'] = Number(sugarCoatLayers);
+  }
 
   return level;
-  // return 'for testing purposes';
 }
 
 function displayExportLevelPopup() {
