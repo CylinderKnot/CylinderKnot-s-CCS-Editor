@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0
+You can now export levels!
+- Clicking the Export button now shows a dialog with the level code and any generated warnings.
+- The exporter took over 7 hours to write, and warnings have not been implemented yet.
+- Simplified the ingredients inputs in the Requirements section
+
 ## 0.0.14
 You can now add and remove simple encasings!
 - Licorice locks, marmalade, sugar chests, and sugar coats can be added and removed from the board.

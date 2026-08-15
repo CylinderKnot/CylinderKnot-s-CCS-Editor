@@ -21,7 +21,7 @@
       <div class="navbar">
         <div class="navbar-item-container">
           <div class="navbar-flex">
-            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.0.14</p>
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.1.0</p>
           </div>
           <div class="navbar-flex">
             <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
@@ -33,7 +33,7 @@
           </div>
           <div class="navbar-flex">
             <button>Import</button>
-            <button>Export</button>
+            <button onclick="displayExportLevelPopup()">Export</button>
           </div>
           <div class="navbar-flex">
             <button>GitHub</button>
@@ -545,15 +545,15 @@
             </thead>
             <tbody id="orders-table-body">
               <tr>
-                <td><select class="order-requirement-dropdown"><option>none</option></select></td>
+                <td><select class="order-requirement-dropdown" id="order-dropdown-1"><option value="0">none</option></select></td>
                 <td><input type="number" class="order-requirement-amount" name="order-amount-1" id="order-amount-1" /></td>
               </tr>
               <tr>
-                <td><select class="order-requirement-dropdown"><option>none</option></select></td>
+                <td><select class="order-requirement-dropdown" id="order-dropdown-2"><option value="0">none</option></select></td>
                 <td><input type="number" class="order-requirement-amount" name="order-amount-2" id="order-amount-2" /></td>
               </tr>
               <tr>
-                <td><select class="order-requirement-dropdown"><option>none</option></select></td>
+                <td><select class="order-requirement-dropdown" id="order-dropdown-3"><option value="0">none</option></select></td>
                 <td><input type="number" class="order-requirement-amount" name="order-amount-3" id="order-amount-3" /></td>
               </tr>
             </tbody>
@@ -562,20 +562,14 @@
         <div class="config-panel-section" id="config-panel-ingredients-requirements" style="display: none;">
           <p>Ingredients:</p>
           <table id="ingredients-table">
-            <thead>
-              <tr>
-                <th>Ingredient</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
             <tbody id="ingredients-table-body">
               <tr>
-                <td><select class="ingredient-requirement-dropdown"><option>none</option></select></td>
-                <td><input type="number" class="ingredient-requirement-amount" name="ingredient-amount-1" id="ingredient-amount-1" /></td>
+                <td><p>Hazelnuts</p></td>
+                <td><input type="number" class="ingredient-requirement-amount" name="hazelnut-amount" id="hazelnut-amount" /></td>
               </tr>
               <tr>
-                <td><select class="ingredient-requirement-dropdown"><option>none</option></select></td>
-                <td><input type="number" class="ingredient-requirement-amount" name="ingredient-amount-2" id="ingredient-amount-2" /></td>
+                <td><p>Cherries/Sprinks</p></td>
+                <td><input type="number" class="ingredient-requirement-amount" name="cherry-amount" id="cherry-amount" /></td>
               </tr>
             </tbody>
           </table>
@@ -873,6 +867,17 @@
 
           <!-- and also do moves candies -->
           
+        </div>
+      </div>
+
+      <!-- Export popup -->
+      <div id="export-menu" style="display: none;">
+        <div class="popup">
+          <label for="export-field">Level code:</label>
+          <textarea id="export-field" name="export-field" readonly></textarea>
+          <label for="export-warnings">Warnings:</label>
+          <textarea id="export-warnings" name="export-warnings" readonly></textarea>
+          <button onclick="document.getElementById('export-menu').style.display='none'">Close</button>
         </div>
       </div>
 

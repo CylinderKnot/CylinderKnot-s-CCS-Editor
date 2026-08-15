@@ -338,3 +338,33 @@
 #config-panel-element-information .spawn-information-input {
   width: 100%;
 }
+
+.popup {
+  width: 40%;
+  height: 50%;
+  margin: auto;
+  background-color: #545454;
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup label {
+  color: #fff;
+}
+
+.popup textarea {
+  background-color: #464646;
+  width: 90%;
+  height: 30%;
+  resize: none;
+  color: #fff;
+  margin-bottom: 1%;
+}
