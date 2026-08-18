@@ -683,6 +683,7 @@ function exportLevel() {
         'jelly_jar_1': '220', 'jelly_jar_2': '221',
         'bobber': '066',
         'magic_mixer': '062',
+        'gumball_machine': '230',
         'bonbon_blitz_striped_horizontal_1': '186', 'bonbon_blitz_striped_horizontal_2': '187', 'bonbon_blitz_striped_horizontal_3': '188', 'bonbon_blitz_striped_horizontal_4': '189',
         'bonbon_blitz_striped_vertical_1': '190', 'bonbon_blitz_striped_vertical_2': '191', 'bonbon_blitz_striped_vertical_3': '192', 'bonbon_blitz_striped_vertical_4': '193',
         'bonbon_blitz_wrapped_1': '198', 'bonbon_blitz_wrapped_2': '199', 'bonbon_blitz_wrapped_3': '200', 'bonbon_blitz_wrapped_4': '201',
