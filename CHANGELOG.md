@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+You can now draw and delete gumball machines!
+- At some point, there will be warnings for improper gumball machine usage.
+
 ## 0.1.0
 You can now export levels!
 - Clicking the Export button now shows a dialog with the level code and any generated warnings.
