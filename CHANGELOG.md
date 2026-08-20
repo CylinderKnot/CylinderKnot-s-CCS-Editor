@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2
+You can now change the colors of existing candies!
+- To avoid confusion, colors can only be painted. You cannot draw entirely new colored candies.
+- At some point, there will be a warning for the presence of color bomb jelly fish. They are not supported in newer CCS versions.
+
 ## 0.1.1
 You can now draw and delete gumball machines!
 - At some point, there will be warnings for improper gumball machine usage.
