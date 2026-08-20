@@ -461,11 +461,41 @@ function drawElement(row, column) {
   if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
     // only add something if a tile is present
     if (tilesLayerContents[row][column] !== 'empty') {
-      candiesBlockersLayerContents[row][column] = currentlySelectedElement;
+      const colorsToPaint = ['candy_random_ui', 'candy_blue', 'candy_green', 'candy_orange', 'candy_purple', 'candy_red', 'candy_yellow'];
+      
+      // we're doing color painting
+      if (colorsToPaint.includes(currentlySelectedElement)) {
+        const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
+        
+        let isElementColorable = false;
+        for (let i = 0; i < colorableElementPrefixes.length; i++) {
+          if (candiesBlockersLayerContents[row][column].indexOf(colorableElementPrefixes[i]) === 0) {
+            isElementColorable = true;
+          }
+        }
 
-      // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
-      if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
-        encasingsLayerContents[row][column] = 'empty';
+        if (isElementColorable) {
+          // get color after last underscore of selected color
+          let colorToSet = currentlySelectedElement.split('_').pop();
+          if (colorToSet === 'ui') {
+            colorToSet = 'random';
+          }
+
+          // replace
+          let currentCandy = candiesBlockersLayerContents[row][column];
+          let currentCandyArray = currentCandy.split('_');
+          currentCandyArray[currentCandyArray.length - 1] = colorToSet;
+          let newCandy = currentCandyArray.join('_');
+          candiesBlockersLayerContents[row][column] = newCandy;
+        }
+
+      } else { // we're doing regular drawing
+        candiesBlockersLayerContents[row][column] = currentlySelectedElement;
+
+        // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
+        if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
+          encasingsLayerContents[row][column] = 'empty';
+        }
       }
     }
   }
