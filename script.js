@@ -461,11 +461,41 @@ function drawElement(row, column) {
   if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
     // only add something if a tile is present
     if (tilesLayerContents[row][column] !== 'empty') {
-      candiesBlockersLayerContents[row][column] = currentlySelectedElement;
+      const colorsToPaint = ['candy_random_ui', 'candy_blue', 'candy_green', 'candy_orange', 'candy_purple', 'candy_red', 'candy_yellow'];
+      
+      // we're doing color painting
+      if (colorsToPaint.includes(currentlySelectedElement)) {
+        const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
+        
+        let isElementColorable = false;
+        for (let i = 0; i < colorableElementPrefixes.length; i++) {
+          if (candiesBlockersLayerContents[row][column].indexOf(colorableElementPrefixes[i]) === 0) {
+            isElementColorable = true;
+          }
+        }
 
-      // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
-      if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
-        encasingsLayerContents[row][column] = 'empty';
+        if (isElementColorable) {
+          // get color after last underscore of selected color
+          let colorToSet = currentlySelectedElement.split('_').pop();
+          if (colorToSet === 'ui') {
+            colorToSet = 'random';
+          }
+
+          // replace
+          let currentCandy = candiesBlockersLayerContents[row][column];
+          let currentCandyArray = currentCandy.split('_');
+          currentCandyArray[currentCandyArray.length - 1] = colorToSet;
+          let newCandy = currentCandyArray.join('_');
+          candiesBlockersLayerContents[row][column] = newCandy;
+        }
+
+      } else { // we're doing regular drawing
+        candiesBlockersLayerContents[row][column] = currentlySelectedElement;
+
+        // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
+        if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
+          encasingsLayerContents[row][column] = 'empty';
+        }
       }
     }
   }
@@ -654,17 +684,17 @@ function exportLevel() {
 
       // Candies and Blockers layer
       const candiesBlockersCodes = {
-        'candy_random': '002',
-        'striped_horizontal_random': '045',
-        'striped_vertical_random': '046',
-        'wrapped_random': '047',
-        'bomb_random': '018',
-        'key_random': '051',
-        'lucky_candy_random': '052',
-        'jelly_fish_random': '049',
-        'jelly_fish_striped_random': '091',
-        'jelly_fish_wrapped_random': '092',
-        'jelly_fish_color_bomb_random': '093',
+        'candy_random': '002', 'candy_blue': '002057', 'candy_green': '002058', 'candy_orange': '002059', 'candy_purple': '002060', 'candy_red': '002055', 'candy_yellow': '002056',
+        'striped_horizontal_random': '045', 'striped_horizontal_blue': '045057', 'striped_horizontal_green': '045058', 'striped_horizontal_orange': '045059', 'striped_horizontal_purple': '045060', 'striped_horizontal_red': '045055', 'striped_horizontal_yellow': '045056',
+        'striped_vertical_random': '046', 'striped_vertical_blue': '046057', 'striped_vertical_green': '046058', 'striped_vertical_orange': '046059', 'striped_vertical_purple': '046060', 'striped_vertical_red': '046055', 'striped_vertical_yellow': '046056',
+        'wrapped_random': '047', 'wrapped_blue': '047057', 'wrapped_green': '047058', 'wrapped_orange': '047059', 'wrapped_purple': '047060', 'wrapped_red': '047055', 'wrapped_yellow': '047056',
+        'bomb_random': '018', 'bomb_blue': '018057', 'bomb_green': '018058', 'bomb_orange': '018059', 'bomb_purple': '018060', 'bomb_red': '018055', 'bomb_yellow': '018056',
+        'key_random': '051', 'key_blue': '051057', 'key_green': '051058', 'key_orange': '051059', 'key_purple': '051060', 'key_red': '051055', 'key_yellow': '051056',
+        'lucky_candy_random': '052', 'lucky_candy_blue': '052057', 'lucky_candy_green': '052058', 'lucky_candy_orange': '052059', 'lucky_candy_purple': '052060', 'lucky_candy_red': '052055', 'lucky_candy_yellow': '052056',
+        'jelly_fish_random': '049', 'jelly_fish_blue': '049057', 'jelly_fish_green': '049058', 'jelly_fish_orange': '049059', 'jelly_fish_purple': '049060', 'jelly_fish_red': '049055', 'jelly_fish_yellow': '049056',
+        'jelly_fish_striped_random': '091', 'jelly_fish_striped_blue': '091057', 'jelly_fish_striped_green': '091058', 'jelly_fish_striped_orange': '091059', 'jelly_fish_striped_purple': '091060', 'jelly_fish_striped_red': '091055', 'jelly_fish_striped_yellow': '091056',
+        'jelly_fish_wrapped_random': '092', 'jelly_fish_wrapped_blue': '092057', 'jelly_fish_wrapped_green': '092058', 'jelly_fish_wrapped_orange': '092059', 'jelly_fish_wrapped_purple': '092060', 'jelly_fish_wrapped_red': '092055', 'jelly_fish_wrapped_yellow': '092056',
+        'jelly_fish_color_bomb_random': '093', 'jelly_fish_color_bomb_blue': '093057', 'jelly_fish_color_bomb_green': '093058', 'jelly_fish_color_bomb_orange': '093059', 'jelly_fish_color_bomb_purple': '093060', 'jelly_fish_color_bomb_red': '093055', 'jelly_fish_color_bomb_yellow': '093056',
         'color_bomb': '044',
         'coconut_wheel': '043',
         'ufo': '061',
