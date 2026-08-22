@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3
+A little bit of refactoring:
+- Refactored the drawElement and deleteElement functions to be more modular
+- Breaking the logic into separate functions based on layers will better enable drawing and deleting multi-tile elements.
+- No visible changes were made to the editor or its functionality. These changes are purely under the hood.
+
 ## 0.1.2
 You can now change the colors of existing candies!
 - To avoid confusion, colors can only be painted. You cannot draw entirely new colored candies.

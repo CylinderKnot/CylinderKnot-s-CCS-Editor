@@ -1,7 +1,7 @@
 # CylinderKnot's CCS Editor
 Custom level editor for Candy Crush Saga by CylinderKnot
 
-Current version: 0.1.2
+Current version: 0.1.3
 
 ## How to run
 Download everything and double-click the `index.html` file. The editor will open in your browser.

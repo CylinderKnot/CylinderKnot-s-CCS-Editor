@@ -451,7 +451,7 @@ function updateTile(object) {
 
 function drawElement(row, column) {
   if (currentLayer === 'tiles' && layerOfCurrentlySelectedElement === 'tiles' && document.getElementById('visible_tiles').checked) {
-    tilesLayerContents[row][column] = currentlySelectedElement;
+    drawTileAt(row, column);
   }
 
   // rapids_paths: TODO
@@ -459,117 +459,159 @@ function drawElement(row, column) {
   // conveyor_belts: TODO
   
   if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
-    // only add something if a tile is present
-    if (tilesLayerContents[row][column] !== 'empty') {
-      const colorsToPaint = ['candy_random_ui', 'candy_blue', 'candy_green', 'candy_orange', 'candy_purple', 'candy_red', 'candy_yellow'];
-      
-      // we're doing color painting
-      if (colorsToPaint.includes(currentlySelectedElement)) {
-        const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
-        
-        let isElementColorable = false;
-        for (let i = 0; i < colorableElementPrefixes.length; i++) {
-          if (candiesBlockersLayerContents[row][column].indexOf(colorableElementPrefixes[i]) === 0) {
-            isElementColorable = true;
-          }
-        }
-
-        if (isElementColorable) {
-          // get color after last underscore of selected color
-          let colorToSet = currentlySelectedElement.split('_').pop();
-          if (colorToSet === 'ui') {
-            colorToSet = 'random';
-          }
-
-          // replace
-          let currentCandy = candiesBlockersLayerContents[row][column];
-          let currentCandyArray = currentCandy.split('_');
-          currentCandyArray[currentCandyArray.length - 1] = colorToSet;
-          let newCandy = currentCandyArray.join('_');
-          candiesBlockersLayerContents[row][column] = newCandy;
-        }
-
-      } else { // we're doing regular drawing
-        candiesBlockersLayerContents[row][column] = currentlySelectedElement;
-
-        // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
-        if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
-          encasingsLayerContents[row][column] = 'empty';
-        }
-      }
-    }
+    drawCandyOrBlockerAt(row, column);
   }
 
   if (currentLayer === 'encasings' && layerOfCurrentlySelectedElement === 'encasings' && document.getElementById('visible_encasings').checked) {
-    // only add something if a tile is present
-    if (tilesLayerContents[row][column] !== 'empty') {
-      // sugar coat not selected? just add it
-      if (!currentlySelectedElement.includes('sugar_coat_')) {
-        encasingsLayerContents[row][column] = currentlySelectedElement;
-      } else {
-        // if sugar coat is selected:
-        if (SUGAR_COATABLE.includes(candiesBlockersLayerContents[row][column])) {
-          encasingsLayerContents[row][column] = currentlySelectedElement;
-        }
-      }
-    }
+    drawEncasingAt(row, column);
   }
 
   if (currentLayer === 'ingredient_exits' && layerOfCurrentlySelectedElement === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
-    if (tilesLayerContents[row][column] !== 'empty') {
-      ingredientExitsLayerContents[row][column] = currentlySelectedElement;
-    }
+    drawIngredientExitAt(row, column);
   }
 
   if (currentLayer === 'dispensers' && layerOfCurrentlySelectedElement === 'dispensers' && document.getElementById('visible_dispensers')) {
-    if (tilesLayerContents[row][column] !== 'empty') {
-      dispensersLayerContents[row][column] = currentlySelectedElement;
+    drawDispenserAt(row, column);
+  }
+}
 
-      const selectedDispenserElements = document.querySelectorAll('.dispenser-element-selected');
-      dispensersElementsLayerContents[row][column] = [];
-      selectedDispenserElements.forEach(function(element) {
-        dispensersElementsLayerContents[row][column].push(element.getAttribute('element'));
-      });
+function drawTileAt(row, column) {
+  tilesLayerContents[row][column] = currentlySelectedElement;
+}
+
+function drawCandyOrBlockerAt(row, column) {
+  // only add something if a tile is present
+  if (tilesLayerContents[row][column] !== 'empty') {
+    const colorsToPaint = ['candy_random_ui', 'candy_blue', 'candy_green', 'candy_orange', 'candy_purple', 'candy_red', 'candy_yellow'];
+    
+    // we're doing color painting
+    if (colorsToPaint.includes(currentlySelectedElement)) {
+      const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
+      
+      let isElementColorable = false;
+      for (let i = 0; i < colorableElementPrefixes.length; i++) {
+        if (candiesBlockersLayerContents[row][column].indexOf(colorableElementPrefixes[i]) === 0) {
+          isElementColorable = true;
+        }
+      }
+
+      if (isElementColorable) {
+        // get color after last underscore of selected color
+        let colorToSet = currentlySelectedElement.split('_').pop();
+        if (colorToSet === 'ui') {
+          colorToSet = 'random';
+        }
+
+        // replace
+        let currentCandy = candiesBlockersLayerContents[row][column];
+        let currentCandyArray = currentCandy.split('_');
+        currentCandyArray[currentCandyArray.length - 1] = colorToSet;
+        let newCandy = currentCandyArray.join('_');
+        candiesBlockersLayerContents[row][column] = newCandy;
+      }
+
+    } else { // we're doing regular drawing
+      candiesBlockersLayerContents[row][column] = currentlySelectedElement;
+
+      // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
+      if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
+        encasingsLayerContents[row][column] = 'empty';
+      }
     }
   }
 }
 
-function deleteElement(row, column) {
-  // if you're deleting a tile, delete everything above it as well!
-  if (currentLayer === 'tiles' && document.getElementById('visible_tiles').checked) {
-    tilesLayerContents[row][column] = 'empty';
-    candiesBlockersLayerContents[row][column] = 'empty';
-    encasingsLayerContents[row][column] = 'empty';
-    ingredientExitsLayerContents[row][column] = 'empty';
-    dispensersLayerContents[row][column] = 'empty';
-    dispensersElementsLayerContents[row][column] = [];
-  }
-
-  // if you're deleting a candy or a blocker, keep the tile below
-  if (currentLayer === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
-    candiesBlockersLayerContents[row][column] = 'empty';
-
-    // however, if sugar coats are present, remove them as well
-    if (encasingsLayerContents[row][column].includes('sugar_coat_')) {
-      encasingsLayerContents[row][column] = 'empty';
+function drawEncasingAt(row, column) {
+  // only add something if a tile is present
+  if (tilesLayerContents[row][column] !== 'empty') {
+    // sugar coat not selected? just add it
+    if (!currentlySelectedElement.includes('sugar_coat_')) {
+      encasingsLayerContents[row][column] = currentlySelectedElement;
+    } else {
+      // if sugar coat is selected:
+      if (SUGAR_COATABLE.includes(candiesBlockersLayerContents[row][column])) {
+        encasingsLayerContents[row][column] = currentlySelectedElement;
+      }
     }
   }
+}
 
-  // if you're deleting an encasing, delete only the encasing
+function drawIngredientExitAt(row, column) {
+  // only add something if a tile is present
+  if (tilesLayerContents[row][column] !== 'empty') {
+    ingredientExitsLayerContents[row][column] = currentlySelectedElement;
+  }
+}
+
+function drawDispenserAt(row, column) {
+  // only add something if a tile is present
+  if (tilesLayerContents[row][column] !== 'empty') {
+    dispensersLayerContents[row][column] = currentlySelectedElement;
+
+    const selectedDispenserElements = document.querySelectorAll('.dispenser-element-selected');
+    dispensersElementsLayerContents[row][column] = [];
+    selectedDispenserElements.forEach(function(element) {
+      dispensersElementsLayerContents[row][column].push(element.getAttribute('element'));
+    });
+  }
+}
+
+function deleteElement(row, column) {
+  if (currentLayer === 'tiles' && document.getElementById('visible_tiles').checked) {
+    deleteTileAt(row, column);
+  }
+
+  if (currentLayer === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
+    deleteCandyOrBlockerAt(row, column);
+  }
+
   if (currentLayer === 'encasings' && document.getElementById('visible_encasings').checked) {
+    deleteEncasingAt(row, column);
+  }
+
+  if (currentLayer === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
+    deleteIngredientExitAt(row, column);
+  }
+
+  if (currentLayer === 'dispensers' && document.getElementById('visible_dispensers').checked) {
+    deleteDispenserAt(row, column);
+  }
+}
+
+function deleteTileAt(row, column) {
+  // delete everything above the tile as well!
+  tilesLayerContents[row][column] = 'empty';
+  candiesBlockersLayerContents[row][column] = 'empty';
+  encasingsLayerContents[row][column] = 'empty';
+  ingredientExitsLayerContents[row][column] = 'empty';
+  dispensersLayerContents[row][column] = 'empty';
+  dispensersElementsLayerContents[row][column] = [];
+}
+
+function deleteCandyOrBlockerAt(row, column) {
+  // delete only the candy or blocker
+  candiesBlockersLayerContents[row][column] = 'empty';
+
+  // however, if a sugar coat is present, delete it as well
+  if (encasingsLayerContents[row][column].includes('sugar_coat_')) {
     encasingsLayerContents[row][column] = 'empty';
   }
+}
 
-  // if you're deleting an ingredient exit, delete only the ingredient exit
-  if (currentLayer === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
-    ingredientExitsLayerContents[row][column] = 'empty';
-  }
+function deleteEncasingAt(row, column) {
+  // delete only the encasing
+  encasingsLayerContents[row][column] = 'empty';
+}
 
-  // if you're deleting a dispenser, keep everything below. delete the spawn elements as well
-  if (currentLayer === 'dispensers' && document.getElementById('visible_dispensers').checked) {
-    dispensersLayerContents[row][column] = 'empty';
-    dispensersElementsLayerContents[row][column] = [];
-  }
+function deleteIngredientExitAt(row, column) {
+  // delete only the ingredient exit
+  ingredientExitsLayerContents[row][column] = 'empty';
+}
+
+function deleteDispenserAt(row, column) {
+  // delete only the dispenser and its spawn elements
+  dispensersLayerContents[row][column] = 'empty';
+  dispensersElementsLayerContents[row][column] = [];
 }
 
 // Populate each layers dropdown with images
