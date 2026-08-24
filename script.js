@@ -528,7 +528,7 @@ function drawCandyOrBlockerAt(row, column) {
 
       // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
       if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
-        encasingsLayerContents[row][column] = 'empty';
+        deleteEncasingAt(row, column);
       }
 
       if (currentlySelectedElement === 'cake_bomb_ui') {
