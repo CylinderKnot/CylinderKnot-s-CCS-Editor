@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4
+You can now draw and delete cake bombs!
+- Added help text that appears when you select a large blocker in the left panel
+- Removed some duplicate logic in the element deletion functions
+
 ## 0.1.3
 A little bit of refactoring:
 - Refactored the drawElement and deleteElement functions to be more modular

@@ -86,6 +86,10 @@
   color: #ddd;
 }
 
+#large-blockers-help-text {
+  font-style: italic;
+}
+
 .elements-container {
   display: flex;
   flex-direction: row;
