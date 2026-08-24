@@ -416,6 +416,14 @@ function updateSelection(object, element, layer) {
   currentlySelectedElement = element;
   console.log(`current element is ${currentlySelectedElement}`);
 
+  let largeBlockersHelpText = document.getElementById('large-blockers-help-text');
+
+  if (element === 'cake_bomb_ui') {
+    largeBlockersHelpText.innerText = '^ To draw a cake bomb, click where its upper-left corner will be.'
+  } else {
+    largeBlockersHelpText.innerText = '';
+  }
+
   // set current layer
   let layerRadio = document.getElementById(`selected_${layer}`);
   layerRadio.checked = true;
@@ -511,11 +519,29 @@ function drawCandyOrBlockerAt(row, column) {
       }
 
     } else { // we're doing regular drawing
+      // multi-tile blockers: delete them first
+      if (candiesBlockersLayerContents[row][column].includes('cake_bomb_')) {
+        deleteCandyOrBlockerAt(row, column);
+      }
+
       candiesBlockersLayerContents[row][column] = currentlySelectedElement;
 
       // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
       if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
         encasingsLayerContents[row][column] = 'empty';
+      }
+
+      if (currentlySelectedElement === 'cake_bomb_ui') {
+        if (row < currentBoardRows && column < currentBoardColumns) {
+          deleteCandyOrBlockerAt(row, column);
+          deleteCandyOrBlockerAt(row, column + 1);
+          deleteCandyOrBlockerAt(row + 1, column);
+          deleteCandyOrBlockerAt(row + 1, column + 1);
+          candiesBlockersLayerContents[row][column] = 'cake_bomb_top_left';
+          candiesBlockersLayerContents[row][column + 1] = 'cake_bomb_top_right';
+          candiesBlockersLayerContents[row + 1][column] = 'cake_bomb_bottom_left';
+          candiesBlockersLayerContents[row + 1][column + 1] = 'cake_bomb_bottom_right';
+        }
       }
     }
   }
@@ -581,14 +607,39 @@ function deleteElement(row, column) {
 function deleteTileAt(row, column) {
   // delete everything above the tile as well!
   tilesLayerContents[row][column] = 'empty';
-  candiesBlockersLayerContents[row][column] = 'empty';
-  encasingsLayerContents[row][column] = 'empty';
-  ingredientExitsLayerContents[row][column] = 'empty';
-  dispensersLayerContents[row][column] = 'empty';
-  dispensersElementsLayerContents[row][column] = [];
+  deleteCandyOrBlockerAt(row, column);
+  deleteEncasingAt(row, column);
+  deleteIngredientExitAt(row, column);
+  deleteDispenserAt(row, column);
 }
 
 function deleteCandyOrBlockerAt(row, column) {
+  // if we have a cake bomb:
+  if (candiesBlockersLayerContents[row][column] === 'cake_bomb_top_left') {
+    candiesBlockersLayerContents[row][column] = 'empty';
+    candiesBlockersLayerContents[row][column + 1] = 'empty';
+    candiesBlockersLayerContents[row + 1][column] = 'empty';
+    candiesBlockersLayerContents[row + 1][column + 1] = 'empty';
+  }
+  if (candiesBlockersLayerContents[row][column] === 'cake_bomb_top_right') {
+    candiesBlockersLayerContents[row][column - 1] = 'empty';
+    candiesBlockersLayerContents[row][column] = 'empty';
+    candiesBlockersLayerContents[row + 1][column - 1] = 'empty';
+    candiesBlockersLayerContents[row + 1][column] = 'empty';
+  }
+  if (candiesBlockersLayerContents[row][column] === 'cake_bomb_bottom_left') {
+    candiesBlockersLayerContents[row - 1][column] = 'empty';
+    candiesBlockersLayerContents[row - 1][column + 1] = 'empty';
+    candiesBlockersLayerContents[row][column] = 'empty';
+    candiesBlockersLayerContents[row][column + 1] = 'empty';
+  }
+  if (candiesBlockersLayerContents[row][column] === 'cake_bomb_bottom_right') {
+    candiesBlockersLayerContents[row - 1][column - 1] = 'empty';
+    candiesBlockersLayerContents[row - 1][column] = 'empty';
+    candiesBlockersLayerContents[row][column - 1] = 'empty';
+    candiesBlockersLayerContents[row][column] = 'empty';
+  }
+
   // delete only the candy or blocker
   candiesBlockersLayerContents[row][column] = 'empty';
 
@@ -756,6 +807,7 @@ function exportLevel() {
         'bobber': '066',
         'magic_mixer': '062',
         'gumball_machine': '230',
+        'cake_bomb_top_left': '035', 'cake_bomb_top_right': '035', 'cake_bomb_bottom_left': '035', 'cake_bomb_bottom_right': '035',
         'bonbon_blitz_striped_horizontal_1': '186', 'bonbon_blitz_striped_horizontal_2': '187', 'bonbon_blitz_striped_horizontal_3': '188', 'bonbon_blitz_striped_horizontal_4': '189',
         'bonbon_blitz_striped_vertical_1': '190', 'bonbon_blitz_striped_vertical_2': '191', 'bonbon_blitz_striped_vertical_3': '192', 'bonbon_blitz_striped_vertical_4': '193',
         'bonbon_blitz_wrapped_1': '198', 'bonbon_blitz_wrapped_2': '199', 'bonbon_blitz_wrapped_3': '200', 'bonbon_blitz_wrapped_4': '201',
