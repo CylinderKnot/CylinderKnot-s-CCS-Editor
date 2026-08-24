@@ -645,7 +645,7 @@ function deleteCandyOrBlockerAt(row, column) {
 
   // however, if a sugar coat is present, delete it as well
   if (encasingsLayerContents[row][column].includes('sugar_coat_')) {
-    encasingsLayerContents[row][column] = 'empty';
+    deleteEncasingAt(row, column);
   }
 }
 
