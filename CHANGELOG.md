@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.5
+Boring but very necessary update:
+- Made buttons in the left panel square
+- Made grid spaces on the board square
+- Made the preferred colors buttons square
+- In the Element Information section, wrapped the table headers with corresponding element images
+
 ## 0.1.4
 You can now draw and delete cake bombs!
 - Added help text that appears when you select a large blocker in the left panel
