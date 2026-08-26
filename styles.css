@@ -97,7 +97,7 @@
 }
 
 .elements-container button {
-  width: 54px;
+  width: 48px;
   height: 48px;
 }
 
@@ -126,7 +126,7 @@
 
 .board-area td {
   position: relative;
-  width: 72px;
+  width: 64px;
   height: 64px;
 }
 
@@ -167,7 +167,7 @@
   align-content: center;
   justify-content: center;
   pointer-events: none;
-  left: 5;
+  left: 0;
   margin: 0;
   padding: 0;
   max-width: 64px;
@@ -291,7 +291,7 @@
 }
 
 #preferred-colors-container button {
-  width: 54px;
+  width: 48px;
   height: 48px;
 }
 
@@ -331,7 +331,18 @@
 }
 
 #config-panel-element-information table {
-  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+#config-panel-element-information th span {
+  vertical-align: top;
+  margin: 3px;
+}
+
+#config-panel-element-information th img {
+  max-width: 20px;
+  max-height: 20px;
+  object-fit: contain;
 }
 
 #config-panel-element-information td {
