@@ -349,6 +349,24 @@ function renderNewBoardFromLayers() {
       // walls
       // crystals
       // portals
+      if (document.getElementById('visible_portals').checked) {
+        for (let k = 0; k < portalsLayerContents[i][j].length; k++) {
+          if (portalsLayerContents[i][j][k] !== 'empty') {
+            let image = document.createElement('img');
+            image.setAttribute('draggable', false);
+            image.src = `elements/portals/${portalsLayerContents[i][j][k]}.png`;
+
+            if (portalsLayerContents[i][j][k] === 'portal_entrance') {
+              image.classList.add('portal-entrance');
+            } else if (portalsLayerContents[i][j][k] === 'portal_exit') {
+              image.classList.add('portal-exit');
+            }
+
+            rowCell.appendChild(image);
+          }
+        }
+      }
+
       // exits
       if (document.getElementById('visible_ingredient_exits').checked && ingredientExitsLayerContents[i][j] !== 'empty') {
         let image = document.createElement('img');
@@ -389,7 +407,7 @@ function selectDrawingMode(object) {
   currentDrawingMode = object.getAttribute('value');
 
   if (currentDrawingMode !== 'draw') {
-    deleteIncompletePortals();
+    deleteIncompletePortalsAndRestartPortalDrawing();
   }
 
   console.log(`clicked radio to set current drawing mode to ${currentDrawingMode}`)
@@ -440,8 +458,8 @@ function updateSelection(object, element, layer) {
   if (element === 'portal_entrance') {
     portalsHelpText.innerText = '^ Click the board where you want the entrance to be.'
   } else {
+    deleteIncompletePortalsAndRestartPortalDrawing();
     portalsHelpText.innerText = '';
-    deleteIncompletePortals();
   }
 
   // set current layer
@@ -771,7 +789,7 @@ function deletePortalByExit(row, column) {
   }
 }
 
-function deleteIncompletePortals() {
+function deleteIncompletePortalsAndRestartPortalDrawing() {
   for (let i = 0; i < portalPaths.length; i++) {
     if (portalPaths[i].length === 0) {
       portalPaths.splice(i, 1);
@@ -782,6 +800,17 @@ function deleteIncompletePortals() {
       portalPaths.splice(i, 1);
     }
   }
+
+  let portalsHelpText = document.getElementById('portals-help-text');
+
+  if (currentLayer === 'portals') {
+    portalsHelpText.innerText = '^ Click the board where you want the entrance to be.'
+  } else {
+    portalsHelpText.innerText = '';
+  }
+
+  placedPortalEntranceOnly = false;
+  renderNewBoardFromLayers();
 }
 
 function deleteIngredientExitAt(row, column) {
