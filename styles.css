@@ -140,6 +140,18 @@
   object-fit: contain;
 }
 
+.board-area td img.portal-entrance {
+  top: 24px;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.board-area td img.portal-exit {
+  top: -24px;
+  pointer-events: none;
+  z-index: 90;
+}
+
 .board-area td img.ingredient-exit {
   position: absolute;
   max-width: 32px;
