@@ -995,6 +995,22 @@ function exportLevel() {
       // Crystals layer
 
       // Portals layer
+      const portalsCodes = {
+        'portal_location': '011',
+        'portal_entrance': '012',
+        'portal_exit': '013'
+      };
+
+      if (portalsLayerContents[i][j][0] !== 'empty' || portalsLayerContents[i][j][1] !== 'empty') { // JavaScript array equality is dumb
+        rowArray[j] += portalsCodes['portal_location'];
+
+        if (portalsLayerContents[i][j][0] === 'portal_entrance') {
+          rowArray[j] += portalsCodes[portalsLayerContents[i][j][0]];
+        }
+        if (portalsLayerContents[i][j][1] === 'portal_exit') {
+          rowArray[j] += portalsCodes[portalsLayerContents[i][j][1]];
+        }
+      }
 
       // Ingredient Exits layer
       const ingredientExitsCodes = {
@@ -1069,7 +1085,7 @@ function exportLevel() {
 
   level['protocolVersion'] = '0.3';
   level['randomSeed'] = 0;
-  level['portals'] = [];
+  level['portals'] = portalPaths;
   level['gates'] = [];
   level['orlocks'] = [];
   level['skulls'] = [];
