@@ -71,6 +71,7 @@ let currentLayer = 'tiles';
 let layerOfCurrentlySelectedElement = 'tiles';
 
 let currentDrawingMode = 'draw';
+let lockDrawing = false;
 
 let tilesLayerContents = [[]];
 let rapidsPathsLayerContents = [[]];
@@ -84,6 +85,9 @@ let portalsLayerContents = [[]];
 let ingredientExitsLayerContents = [[]];
 let dispensersLayerContents = [[]];
 let dispensersElementsLayerContents = [[]];
+
+let portalPaths = [];
+let placedPortalEntranceOnly = false;
 
 let currentlySelectedElement = 'regular_tile';
 
@@ -246,7 +250,7 @@ function createNewBoard() {
       orderLocksLayerContents[i][j] = 'empty';
       wallsLayerContents[i][j] = 'empty';
       crystalsLayerContents[i][j] = 'empty';
-      portalsLayerContents[i][j] = 'empty';
+      portalsLayerContents[i][j] = ['empty', 'empty'];
       ingredientExitsLayerContents[i][j] = 'empty';
       dispensersLayerContents[i][j] = 'empty';
       dispensersElementsLayerContents[i][j] = [];
@@ -266,6 +270,7 @@ createNewBoard();
 
 document.addEventListener('mouseup', function() {
   isMouseDown = false;
+  lockDrawing = false;
 }, true);
 
 function initializeLayerDimensions(array) {
@@ -293,6 +298,7 @@ function renderNewBoardFromLayers() {
         event.preventDefault();
         if (isMouseDown) {
           updateTile(this);
+        } else {
         }
       }
 
@@ -381,6 +387,11 @@ function renderNewBoardFromLayers() {
 
 function selectDrawingMode(object) {
   currentDrawingMode = object.getAttribute('value');
+
+  if (currentDrawingMode !== 'draw') {
+    deleteIncompletePortals();
+  }
+
   console.log(`clicked radio to set current drawing mode to ${currentDrawingMode}`)
 }
 
@@ -422,6 +433,15 @@ function updateSelection(object, element, layer) {
     largeBlockersHelpText.innerText = '^ To draw a cake bomb, click where its upper-left corner will be.'
   } else {
     largeBlockersHelpText.innerText = '';
+  }
+
+  let portalsHelpText = document.getElementById('portals-help-text');
+
+  if (element === 'portal_entrance') {
+    portalsHelpText.innerText = '^ Click the board where you want the entrance to be.'
+  } else {
+    portalsHelpText.innerText = '';
+    deleteIncompletePortals();
   }
 
   // set current layer
@@ -472,6 +492,10 @@ function drawElement(row, column) {
 
   if (currentLayer === 'encasings' && layerOfCurrentlySelectedElement === 'encasings' && document.getElementById('visible_encasings').checked) {
     drawEncasingAt(row, column);
+  }
+
+  if (currentLayer === 'portals' && layerOfCurrentlySelectedElement === 'portals' && document.getElementById('visible_portals').checked) {
+    drawPortalAt(row, column);
   }
 
   if (currentLayer === 'ingredient_exits' && layerOfCurrentlySelectedElement === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
@@ -562,6 +586,52 @@ function drawEncasingAt(row, column) {
   }
 }
 
+function drawPortalAt(row, column) {
+  // only add something if a tile is present
+  if (tilesLayerContents[row][column] !== 'empty' && lockDrawing === false) {
+    lockDrawing = true;
+
+    if (!placedPortalEntranceOnly) {
+      console.log(`placing portal entrance at ${row}, ${column}`)
+      drawPortalEntranceAt(row, column);
+    } else {
+      console.log(`placing portal exit at ${row}, ${column}`)
+      drawPortalExitAt(row, column);
+    }
+  }
+}
+
+function drawPortalEntranceAt(row, column) {
+  placedPortalEntranceOnly = true;
+
+  // delete the portal by entrance that already exists
+  if (portalsLayerContents[row][column][0] === 'portal_entrance') {
+    deletePortalByEntrance(row, column);
+  }
+
+  portalsLayerContents[row][column][0] = currentlySelectedElement;
+  portalPaths.push([]);
+  portalPaths[portalPaths.length - 1].push([row, column, 14]);
+
+  let portalsHelpText = document.getElementById('portals-help-text');
+  portalsHelpText.innerText = '^ Click the board where you want the exit to be.';
+}
+
+function drawPortalExitAt(row, column) {
+  placedPortalEntranceOnly = false;
+
+  // delete the portal by exit that already exists
+  if (portalsLayerContents[row][column][1] === 'portal_exit') {
+    deletePortalByExit(row, column);
+  }
+
+  portalsLayerContents[row][column][1] = 'portal_exit';
+  portalPaths[portalPaths.length - 1].push([row, column, 14]);
+
+  let portalsHelpText = document.getElementById('portals-help-text');
+  portalsHelpText.innerText = '^ Click the board where you want the entrance to be.';
+}
+
 function drawIngredientExitAt(row, column) {
   // only add something if a tile is present
   if (tilesLayerContents[row][column] !== 'empty') {
@@ -595,6 +665,11 @@ function deleteElement(row, column) {
     deleteEncasingAt(row, column);
   }
 
+  if (currentLayer === 'portals' && document.getElementById('visible_portals').checked) {
+    console.log('attempting to delete portals');
+    deletePortalsAt(row, column);
+  }
+
   if (currentLayer === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
     deleteIngredientExitAt(row, column);
   }
@@ -609,6 +684,7 @@ function deleteTileAt(row, column) {
   tilesLayerContents[row][column] = 'empty';
   deleteCandyOrBlockerAt(row, column);
   deleteEncasingAt(row, column);
+  deletePortalsAt(row, column);
   deleteIngredientExitAt(row, column);
   deleteDispenserAt(row, column);
 }
@@ -652,6 +728,60 @@ function deleteCandyOrBlockerAt(row, column) {
 function deleteEncasingAt(row, column) {
   // delete only the encasing
   encasingsLayerContents[row][column] = 'empty';
+}
+
+function deletePortalsAt(row, column) {
+  if (portalsLayerContents[row][column][0] === 'portal_entrance') {
+    console.log(`portal entrance at ${row}, ${column} - deleting...`)
+    deletePortalByEntrance(row, column);
+  }
+  if (portalsLayerContents[row][column][1] === 'portal_exit') {
+    console.log(`portal exit at ${row}, ${column} - deleting...`)
+    deletePortalByExit(row, column);
+  }
+}
+
+function deletePortalByEntrance(row, column) {
+  for (let i = 0; i < portalPaths.length; i++) {
+    const [currentRow, currentColumn, _] = portalPaths[i][0];
+
+    if (currentRow === row && currentColumn === column) {
+      const [correspondingExitRow, correspondingExitColumn, _] = portalPaths[i][1];
+
+      portalsLayerContents[row][column][0] = 'empty';
+      portalsLayerContents[correspondingExitRow][correspondingExitColumn][1] = 'empty';
+
+      portalPaths.splice(i, 1);
+    }
+  }
+}
+
+function deletePortalByExit(row, column) {
+  for (let i = 0; i < portalPaths.length; i++) {
+    const [currentRow, currentColumn, _] = portalPaths[i][1];
+
+    if (currentRow === row && currentColumn === column) {
+      const [correspondingEntranceRow, correspondingEntranceColumn, _] = portalPaths[i][0];
+
+      portalsLayerContents[row][column][1] = 'empty';
+      portalsLayerContents[correspondingEntranceRow][correspondingEntranceColumn][0] = 'empty';
+
+      portalPaths.splice(i, 1);
+    }
+  }
+}
+
+function deleteIncompletePortals() {
+  for (let i = 0; i < portalPaths.length; i++) {
+    if (portalPaths[i].length === 0) {
+      portalPaths.splice(i, 1);
+    } else if (portalPaths[i].length === 1) {
+      const [entranceRow, entranceColumn, _] = portalPaths[i][0];
+      portalsLayerContents[entranceRow][entranceColumn][0] = 'empty';
+
+      portalPaths.splice(i, 1);
+    }
+  }
 }
 
 function deleteIngredientExitAt(row, column) {
