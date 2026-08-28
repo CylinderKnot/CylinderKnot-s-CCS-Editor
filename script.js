@@ -610,10 +610,8 @@ function drawPortalAt(row, column) {
     lockDrawing = true;
 
     if (!placedPortalEntranceOnly) {
-      console.log(`placing portal entrance at ${row}, ${column}`)
       drawPortalEntranceAt(row, column);
     } else {
-      console.log(`placing portal exit at ${row}, ${column}`)
       drawPortalExitAt(row, column);
     }
   }
@@ -629,7 +627,7 @@ function drawPortalEntranceAt(row, column) {
 
   portalsLayerContents[row][column][0] = currentlySelectedElement;
   portalPaths.push([]);
-  portalPaths[portalPaths.length - 1].push([row, column, 14]);
+  portalPaths[portalPaths.length - 1].push([column, row, 14]); // x and y screen coordinates, cuh!
 
   let portalsHelpText = document.getElementById('portals-help-text');
   portalsHelpText.innerText = '^ Click the board where you want the exit to be.';
@@ -644,7 +642,7 @@ function drawPortalExitAt(row, column) {
   }
 
   portalsLayerContents[row][column][1] = 'portal_exit';
-  portalPaths[portalPaths.length - 1].push([row, column, 14]);
+  portalPaths[portalPaths.length - 1].push([column, row, 14]); // x and y screen coordinates, cuh!
 
   let portalsHelpText = document.getElementById('portals-help-text');
   portalsHelpText.innerText = '^ Click the board where you want the entrance to be.';
@@ -750,24 +748,22 @@ function deleteEncasingAt(row, column) {
 
 function deletePortalsAt(row, column) {
   if (portalsLayerContents[row][column][0] === 'portal_entrance') {
-    console.log(`portal entrance at ${row}, ${column} - deleting...`)
     deletePortalByEntrance(row, column);
   }
   if (portalsLayerContents[row][column][1] === 'portal_exit') {
-    console.log(`portal exit at ${row}, ${column} - deleting...`)
     deletePortalByExit(row, column);
   }
 }
 
 function deletePortalByEntrance(row, column) {
   for (let i = 0; i < portalPaths.length; i++) {
-    const [currentRow, currentColumn, _] = portalPaths[i][0];
+    const [currentScreenX, currentScreenY, _] = portalPaths[i][0];
 
-    if (currentRow === row && currentColumn === column) {
-      const [correspondingExitRow, correspondingExitColumn, _] = portalPaths[i][1];
+    if (currentScreenX === column && currentScreenY === row) {
+      const [correspondingExitScreenX, correspondingExitScreenY, _] = portalPaths[i][1];
 
       portalsLayerContents[row][column][0] = 'empty';
-      portalsLayerContents[correspondingExitRow][correspondingExitColumn][1] = 'empty';
+      portalsLayerContents[correspondingExitScreenY][correspondingExitScreenX][1] = 'empty'; // Y = row, X = column
 
       portalPaths.splice(i, 1);
     }
@@ -776,13 +772,13 @@ function deletePortalByEntrance(row, column) {
 
 function deletePortalByExit(row, column) {
   for (let i = 0; i < portalPaths.length; i++) {
-    const [currentRow, currentColumn, _] = portalPaths[i][1];
+    const [currentScreenX, currentScreenY, _] = portalPaths[i][1];
 
-    if (currentRow === row && currentColumn === column) {
-      const [correspondingEntranceRow, correspondingEntranceColumn, _] = portalPaths[i][0];
+    if (currentScreenX === column && currentScreenY === row) {
+      const [correspondingEntranceScreenX, correspondingEntranceScreenY, _] = portalPaths[i][0];
 
       portalsLayerContents[row][column][1] = 'empty';
-      portalsLayerContents[correspondingEntranceRow][correspondingEntranceColumn][0] = 'empty';
+      portalsLayerContents[correspondingEntranceScreenY][correspondingEntranceScreenX][0] = 'empty'; // Y = row, X = column
 
       portalPaths.splice(i, 1);
     }
@@ -794,8 +790,8 @@ function deleteIncompletePortalsAndRestartPortalDrawing() {
     if (portalPaths[i].length === 0) {
       portalPaths.splice(i, 1);
     } else if (portalPaths[i].length === 1) {
-      const [entranceRow, entranceColumn, _] = portalPaths[i][0];
-      portalsLayerContents[entranceRow][entranceColumn][0] = 'empty';
+      const [entranceScreenX, entranceScreenY, _] = portalPaths[i][0];
+      portalsLayerContents[entranceScreenY][entranceScreenX][0] = 'empty'; // Y = row, X = column
 
       portalPaths.splice(i, 1);
     }
