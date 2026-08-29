@@ -86,7 +86,7 @@
   color: #ddd;
 }
 
-#large-blockers-help-text {
+.element-help-text {
   font-style: italic;
 }
 
@@ -138,6 +138,18 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.board-area td img.portal-entrance {
+  top: 24px;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.board-area td img.portal-exit {
+  top: -24px;
+  pointer-events: none;
+  z-index: 90;
 }
 
 .board-area td img.ingredient-exit {

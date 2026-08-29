@@ -21,7 +21,7 @@
       <div class="navbar">
         <div class="navbar-item-container">
           <div class="navbar-flex">
-            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.1.5</p>
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.2.0</p>
           </div>
           <div class="navbar-flex">
             <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
@@ -203,7 +203,7 @@
                 <div class="elements-container">
                   <div class="select-element" element="cake_bomb_ui" gamelayer="candies_blockers"></div>
                 </div>
-                <p id="large-blockers-help-text"></p>
+                <p id="large-blockers-help-text" class="element-help-text"></p>
                 <p>Bonbon Blitzes</p>
                 <div class="elements-container">
                   <div class="select-element" element="bonbon_blitz_striped_horizontal_1" gamelayer="candies_blockers"></div>
@@ -323,7 +323,11 @@
             </tr>
             <tr id="dropdown_portals" class="dropdown-contents" style="display: none">
               <td colspan="3">
-                <p>Portals (not yet implemented)</p>
+                <p>Portals</p>
+                <div class="elements-container">
+                  <div class="select-element" element="portal_entrance" gamelayer="portals"></div>
+                </div>
+                <p id="portals-help-text" class="element-help-text"></p>
               </td>
             </tr>
             <tr>
