@@ -4,6 +4,7 @@
 You can now draw and delete portals!
 - Added help text that appears and changes while drawing portals
 - Drawing can now be "locked" until the left mouse button is released (currently applies only to portals)
+- Slightly refactored help text CSS to prevent code duplication
 
 ## 0.1.5
 Boring but very necessary update:

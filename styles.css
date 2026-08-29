@@ -86,7 +86,7 @@
   color: #ddd;
 }
 
-#large-blockers-help-text {
+.element-help-text {
   font-style: italic;
 }
 
