@@ -122,8 +122,8 @@ const orderCodes = {
   '22': 'Cake bombs',
   '23': 'Mystery candies',
   '24': 'Magic mixers',
-  '25': 'Toffee swirls',
-  '26': 'Dark chocolate squares',
+  '25': 'Toffee swirl layers',
+  '26': 'Dark chocolate layers',
   '27': 'Candy cane curl layers',
   '28': 'Crystal candy layers',
   '29': 'Rainbow twist layers',
@@ -240,25 +240,25 @@ function createNewBoard() {
   dispensersElementsLayerContents = initializeLayerDimensions(dispensersElementsLayerContents);
 
   // Populate layers with default elements
-  for (let i = 0; i < currentBoardRows; i++) {
-    for (let j = 0; j < currentBoardColumns; j++) {
-      tilesLayerContents[i][j] = 'regular_tile';
-      rapidsPathsLayerContents[i][j] = 'empty';
-      conveyorBeltsLayerContents[i][j] = 'empty';
-      candiesBlockersLayerContents[i][j] = 'candy_random';
-      encasingsLayerContents[i][j] = 'empty';
-      orderLocksLayerContents[i][j] = 'empty';
-      wallsLayerContents[i][j] = 'empty';
-      crystalsLayerContents[i][j] = 'empty';
-      portalsLayerContents[i][j] = ['empty', 'empty'];
-      ingredientExitsLayerContents[i][j] = 'empty';
-      dispensersLayerContents[i][j] = 'empty';
-      dispensersElementsLayerContents[i][j] = [];
-      if (i === 0) {
-        dispensersLayerContents[i][j] = 'dispenser';
-        dispensersElementsLayerContents[i][j].push('dispenser_candy_spawn');
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      tilesLayerContents[boardRow][boardCol] = 'regular_tile';
+      rapidsPathsLayerContents[boardRow][boardCol] = 'empty';
+      conveyorBeltsLayerContents[boardRow][boardCol] = 'empty';
+      candiesBlockersLayerContents[boardRow][boardCol] = 'candy_random';
+      encasingsLayerContents[boardRow][boardCol] = 'empty';
+      orderLocksLayerContents[boardRow][boardCol] = 'empty';
+      wallsLayerContents[boardRow][boardCol] = 'empty';
+      crystalsLayerContents[boardRow][boardCol] = 'empty';
+      portalsLayerContents[boardRow][boardCol] = ['empty', 'empty'];
+      ingredientExitsLayerContents[boardRow][boardCol] = 'empty';
+      dispensersLayerContents[boardRow][boardCol] = 'empty';
+      dispensersElementsLayerContents[boardRow][boardCol] = [];
+      if (boardRow === 0) {
+        dispensersLayerContents[boardRow][boardCol] = 'dispenser';
+        dispensersElementsLayerContents[boardRow][boardCol].push('dispenser_candy_spawn');
       } else {
-        dispensersLayerContents[i][j] = 'empty';
+        dispensersLayerContents[boardRow][boardCol] = 'empty';
       }
     }
   }
@@ -284,14 +284,14 @@ function renderNewBoardFromLayers() {
   boardTable.innerHTML = "";
 
   // Add rows and columns to board table
-  for (let i = 0; i < currentBoardRows; i++) {
-    let boardRow = document.createElement('tr');
-    boardTable.appendChild(boardRow);
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    let boardTableRow = document.createElement('tr');
+    boardTable.appendChild(boardTableRow);
 
-    for (let j = 0; j < currentBoardColumns; j++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
       let rowCell = document.createElement('td');
-      rowCell.setAttribute("pos-row", i);
-      rowCell.setAttribute("pos-col", j);
+      rowCell.setAttribute("pos-row", boardRow);
+      rowCell.setAttribute("pos-col", boardCol);
 
       // handle mouse-over of tile
       rowCell.onmouseover = function(event) {
@@ -323,26 +323,26 @@ function renderNewBoardFromLayers() {
       }
 
       // tiles
-      if (document.getElementById('visible_tiles').checked && tilesLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_tiles').checked && tilesLayerContents[boardRow][boardCol] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
-        image.src = `elements/tiles/${tilesLayerContents[i][j]}.png`;
+        image.src = `elements/tiles/${tilesLayerContents[boardRow][boardCol]}.png`;
         rowCell.appendChild(image);
       }
       // rapids paths, TODO
       // conveyors belts, TODO
       // candies blockers
-      if (document.getElementById('visible_candies_blockers').checked && candiesBlockersLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_candies_blockers').checked && candiesBlockersLayerContents[boardRow][boardCol] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
-        image.src = `elements/candies_blockers/${candiesBlockersLayerContents[i][j]}.png`;
+        image.src = `elements/candies_blockers/${candiesBlockersLayerContents[boardRow][boardCol]}.png`;
         rowCell.appendChild(image);
       }
       // encasings
-      if (document.getElementById('visible_encasings').checked && encasingsLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_encasings').checked && encasingsLayerContents[boardRow][boardCol] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
-        image.src = `elements/encasings/${encasingsLayerContents[i][j]}.png`;
+        image.src = `elements/encasings/${encasingsLayerContents[boardRow][boardCol]}.png`;
         rowCell.appendChild(image);
       }
       // order locks
@@ -350,15 +350,15 @@ function renderNewBoardFromLayers() {
       // crystals
       // portals
       if (document.getElementById('visible_portals').checked) {
-        for (let k = 0; k < portalsLayerContents[i][j].length; k++) {
-          if (portalsLayerContents[i][j][k] !== 'empty') {
+        for (let i = 0; i < portalsLayerContents[boardRow][boardCol].length; i++) {
+          if (portalsLayerContents[boardRow][boardCol][i] !== 'empty') {
             let image = document.createElement('img');
             image.setAttribute('draggable', false);
-            image.src = `elements/portals/${portalsLayerContents[i][j][k]}.png`;
+            image.src = `elements/portals/${portalsLayerContents[boardRow][boardCol][i]}.png`;
 
-            if (portalsLayerContents[i][j][k] === 'portal_entrance') {
+            if (portalsLayerContents[boardRow][boardCol][i] === 'portal_entrance') {
               image.classList.add('portal-entrance');
-            } else if (portalsLayerContents[i][j][k] === 'portal_exit') {
+            } else if (portalsLayerContents[boardRow][boardCol][i] === 'portal_exit') {
               image.classList.add('portal-exit');
             }
 
@@ -368,35 +368,35 @@ function renderNewBoardFromLayers() {
       }
 
       // exits
-      if (document.getElementById('visible_ingredient_exits').checked && ingredientExitsLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_ingredient_exits').checked && ingredientExitsLayerContents[boardRow][boardCol] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
-        image.src = `elements/ingredient_exits/${ingredientExitsLayerContents[i][j]}.png`;
+        image.src = `elements/ingredient_exits/${ingredientExitsLayerContents[boardRow][boardCol]}.png`;
         image.classList.add('ingredient-exit');
         rowCell.appendChild(image);
       }
 
       // dispensers
-      if (document.getElementById('visible_dispensers').checked && dispensersLayerContents[i][j] !== 'empty') {
+      if (document.getElementById('visible_dispensers').checked && dispensersLayerContents[boardRow][boardCol] !== 'empty') {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
-        image.src = `elements/dispensers/${dispensersLayerContents[i][j]}.png`;
+        image.src = `elements/dispensers/${dispensersLayerContents[boardRow][boardCol]}.png`;
         image.classList.add('board-dispenser');
         rowCell.appendChild(image);
 
         let dispenserElementsContainer = rowCell.appendChild(document.createElement('div'));
         dispenserElementsContainer.classList.add('board-dispenser-elements-container');
 
-        for (let k = 0; k < dispensersElementsLayerContents[i][j].length; k++) {
+        for (let i = 0; i < dispensersElementsLayerContents[boardRow][boardCol].length; i++) {
           let dispenserElementImage = document.createElement('img');
           dispenserElementImage.setAttribute('draggable', false);
-          dispenserElementImage.src = `elements/dispensers/${dispensersElementsLayerContents[i][j][k]}.png`;
+          dispenserElementImage.src = `elements/dispensers/${dispensersElementsLayerContents[boardRow][boardCol][i]}.png`;
           dispenserElementImage.classList.add('board-dispenser-element');
           dispenserElementsContainer.appendChild(dispenserElementImage);
         }
       }
 
-      boardRow.appendChild(rowCell);
+      boardTableRow.appendChild(rowCell);
     }
   }
 }
@@ -482,22 +482,22 @@ function updateDispenserElementSelection(object, element, layer) {
 }
 
 function updateTile(object) {
-  let row = Number(object.getAttribute('pos-row'));
-  let column = Number(object.getAttribute('pos-col'));
+  let boardRow = Number(object.getAttribute('pos-row'));
+  let boardCol = Number(object.getAttribute('pos-col'));
 
   if (currentDrawingMode === 'draw') {
-    drawElement(row, column);
+    drawElement(boardRow, boardCol);
   }
   if (currentDrawingMode === 'delete') {
-    deleteElement(row, column);
+    deleteElement(boardRow, boardCol);
   }
 
   renderNewBoardFromLayers();
 }
 
-function drawElement(row, column) {
+function drawElement(boardRow, boardCol) {
   if (currentLayer === 'tiles' && layerOfCurrentlySelectedElement === 'tiles' && document.getElementById('visible_tiles').checked) {
-    drawTileAt(row, column);
+    drawTileAt(boardRow, boardCol);
   }
 
   // rapids_paths: TODO
@@ -505,33 +505,33 @@ function drawElement(row, column) {
   // conveyor_belts: TODO
   
   if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
-    drawCandyOrBlockerAt(row, column);
+    drawCandyOrBlockerAt(boardRow, boardCol);
   }
 
   if (currentLayer === 'encasings' && layerOfCurrentlySelectedElement === 'encasings' && document.getElementById('visible_encasings').checked) {
-    drawEncasingAt(row, column);
+    drawEncasingAt(boardRow, boardCol);
   }
 
   if (currentLayer === 'portals' && layerOfCurrentlySelectedElement === 'portals' && document.getElementById('visible_portals').checked) {
-    drawPortalAt(row, column);
+    drawPortalAt(boardRow, boardCol);
   }
 
   if (currentLayer === 'ingredient_exits' && layerOfCurrentlySelectedElement === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
-    drawIngredientExitAt(row, column);
+    drawIngredientExitAt(boardRow, boardCol);
   }
 
-  if (currentLayer === 'dispensers' && layerOfCurrentlySelectedElement === 'dispensers' && document.getElementById('visible_dispensers')) {
-    drawDispenserAt(row, column);
+  if (currentLayer === 'dispensers' && layerOfCurrentlySelectedElement === 'dispensers' && document.getElementById('visible_dispensers').checked) {
+    drawDispenserAt(boardRow, boardCol);
   }
 }
 
-function drawTileAt(row, column) {
-  tilesLayerContents[row][column] = currentlySelectedElement;
+function drawTileAt(boardRow, boardCol) {
+  tilesLayerContents[boardRow][boardCol] = currentlySelectedElement;
 }
 
-function drawCandyOrBlockerAt(row, column) {
+function drawCandyOrBlockerAt(boardRow, boardCol) {
   // only add something if a tile is present
-  if (tilesLayerContents[row][column] !== 'empty') {
+  if (tilesLayerContents[boardRow][boardCol] !== 'empty') {
     const colorsToPaint = ['candy_random_ui', 'candy_blue', 'candy_green', 'candy_orange', 'candy_purple', 'candy_red', 'candy_yellow'];
     
     // we're doing color painting
@@ -540,7 +540,7 @@ function drawCandyOrBlockerAt(row, column) {
       
       let isElementColorable = false;
       for (let i = 0; i < colorableElementPrefixes.length; i++) {
-        if (candiesBlockersLayerContents[row][column].indexOf(colorableElementPrefixes[i]) === 0) {
+        if (candiesBlockersLayerContents[boardRow][boardCol].indexOf(colorableElementPrefixes[i]) === 0) {
           isElementColorable = true;
         }
       }
@@ -553,232 +553,232 @@ function drawCandyOrBlockerAt(row, column) {
         }
 
         // replace
-        let currentCandy = candiesBlockersLayerContents[row][column];
+        let currentCandy = candiesBlockersLayerContents[boardRow][boardCol];
         let currentCandyArray = currentCandy.split('_');
         currentCandyArray[currentCandyArray.length - 1] = colorToSet;
         let newCandy = currentCandyArray.join('_');
-        candiesBlockersLayerContents[row][column] = newCandy;
+        candiesBlockersLayerContents[boardRow][boardCol] = newCandy;
       }
 
     } else { // we're doing regular drawing
       // multi-tile blockers: delete them first
-      if (candiesBlockersLayerContents[row][column].includes('cake_bomb_')) {
-        deleteCandyOrBlockerAt(row, column);
+      if (candiesBlockersLayerContents[boardRow][boardCol].includes('cake_bomb_')) {
+        deleteCandyOrBlockerAt(boardRow, boardCol);
       }
 
-      candiesBlockersLayerContents[row][column] = currentlySelectedElement;
+      candiesBlockersLayerContents[boardRow][boardCol] = currentlySelectedElement;
 
       // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
-      if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[row][column].includes('sugar_coat_')) {
-        deleteEncasingAt(row, column);
+      if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[boardRow][boardCol].includes('sugar_coat_')) {
+        deleteEncasingAt(boardRow, boardCol);
       }
 
       if (currentlySelectedElement === 'cake_bomb_ui') {
-        if (row < currentBoardRows && column < currentBoardColumns) {
-          deleteCandyOrBlockerAt(row, column);
-          deleteCandyOrBlockerAt(row, column + 1);
-          deleteCandyOrBlockerAt(row + 1, column);
-          deleteCandyOrBlockerAt(row + 1, column + 1);
-          candiesBlockersLayerContents[row][column] = 'cake_bomb_top_left';
-          candiesBlockersLayerContents[row][column + 1] = 'cake_bomb_top_right';
-          candiesBlockersLayerContents[row + 1][column] = 'cake_bomb_bottom_left';
-          candiesBlockersLayerContents[row + 1][column + 1] = 'cake_bomb_bottom_right';
+        if (boardRow < currentBoardRows && boardCol < currentBoardColumns) {
+          deleteCandyOrBlockerAt(boardRow, boardCol);
+          deleteCandyOrBlockerAt(boardRow, boardCol + 1);
+          deleteCandyOrBlockerAt(boardRow + 1, boardCol);
+          deleteCandyOrBlockerAt(boardRow + 1, boardCol + 1);
+          candiesBlockersLayerContents[boardRow][boardCol] = 'cake_bomb_top_left';
+          candiesBlockersLayerContents[boardRow][boardCol + 1] = 'cake_bomb_top_right';
+          candiesBlockersLayerContents[boardRow + 1][boardCol] = 'cake_bomb_bottom_left';
+          candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'cake_bomb_bottom_right';
         }
       }
     }
   }
 }
 
-function drawEncasingAt(row, column) {
+function drawEncasingAt(boardRow, boardCol) {
   // only add something if a tile is present
-  if (tilesLayerContents[row][column] !== 'empty') {
+  if (tilesLayerContents[boardRow][boardCol] !== 'empty') {
     // sugar coat not selected? just add it
     if (!currentlySelectedElement.includes('sugar_coat_')) {
-      encasingsLayerContents[row][column] = currentlySelectedElement;
+      encasingsLayerContents[boardRow][boardCol] = currentlySelectedElement;
     } else {
       // if sugar coat is selected:
-      if (SUGAR_COATABLE.includes(candiesBlockersLayerContents[row][column])) {
-        encasingsLayerContents[row][column] = currentlySelectedElement;
+      if (SUGAR_COATABLE.includes(candiesBlockersLayerContents[boardRow][boardCol])) {
+        encasingsLayerContents[boardRow][boardCol] = currentlySelectedElement;
       }
     }
   }
 }
 
-function drawPortalAt(row, column) {
+function drawPortalAt(boardRow, boardCol) {
   // only add something if a tile is present
-  if (tilesLayerContents[row][column] !== 'empty' && lockDrawing === false) {
+  if (tilesLayerContents[boardRow][boardCol] !== 'empty' && lockDrawing === false) {
     lockDrawing = true;
 
     if (!placedPortalEntranceOnly) {
-      drawPortalEntranceAt(row, column);
+      drawPortalEntranceAt(boardRow, boardCol);
     } else {
-      drawPortalExitAt(row, column);
+      drawPortalExitAt(boardRow, boardCol);
     }
   }
 }
 
-function drawPortalEntranceAt(row, column) {
+function drawPortalEntranceAt(boardRow, boardCol) {
   placedPortalEntranceOnly = true;
 
   // delete the portal by entrance that already exists
-  if (portalsLayerContents[row][column][0] === 'portal_entrance') {
-    deletePortalByEntrance(row, column);
+  if (portalsLayerContents[boardRow][boardCol][0] === 'portal_entrance') {
+    deletePortalByEntrance(boardRow, boardCol);
   }
 
-  portalsLayerContents[row][column][0] = currentlySelectedElement;
+  portalsLayerContents[boardRow][boardCol][0] = currentlySelectedElement;
   portalPaths.push([]);
-  portalPaths[portalPaths.length - 1].push([column, row, 14]); // x and y screen coordinates, cuh!
+  portalPaths[portalPaths.length - 1].push([boardCol, boardRow, 14]); // x and y screen coordinates, cuh!
 
   let portalsHelpText = document.getElementById('portals-help-text');
   portalsHelpText.innerText = '^ Click the board where you want the exit to be.';
 }
 
-function drawPortalExitAt(row, column) {
+function drawPortalExitAt(boardRow, boardCol) {
   placedPortalEntranceOnly = false;
 
   // delete the portal by exit that already exists
-  if (portalsLayerContents[row][column][1] === 'portal_exit') {
-    deletePortalByExit(row, column);
+  if (portalsLayerContents[boardRow][boardCol][1] === 'portal_exit') {
+    deletePortalByExit(boardRow, boardCol);
   }
 
-  portalsLayerContents[row][column][1] = 'portal_exit';
-  portalPaths[portalPaths.length - 1].push([column, row, 14]); // x and y screen coordinates, cuh!
+  portalsLayerContents[boardRow][boardCol][1] = 'portal_exit';
+  portalPaths[portalPaths.length - 1].push([boardCol, boardRow, 14]); // x and y screen coordinates, cuh!
 
   let portalsHelpText = document.getElementById('portals-help-text');
   portalsHelpText.innerText = '^ Click the board where you want the entrance to be.';
 }
 
-function drawIngredientExitAt(row, column) {
+function drawIngredientExitAt(boardRow, boardCol) {
   // only add something if a tile is present
-  if (tilesLayerContents[row][column] !== 'empty') {
-    ingredientExitsLayerContents[row][column] = currentlySelectedElement;
+  if (tilesLayerContents[boardRow][boardCol] !== 'empty') {
+    ingredientExitsLayerContents[boardRow][boardCol] = currentlySelectedElement;
   }
 }
 
-function drawDispenserAt(row, column) {
+function drawDispenserAt(boardRow, boardCol) {
   // only add something if a tile is present
-  if (tilesLayerContents[row][column] !== 'empty') {
-    dispensersLayerContents[row][column] = currentlySelectedElement;
+  if (tilesLayerContents[boardRow][boardCol] !== 'empty') {
+    dispensersLayerContents[boardRow][boardCol] = currentlySelectedElement;
 
     const selectedDispenserElements = document.querySelectorAll('.dispenser-element-selected');
-    dispensersElementsLayerContents[row][column] = [];
+    dispensersElementsLayerContents[boardRow][boardCol] = [];
     selectedDispenserElements.forEach(function(element) {
-      dispensersElementsLayerContents[row][column].push(element.getAttribute('element'));
+      dispensersElementsLayerContents[boardRow][boardCol].push(element.getAttribute('element'));
     });
   }
 }
 
-function deleteElement(row, column) {
+function deleteElement(boardRow, boardCol) {
   if (currentLayer === 'tiles' && document.getElementById('visible_tiles').checked) {
-    deleteTileAt(row, column);
+    deleteTileAt(boardRow, boardCol);
   }
 
   if (currentLayer === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
-    deleteCandyOrBlockerAt(row, column);
+    deleteCandyOrBlockerAt(boardRow, boardCol);
   }
 
   if (currentLayer === 'encasings' && document.getElementById('visible_encasings').checked) {
-    deleteEncasingAt(row, column);
+    deleteEncasingAt(boardRow, boardCol);
   }
 
   if (currentLayer === 'portals' && document.getElementById('visible_portals').checked) {
     console.log('attempting to delete portals');
-    deletePortalsAt(row, column);
+    deletePortalsAt(boardRow, boardCol);
   }
 
   if (currentLayer === 'ingredient_exits' && document.getElementById('visible_ingredient_exits').checked) {
-    deleteIngredientExitAt(row, column);
+    deleteIngredientExitAt(boardRow, boardCol);
   }
 
   if (currentLayer === 'dispensers' && document.getElementById('visible_dispensers').checked) {
-    deleteDispenserAt(row, column);
+    deleteDispenserAt(boardRow, boardCol);
   }
 }
 
-function deleteTileAt(row, column) {
+function deleteTileAt(boardRow, boardCol) {
   // delete everything above the tile as well!
-  tilesLayerContents[row][column] = 'empty';
-  deleteCandyOrBlockerAt(row, column);
-  deleteEncasingAt(row, column);
-  deletePortalsAt(row, column);
-  deleteIngredientExitAt(row, column);
-  deleteDispenserAt(row, column);
+  tilesLayerContents[boardRow][boardCol] = 'empty';
+  deleteCandyOrBlockerAt(boardRow, boardCol);
+  deleteEncasingAt(boardRow, boardCol);
+  deletePortalsAt(boardRow, boardCol);
+  deleteIngredientExitAt(boardRow, boardCol);
+  deleteDispenserAt(boardRow, boardCol);
 }
 
-function deleteCandyOrBlockerAt(row, column) {
+function deleteCandyOrBlockerAt(boardRow, boardCol) {
   // if we have a cake bomb:
-  if (candiesBlockersLayerContents[row][column] === 'cake_bomb_top_left') {
-    candiesBlockersLayerContents[row][column] = 'empty';
-    candiesBlockersLayerContents[row][column + 1] = 'empty';
-    candiesBlockersLayerContents[row + 1][column] = 'empty';
-    candiesBlockersLayerContents[row + 1][column + 1] = 'empty';
+  if (candiesBlockersLayerContents[boardRow][boardCol] === 'cake_bomb_top_left') {
+    candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
+    candiesBlockersLayerContents[boardRow][boardCol + 1] = 'empty';
+    candiesBlockersLayerContents[boardRow + 1][boardCol] = 'empty';
+    candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'empty';
   }
-  if (candiesBlockersLayerContents[row][column] === 'cake_bomb_top_right') {
-    candiesBlockersLayerContents[row][column - 1] = 'empty';
-    candiesBlockersLayerContents[row][column] = 'empty';
-    candiesBlockersLayerContents[row + 1][column - 1] = 'empty';
-    candiesBlockersLayerContents[row + 1][column] = 'empty';
+  if (candiesBlockersLayerContents[boardRow][boardCol] === 'cake_bomb_top_right') {
+    candiesBlockersLayerContents[boardRow][boardCol - 1] = 'empty';
+    candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
+    candiesBlockersLayerContents[boardRow + 1][boardCol - 1] = 'empty';
+    candiesBlockersLayerContents[boardRow + 1][boardCol] = 'empty';
   }
-  if (candiesBlockersLayerContents[row][column] === 'cake_bomb_bottom_left') {
-    candiesBlockersLayerContents[row - 1][column] = 'empty';
-    candiesBlockersLayerContents[row - 1][column + 1] = 'empty';
-    candiesBlockersLayerContents[row][column] = 'empty';
-    candiesBlockersLayerContents[row][column + 1] = 'empty';
+  if (candiesBlockersLayerContents[boardRow][boardCol] === 'cake_bomb_bottom_left') {
+    candiesBlockersLayerContents[boardRow - 1][boardCol] = 'empty';
+    candiesBlockersLayerContents[boardRow - 1][boardCol + 1] = 'empty';
+    candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
+    candiesBlockersLayerContents[boardRow][boardCol + 1] = 'empty';
   }
-  if (candiesBlockersLayerContents[row][column] === 'cake_bomb_bottom_right') {
-    candiesBlockersLayerContents[row - 1][column - 1] = 'empty';
-    candiesBlockersLayerContents[row - 1][column] = 'empty';
-    candiesBlockersLayerContents[row][column - 1] = 'empty';
-    candiesBlockersLayerContents[row][column] = 'empty';
+  if (candiesBlockersLayerContents[boardRow][boardCol] === 'cake_bomb_bottom_right') {
+    candiesBlockersLayerContents[boardRow - 1][boardCol - 1] = 'empty';
+    candiesBlockersLayerContents[boardRow - 1][boardCol] = 'empty';
+    candiesBlockersLayerContents[boardRow][boardCol - 1] = 'empty';
+    candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
   }
 
   // delete only the candy or blocker
-  candiesBlockersLayerContents[row][column] = 'empty';
+  candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
 
   // however, if a sugar coat is present, delete it as well
-  if (encasingsLayerContents[row][column].includes('sugar_coat_')) {
-    deleteEncasingAt(row, column);
+  if (encasingsLayerContents[boardRow][boardCol].includes('sugar_coat_')) {
+    deleteEncasingAt(boardRow, boardCol);
   }
 }
 
-function deleteEncasingAt(row, column) {
+function deleteEncasingAt(boardRow, boardCol) {
   // delete only the encasing
-  encasingsLayerContents[row][column] = 'empty';
+  encasingsLayerContents[boardRow][boardCol] = 'empty';
 }
 
-function deletePortalsAt(row, column) {
-  if (portalsLayerContents[row][column][0] === 'portal_entrance') {
-    deletePortalByEntrance(row, column);
+function deletePortalsAt(boardRow, boardCol) {
+  if (portalsLayerContents[boardRow][boardCol][0] === 'portal_entrance') {
+    deletePortalByEntrance(boardRow, boardCol);
   }
-  if (portalsLayerContents[row][column][1] === 'portal_exit') {
-    deletePortalByExit(row, column);
+  if (portalsLayerContents[boardRow][boardCol][1] === 'portal_exit') {
+    deletePortalByExit(boardRow, boardCol);
   }
 }
 
-function deletePortalByEntrance(row, column) {
+function deletePortalByEntrance(boardRow, boardCol) {
   for (let i = 0; i < portalPaths.length; i++) {
-    const [currentScreenX, currentScreenY, _] = portalPaths[i][0];
+    const [currentX, currentY, _] = portalPaths[i][0];
 
-    if (currentScreenX === column && currentScreenY === row) {
-      const [correspondingExitScreenX, correspondingExitScreenY, _] = portalPaths[i][1];
+    if (currentX === boardCol && currentY === boardRow) {
+      const [correspondingExitX, correspondingExitY, _] = portalPaths[i][1];
 
-      portalsLayerContents[row][column][0] = 'empty';
-      portalsLayerContents[correspondingExitScreenY][correspondingExitScreenX][1] = 'empty'; // Y = row, X = column
+      portalsLayerContents[boardRow][boardCol][0] = 'empty';
+      portalsLayerContents[correspondingExitY][correspondingExitX][1] = 'empty'; // Y = row, X = column
 
       portalPaths.splice(i, 1);
     }
   }
 }
 
-function deletePortalByExit(row, column) {
+function deletePortalByExit(boardRow, boardCol) {
   for (let i = 0; i < portalPaths.length; i++) {
-    const [currentScreenX, currentScreenY, _] = portalPaths[i][1];
+    const [currentX, currentY, _] = portalPaths[i][1];
 
-    if (currentScreenX === column && currentScreenY === row) {
-      const [correspondingEntranceScreenX, correspondingEntranceScreenY, _] = portalPaths[i][0];
+    if (currentX === boardCol && currentY === boardRow) {
+      const [correspondingEntranceX, correspondingEntranceY, _] = portalPaths[i][0];
 
-      portalsLayerContents[row][column][1] = 'empty';
-      portalsLayerContents[correspondingEntranceScreenY][correspondingEntranceScreenX][0] = 'empty'; // Y = row, X = column
+      portalsLayerContents[boardRow][boardCol][1] = 'empty';
+      portalsLayerContents[correspondingEntranceY][correspondingEntranceX][0] = 'empty'; // Y = row, X = column
 
       portalPaths.splice(i, 1);
     }
@@ -790,8 +790,8 @@ function deleteIncompletePortalsAndRestartPortalDrawing() {
     if (portalPaths[i].length === 0) {
       portalPaths.splice(i, 1);
     } else if (portalPaths[i].length === 1) {
-      const [entranceScreenX, entranceScreenY, _] = portalPaths[i][0];
-      portalsLayerContents[entranceScreenY][entranceScreenX][0] = 'empty'; // Y = row, X = column
+      const [entranceX, entranceY, _] = portalPaths[i][0];
+      portalsLayerContents[entranceY][entranceX][0] = 'empty'; // Y = row, X = column
 
       portalPaths.splice(i, 1);
     }
@@ -809,15 +809,15 @@ function deleteIncompletePortalsAndRestartPortalDrawing() {
   renderNewBoardFromLayers();
 }
 
-function deleteIngredientExitAt(row, column) {
+function deleteIngredientExitAt(boardRow, boardCol) {
   // delete only the ingredient exit
-  ingredientExitsLayerContents[row][column] = 'empty';
+  ingredientExitsLayerContents[boardRow][boardCol] = 'empty';
 }
 
-function deleteDispenserAt(row, column) {
+function deleteDispenserAt(boardRow, boardCol) {
   // delete only the dispenser and its spawn elements
-  dispensersLayerContents[row][column] = 'empty';
-  dispensersElementsLayerContents[row][column] = [];
+  dispensersLayerContents[boardRow][boardCol] = 'empty';
+  dispensersElementsLayerContents[boardRow][boardCol] = [];
 }
 
 // Populate each layers dropdown with images
@@ -910,11 +910,11 @@ function updateRequirementsSections() {
 function exportLevel() {
   let levelArray = [];
 
-  for (let i = 0; i < currentBoardRows; i++) {
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
     let rowArray = [];
 
-    for (let j = 0; j < currentBoardColumns; j++) {
-      rowArray[j] = '';
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      rowArray[boardCol] = '';
 
       // Tiles layer
       const tilesCodes = {
@@ -926,7 +926,7 @@ function exportLevel() {
         'black_tile': '065'
       };
 
-      rowArray[j] += tilesCodes[tilesLayerContents[i][j]];
+      rowArray[boardCol] += tilesCodes[tilesLayerContents[boardRow][boardCol]];
 
       // Rapids Paths layer
 
@@ -970,8 +970,8 @@ function exportLevel() {
         'bonbon_blitz_color_bomb_1': '182', 'bonbon_blitz_color_bomb_2': '183', 'bonbon_blitz_color_bomb_3': '184', 'bonbon_blitz_color_bomb_4': '185',
       };
 
-      if (candiesBlockersLayerContents[i][j] !== 'empty') {
-        rowArray[j] += candiesBlockersCodes[candiesBlockersLayerContents[i][j]];
+      if (candiesBlockersLayerContents[boardRow][boardCol] !== 'empty') {
+        rowArray[boardCol] += candiesBlockersCodes[candiesBlockersLayerContents[boardRow][boardCol]];
       }
 
       // Encasings layer
@@ -982,8 +982,8 @@ function exportLevel() {
         'sugar_coat_1': '134', 'sugar_coat_2': '135', 'sugar_coat_3': '136'
       };
 
-      if (encasingsLayerContents[i][j] !== 'empty') {
-        rowArray[j] += encasingsCodes[encasingsLayerContents[i][j]];
+      if (encasingsLayerContents[boardRow][boardCol] !== 'empty') {
+        rowArray[boardCol] += encasingsCodes[encasingsLayerContents[boardRow][boardCol]];
       }
 
       // Walls layer
@@ -997,14 +997,14 @@ function exportLevel() {
         'portal_exit': '013'
       };
 
-      if (portalsLayerContents[i][j][0] !== 'empty' || portalsLayerContents[i][j][1] !== 'empty') { // JavaScript array equality is dumb
-        rowArray[j] += portalsCodes['portal_location'];
+      if (portalsLayerContents[boardRow][boardCol][0] !== 'empty' || portalsLayerContents[boardRow][boardCol][1] !== 'empty') { // JavaScript array equality is dumb
+        rowArray[boardCol] += portalsCodes['portal_location'];
 
-        if (portalsLayerContents[i][j][0] === 'portal_entrance') {
-          rowArray[j] += portalsCodes[portalsLayerContents[i][j][0]];
+        if (portalsLayerContents[boardRow][boardCol][0] === 'portal_entrance') {
+          rowArray[boardCol] += portalsCodes[portalsLayerContents[boardRow][boardCol][0]];
         }
-        if (portalsLayerContents[i][j][1] === 'portal_exit') {
-          rowArray[j] += portalsCodes[portalsLayerContents[i][j][1]];
+        if (portalsLayerContents[boardRow][boardCol][1] === 'portal_exit') {
+          rowArray[boardCol] += portalsCodes[portalsLayerContents[boardRow][boardCol][1]];
         }
       }
 
@@ -1013,8 +1013,8 @@ function exportLevel() {
         'ingredient_exit': '010'
       };
 
-      if (ingredientExitsLayerContents[i][j] !== 'empty') {
-        rowArray[j] += ingredientExitsCodes[ingredientExitsLayerContents[i][j]];
+      if (ingredientExitsLayerContents[boardRow][boardCol] !== 'empty') {
+        rowArray[boardCol] += ingredientExitsCodes[ingredientExitsLayerContents[boardRow][boardCol]];
       }
 
       // Dispensers layer
@@ -1022,8 +1022,8 @@ function exportLevel() {
         'dispenser': '005'
       };
 
-      if (dispensersLayerContents[i][j] !== 'empty') {
-        rowArray[j] += dispensersCodes[dispensersLayerContents[i][j]];
+      if (dispensersLayerContents[boardRow][boardCol] !== 'empty') {
+        rowArray[boardCol] += dispensersCodes[dispensersLayerContents[boardRow][boardCol]];
       }
 
       const dispensersElementsCodes = {
@@ -1050,16 +1050,16 @@ function exportLevel() {
         'dispenser_yellow': '219'
       };
 
-      if (dispensersElementsLayerContents[i][j] !== []) {
-        for (let k = 0; k < dispensersElementsLayerContents[i][j].length; k++) {
-          rowArray[j] += dispensersElementsCodes[dispensersElementsLayerContents[i][j][k]];
+      if (dispensersElementsLayerContents[boardRow][boardCol] !== []) {
+        for (let i = 0; i < dispensersElementsLayerContents[boardRow][boardCol].length; i++) {
+          rowArray[boardCol] += dispensersElementsCodes[dispensersElementsLayerContents[boardRow][boardCol][i]];
         }
       }
 
       // if a regular tile has anything, remove the regular tile code
-      if (rowArray[j].includes(tilesCodes['regular_tile']) && rowArray[j].length > 3) {
-        const start = rowArray[j].indexOf(tilesCodes['regular_tile']);
-        rowArray[j] = rowArray[j].slice(0, start) + rowArray[j].slice(start + tilesCodes['regular_tile'].length);
+      if (rowArray[boardCol].includes(tilesCodes['regular_tile']) && rowArray[boardCol].length > 3) {
+        const start = rowArray[boardCol].indexOf(tilesCodes['regular_tile']);
+        rowArray[boardCol] = rowArray[boardCol].slice(0, start) + rowArray[boardCol].slice(start + tilesCodes['regular_tile'].length);
       }
     }
 
