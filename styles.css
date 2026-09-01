@@ -140,16 +140,28 @@
   object-fit: contain;
 }
 
+.board-area td img.tile {
+  z-index: 15;
+}
+
+.board-area td img.candy-blocker {
+  z-index: 45;
+}
+
+.board-area td img.encasing {
+  z-index: 55;
+}
+
 .board-area td img.portal-entrance {
   top: 24px;
   pointer-events: none;
-  z-index: 90;
+  z-index: 95;
 }
 
 .board-area td img.portal-exit {
   top: -24px;
   pointer-events: none;
-  z-index: 90;
+  z-index: 95;
 }
 
 .board-area td img.ingredient-exit {
@@ -161,14 +173,14 @@
   margin-left: auto;
   margin-right: auto;
   pointer-events: none;
-  z-index: 100;
+  z-index: 105;
 }
 
 .board-area td img.board-dispenser {
   top: -48px;
   opacity: 0.75;
   pointer-events: none;
-  z-index: 109;
+  z-index: 114;
 }
 
 .board-area td .board-dispenser-elements-container {
@@ -217,7 +229,7 @@
   max-width: 60%;
   margin: 0;
   padding: 0;
-  z-index: 110;
+  z-index: 115;
   flex-shrink: 1;
   flex-grow: 0;
   flex-basis: auto;
