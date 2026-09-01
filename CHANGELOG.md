@@ -1,7 +1,8 @@
 # Changelog
 
 ## 0.2.1
-Some under-the-hood changes to make future additions easier:
+Mostly some under-the-hood changes to make future additions easier:
+- Fixed a bug that allowed drawing dispensers while the layer is hidden
 - Renamed a bunch of row and column variables to make their purpose easier to understand and to prevent accidental infinite loops
 - Added CSS classes and z-indexes to board elements based on layer to prepare for modularizing and optimizing board rendering
 
