@@ -327,6 +327,7 @@ function renderNewBoardFromLayers() {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/tiles/${tilesLayerContents[boardRow][boardCol]}.png`;
+        image.classList.add('tile');
         rowCell.appendChild(image);
       }
       // rapids paths, TODO
@@ -336,6 +337,7 @@ function renderNewBoardFromLayers() {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/candies_blockers/${candiesBlockersLayerContents[boardRow][boardCol]}.png`;
+        image.classList.add('candy-blocker');
         rowCell.appendChild(image);
       }
       // encasings
@@ -343,6 +345,7 @@ function renderNewBoardFromLayers() {
         let image = document.createElement('img');
         image.setAttribute('draggable', false);
         image.src = `elements/encasings/${encasingsLayerContents[boardRow][boardCol]}.png`;
+        image.classList.add('encasing');
         rowCell.appendChild(image);
       }
       // order locks
