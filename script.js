@@ -89,6 +89,9 @@ let dispensersElementsLayerContents = [[]];
 let portalPaths = [];
 let placedPortalEntranceOnly = false;
 
+let tileGroupBlockers = [];
+let placedMallOMaticHeadOnly = false;
+
 let currentlySelectedElement = 'regular_tile';
 
 let isMouseDown = false;
@@ -410,7 +413,20 @@ function selectDrawingMode(object) {
   currentDrawingMode = object.getAttribute('value');
 
   if (currentDrawingMode !== 'draw') {
+    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
     deleteIncompletePortalsAndRestartPortalDrawing();
+
+    let largeBlockersHelpText = document.getElementById('large-blockers-help-text');
+
+    if (currentlySelectedElement === 'mall-o-matic_head') {
+      largeBlockersHelpText.innerText = '^ To draw a mall-o-matic, first click where its head will be.'
+    }
+
+    let portalsHelpText = document.getElementById('portals-help-text');
+
+    if (currentlySelectedElement === 'portal_entrance') {
+      portalsHelpText.innerText = '^ Click the board where you want the entrance to be.';
+    }
   }
 
   console.log(`clicked radio to set current drawing mode to ${currentDrawingMode}`)
@@ -451,8 +467,12 @@ function updateSelection(object, element, layer) {
   let largeBlockersHelpText = document.getElementById('large-blockers-help-text');
 
   if (element === 'cake_bomb_ui') {
-    largeBlockersHelpText.innerText = '^ To draw a cake bomb, click where its upper-left corner will be.'
+    largeBlockersHelpText.innerText = '^ To draw a cake bomb, click where its upper-left corner will be.';
+    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
+  } else if (element === 'mall-o-matic_head') {
+    largeBlockersHelpText.innerText = '^ To draw a mall-o-matic, first click where its head will be.';
   } else {
+    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
     largeBlockersHelpText.innerText = '';
   }
 
@@ -508,7 +528,11 @@ function drawElement(boardRow, boardCol) {
   // conveyor_belts: TODO
   
   if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
-    drawCandyOrBlockerAt(boardRow, boardCol);
+    if (currentlySelectedElement === 'mall-o-matic_head') {
+      drawMallOMaticAt(boardRow, boardCol);
+    } else {
+      drawCandyOrBlockerAt(boardRow, boardCol);
+    }
   }
 
   if (currentLayer === 'encasings' && layerOfCurrentlySelectedElement === 'encasings' && document.getElementById('visible_encasings').checked) {
@@ -530,6 +554,105 @@ function drawElement(boardRow, boardCol) {
 
 function drawTileAt(boardRow, boardCol) {
   tilesLayerContents[boardRow][boardCol] = currentlySelectedElement;
+}
+
+function drawMallOMaticAt(boardRow, boardCol) {
+  // only add something if a tile is present
+  if (tilesLayerContents[boardRow][boardCol] !== 'empty' && lockDrawing === false) {
+    lockDrawing = true;
+
+    if (!placedMallOMaticHeadOnly) {
+      drawMallOMaticHeadAt(boardRow, boardCol);
+    } else {
+      drawMallOMaticTailUntil(boardRow, boardCol);
+    }
+  }
+}
+
+function drawMallOMaticHeadAt(boardRow, boardCol) {
+  placedMallOMaticHeadOnly = true;
+
+  // delete whatever already exists
+  deleteCandyOrBlockerAt(boardRow, boardCol);
+
+  candiesBlockersLayerContents[boardRow][boardCol] = currentlySelectedElement;
+  tileGroupBlockers.push({'type': 'gummyRope', 'tiles': [[boardCol, boardRow]], 'params': {}}); // x and y screen coordinates
+
+  let largeBlockersHelpText = document.getElementById('large-blockers-help-text');
+  largeBlockersHelpText.innerText = '^ Click the board where you want the tail to end. (Must be in the same row or column and not cross any empty tiles)'
+}
+
+function drawMallOMaticTailUntil(boardRow, boardCol) {
+  placedMallOMaticHeadOnly = false;
+
+  const headLocation = tileGroupBlockers[tileGroupBlockers.length - 1]['tiles'][0];
+  const tailEndLocation = [boardCol, boardRow]; // x and y screen coordinates
+
+  let largeBlockersHelpText = document.getElementById('large-blockers-help-text');
+
+  if (headLocation[0] === tailEndLocation[0] && headLocation[1] === tailEndLocation[1]) { // head and tail end are on the same tile
+    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
+  } else if (headLocation[0] !== tailEndLocation[0] && headLocation[1] !== tailEndLocation[1]) { // both column and row are mismatched
+    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
+  } else { // valid placement
+    let allBlockerTiles = [];
+
+    if (headLocation[0] === tailEndLocation[0] && headLocation[1] < tailEndLocation[1]) { // pointing down
+      for (let y = headLocation[1]; y <= tailEndLocation[1]; y++) {
+        // if we encounter an empty square, stop drawing the mall-o-matic
+        if (tilesLayerContents[y][headLocation[0]] === 'empty') {
+          break;
+        }
+        allBlockerTiles.push([headLocation[0], y]);
+      }
+    }
+    if (headLocation[0] > tailEndLocation[0] && headLocation[1] === tailEndLocation[1]) { // pointing left
+      for (let x = headLocation[0]; x >= tailEndLocation[0]; x--) {
+        if (tilesLayerContents[headLocation[1]][x] === 'empty') {
+          break;
+        }
+        allBlockerTiles.push([x, headLocation[1]]);
+      }
+    }
+    if (headLocation[0] === tailEndLocation[0] && headLocation[1] > tailEndLocation[1]) { // pointing up
+      for (let y = headLocation[1]; y >= tailEndLocation[1]; y--) {
+        if (tilesLayerContents[y][headLocation[0]] === 'empty') {
+          break;
+        }
+        allBlockerTiles.push([headLocation[0], y]);
+      }
+    }
+    if (headLocation[0] < tailEndLocation[0] && headLocation[1] === tailEndLocation[1]) { // pointing right
+      for (let x = headLocation[0]; x <= tailEndLocation[0]; x++) {
+        if (tilesLayerContents[headLocation[1]][x] === 'empty') {
+          break;
+        }
+        allBlockerTiles.push([x, headLocation[1]]);
+      }
+    }
+
+    tileGroupBlockers[tileGroupBlockers.length - 1]['tiles'] = allBlockerTiles;
+
+    // now delete and replace all the candies or blockers in the range
+    for (let i = 0; i < allBlockerTiles.length; i++) {
+      const [currentX, currentY] = allBlockerTiles[i];
+
+      if (i !== 0) {
+        deleteCandyOrBlockerAt(currentY, currentX);
+      }
+    }
+    for (let i = 0; i < allBlockerTiles.length; i++) {
+      const [currentX, currentY] = allBlockerTiles[i];
+
+      if (i === 0) {
+        candiesBlockersLayerContents[currentY][currentX] = 'mall-o-matic_head';
+      } else {
+        candiesBlockersLayerContents[currentY][currentX] = 'mall-o-matic_tail';
+      }
+    }
+  }
+
+  largeBlockersHelpText.innerText = '^ To draw a mall-o-matic, first click where its head will be.';
 }
 
 function drawCandyOrBlockerAt(boardRow, boardCol) {
@@ -565,8 +688,11 @@ function drawCandyOrBlockerAt(boardRow, boardCol) {
 
     } else { // we're doing regular drawing
       // multi-tile blockers: delete them first
-      if (candiesBlockersLayerContents[boardRow][boardCol].includes('cake_bomb_')) {
-        deleteCandyOrBlockerAt(boardRow, boardCol);
+      const multiTileBlockerPrefixes = ['cake_bomb_', 'mall-o-matic_'];
+      for (let i = 0; i < multiTileBlockerPrefixes.length; i++) {
+        if (candiesBlockersLayerContents[boardRow][boardCol].includes(multiTileBlockerPrefixes[i])) {
+          deleteCandyOrBlockerAt(boardRow, boardCol);
+        }
       }
 
       candiesBlockersLayerContents[boardRow][boardCol] = currentlySelectedElement;
@@ -630,7 +756,7 @@ function drawPortalEntranceAt(boardRow, boardCol) {
 
   portalsLayerContents[boardRow][boardCol][0] = currentlySelectedElement;
   portalPaths.push([]);
-  portalPaths[portalPaths.length - 1].push([boardCol, boardRow, 14]); // x and y screen coordinates, cuh!
+  portalPaths[portalPaths.length - 1].push([boardCol, boardRow, 14]); // x and y screen coordinates
 
   let portalsHelpText = document.getElementById('portals-help-text');
   portalsHelpText.innerText = '^ Click the board where you want the exit to be.';
@@ -645,7 +771,7 @@ function drawPortalExitAt(boardRow, boardCol) {
   }
 
   portalsLayerContents[boardRow][boardCol][1] = 'portal_exit';
-  portalPaths[portalPaths.length - 1].push([boardCol, boardRow, 14]); // x and y screen coordinates, cuh!
+  portalPaths[portalPaths.length - 1].push([boardCol, boardRow, 14]); // x and y screen coordinates
 
   let portalsHelpText = document.getElementById('portals-help-text');
   portalsHelpText.innerText = '^ Click the board where you want the entrance to be.';
@@ -735,6 +861,11 @@ function deleteCandyOrBlockerAt(boardRow, boardCol) {
     candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
   }
 
+  // if we have a mall-o-matic:
+  if (candiesBlockersLayerContents[boardRow][boardCol].includes('mall-o-matic_')) {
+    deleteMallOMaticAt(boardRow, boardCol);
+  }
+
   // delete only the candy or blocker
   candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
 
@@ -742,6 +873,43 @@ function deleteCandyOrBlockerAt(boardRow, boardCol) {
   if (encasingsLayerContents[boardRow][boardCol].includes('sugar_coat_')) {
     deleteEncasingAt(boardRow, boardCol);
   }
+}
+
+function deleteMallOMaticAt(boardRow, boardCol) {
+  for (let blockerIndex = 0; blockerIndex < tileGroupBlockers.length; blockerIndex++) {
+    for (let blockerTilesIndex = 0; blockerTilesIndex < tileGroupBlockers[blockerIndex]['tiles'].length; blockerTilesIndex++) {
+      const [currentX, currentY] = tileGroupBlockers[blockerIndex]['tiles'][blockerTilesIndex];
+
+      if (boardRow === currentY && boardCol === currentX) { // we found it
+        // now set every location to empty
+        const blockerTilesToDelete = tileGroupBlockers[blockerIndex]['tiles'];
+        for (let i = 0; i < blockerTilesToDelete.length; i++) {
+          const [tileToDeleteX, tileToDeleteY] = blockerTilesToDelete[i];
+          candiesBlockersLayerContents[tileToDeleteY][tileToDeleteX] = 'empty';
+        }
+
+        tileGroupBlockers.splice(blockerIndex, 1);
+        break;
+      }
+    }
+  }
+}
+
+function deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing() {
+  for (let blockerIndex = 0; blockerIndex < tileGroupBlockers.length; blockerIndex++) {
+    if (tileGroupBlockers[blockerIndex]['type'] === 'gummyRope' && tileGroupBlockers[blockerIndex]['tiles'].length === 0) {
+      tileGroupBlockers.splice(blockerIndex, 1);
+      blockerIndex--;
+    } else if (tileGroupBlockers[blockerIndex]['type'] === 'gummyRope' && tileGroupBlockers[blockerIndex]['tiles'].length === 1) {
+      const [currentX, currentY] = tileGroupBlockers[blockerIndex]['tiles'][0];
+      candiesBlockersLayerContents[currentY][currentX] = 'empty';
+      tileGroupBlockers.splice(blockerIndex, 1);
+      blockerIndex--;
+    }
+  }
+
+  placedMallOMaticHeadOnly = false;
+  renderNewBoardFromLayers();
 }
 
 function deleteEncasingAt(boardRow, boardCol) {
@@ -792,20 +960,14 @@ function deleteIncompletePortalsAndRestartPortalDrawing() {
   for (let i = 0; i < portalPaths.length; i++) {
     if (portalPaths[i].length === 0) {
       portalPaths.splice(i, 1);
+      i--;
     } else if (portalPaths[i].length === 1) {
       const [entranceX, entranceY, _] = portalPaths[i][0];
       portalsLayerContents[entranceY][entranceX][0] = 'empty'; // Y = row, X = column
 
       portalPaths.splice(i, 1);
+      i--;
     }
-  }
-
-  let portalsHelpText = document.getElementById('portals-help-text');
-
-  if (currentLayer === 'portals') {
-    portalsHelpText.innerText = '^ Click the board where you want the entrance to be.'
-  } else {
-    portalsHelpText.innerText = '';
   }
 
   placedPortalEntranceOnly = false;
