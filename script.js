@@ -1169,6 +1169,7 @@ function exportLevel() {
         'magic_mixer': '062',
         'gumball_machine': '230',
         'cake_bomb_top_left': '035', 'cake_bomb_top_right': '035', 'cake_bomb_bottom_left': '035', 'cake_bomb_bottom_right': '035',
+        'mall-o-matic_head': '231', 'mall-o-matic_tail': '231',
         'bonbon_blitz_striped_horizontal_1': '186', 'bonbon_blitz_striped_horizontal_2': '187', 'bonbon_blitz_striped_horizontal_3': '188', 'bonbon_blitz_striped_horizontal_4': '189',
         'bonbon_blitz_striped_vertical_1': '190', 'bonbon_blitz_striped_vertical_2': '191', 'bonbon_blitz_striped_vertical_3': '192', 'bonbon_blitz_striped_vertical_4': '193',
         'bonbon_blitz_wrapped_1': '198', 'bonbon_blitz_wrapped_2': '199', 'bonbon_blitz_wrapped_3': '200', 'bonbon_blitz_wrapped_4': '201',
@@ -1291,6 +1292,10 @@ function exportLevel() {
   level['gates'] = [];
   level['orlocks'] = [];
   level['skulls'] = [];
+
+  if (tileGroupBlockers.length > 0) {
+    level['tileGroups'] = tileGroupBlockers;
+  }
 
   if (gameMode === 'Classic' || gameMode === 'Jelly Time') {
     level['timeLimit'] = Number(document.getElementById('amount-of-time').value) || 30;
