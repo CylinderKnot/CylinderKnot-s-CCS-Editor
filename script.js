@@ -614,7 +614,6 @@ function drawMallOMaticHeadAt(boardRow, boardCol) {
   placedMallOMaticHeadOnly = true;
 
   // delete whatever already exists
-  console.log(`deleting candy at row ${boardRow}, col ${boardCol}`)
   deleteCandyOrBlockerAt(boardRow, boardCol);
 
   candiesBlockersLayerContents[boardRow][boardCol] = currentlySelectedElement;
@@ -678,7 +677,6 @@ function drawMallOMaticTailUntil(boardRow, boardCol) {
       const [currentX, currentY] = allBlockerTiles[i];
 
       if (i !== 0) {
-        console.log(`deleting candy/blocker at row ${currentY}, col ${currentX}`)
         deleteCandyOrBlockerAt(currentY, currentX);
       }
     }
@@ -924,9 +922,6 @@ function deleteMallOMaticAt(boardRow, boardCol) {
       const [currentX, currentY] = tileGroupBlockers[blockerIndex]['tiles'][blockerTilesIndex];
 
       if (boardRow === currentY && boardCol === currentX) { // we found it
-
-        console.log(`WE HIT A MALL-O-MATIC AT row ${currentY}, col ${currentX}`);
-
         // now set every location to empty
         const blockerTilesToDelete = tileGroupBlockers[blockerIndex]['tiles'];
         for (let i = 0; i < blockerTilesToDelete.length; i++) {
