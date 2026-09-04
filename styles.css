@@ -148,6 +148,30 @@
   z-index: 45;
 }
 
+.board-area td img.mall-o-matic-head-point-left {
+  transform: rotate(90deg);
+}
+
+.board-area td img.mall-o-matic-tail-point-left {
+  transform: matrix(0, -1, -1, 0, 0, 0); /* idiot idiot idiot IDIOT!! you cannot combine transforms normal-thinker, no no no no no! */
+}
+
+.board-area td img.mall-o-matic-head-point-right {
+  transform: rotate(-90deg);
+}
+
+.board-area td img.mall-o-matic-tail-point-right {
+  transform: rotate(-90deg);
+}
+
+.board-area td img.mall-o-matic-head-point-up {
+  transform: rotate(180deg);
+}
+
+.board-area td img.mall-o-matic-tail-point-up {
+  transform: scaleY(-1);
+}
+
 .board-area td img.encasing {
   z-index: 55;
 }

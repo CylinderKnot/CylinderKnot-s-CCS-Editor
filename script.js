@@ -341,6 +341,18 @@ function renderNewBoardFromLayers() {
         image.setAttribute('draggable', false);
         image.src = `elements/candies_blockers/${candiesBlockersLayerContents[boardRow][boardCol]}.png`;
         image.classList.add('candy-blocker');
+
+        if (candiesBlockersLayerContents[boardRow][boardCol].includes('mall-o-matic_')) {
+          const pointingDirection = getMallOMaticPointingDirection(boardRow, boardCol);
+
+          if (candiesBlockersLayerContents[boardRow][boardCol] === 'mall-o-matic_head') {
+            image.classList.add(`mall-o-matic-head-point-${pointingDirection}`);
+          }
+          if (candiesBlockersLayerContents[boardRow][boardCol] === 'mall-o-matic_tail') {
+            image.classList.add(`mall-o-matic-tail-point-${pointingDirection}`);
+          }
+        }
+
         rowCell.appendChild(image);
       }
       // encasings
@@ -405,6 +417,35 @@ function renderNewBoardFromLayers() {
       boardTableRow.appendChild(rowCell);
     }
   }
+}
+
+function getMallOMaticPointingDirection(boardRow, boardCol) {
+  for (let blockerIndex = 0; blockerIndex < tileGroupBlockers.length; blockerIndex++) {
+    for (let blockerTilesIndex = 0; blockerTilesIndex < tileGroupBlockers[blockerIndex]['tiles'].length; blockerTilesIndex++) {
+      const [currentX, currentY] = tileGroupBlockers[blockerIndex]['tiles'][blockerTilesIndex];
+
+      if (boardRow === currentY && boardCol === currentX) { // we found it
+        const allTiles = tileGroupBlockers[blockerIndex]['tiles'];
+        
+        const [firstX, firstY] = allTiles[0];
+        const [lastX, lastY] = allTiles[allTiles.length - 1];
+
+        if (firstX > lastX) {
+          return 'left';
+        } else if (firstX < lastX) {
+          return 'right';
+        } else if (firstY > lastY) {
+          return 'up';
+        } else if (firstY < lastY) {
+          return 'down';
+        } else {
+          return;
+        }
+      }
+    }
+  }
+
+  return;
 }
 
 // more stuff here
@@ -573,6 +614,7 @@ function drawMallOMaticHeadAt(boardRow, boardCol) {
   placedMallOMaticHeadOnly = true;
 
   // delete whatever already exists
+  console.log(`deleting candy at row ${boardRow}, col ${boardCol}`)
   deleteCandyOrBlockerAt(boardRow, boardCol);
 
   candiesBlockersLayerContents[boardRow][boardCol] = currentlySelectedElement;
@@ -631,13 +673,12 @@ function drawMallOMaticTailUntil(boardRow, boardCol) {
       }
     }
 
-    tileGroupBlockers[tileGroupBlockers.length - 1]['tiles'] = allBlockerTiles;
-
     // now delete and replace all the candies or blockers in the range
     for (let i = 0; i < allBlockerTiles.length; i++) {
       const [currentX, currentY] = allBlockerTiles[i];
 
       if (i !== 0) {
+        console.log(`deleting candy/blocker at row ${currentY}, col ${currentX}`)
         deleteCandyOrBlockerAt(currentY, currentX);
       }
     }
@@ -650,6 +691,8 @@ function drawMallOMaticTailUntil(boardRow, boardCol) {
         candiesBlockersLayerContents[currentY][currentX] = 'mall-o-matic_tail';
       }
     }
+
+    tileGroupBlockers[tileGroupBlockers.length - 1]['tiles'] = allBlockerTiles;
   }
 
   largeBlockersHelpText.innerText = '^ To draw a mall-o-matic, first click where its head will be.';
@@ -881,6 +924,9 @@ function deleteMallOMaticAt(boardRow, boardCol) {
       const [currentX, currentY] = tileGroupBlockers[blockerIndex]['tiles'][blockerTilesIndex];
 
       if (boardRow === currentY && boardCol === currentX) { // we found it
+
+        console.log(`WE HIT A MALL-O-MATIC AT row ${currentY}, col ${currentX}`);
+
         // now set every location to empty
         const blockerTilesToDelete = tileGroupBlockers[blockerIndex]['tiles'];
         for (let i = 0; i < blockerTilesToDelete.length; i++) {
