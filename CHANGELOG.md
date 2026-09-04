@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+You can now draw and delete mall-o-matics!
+- Added help text for drawing mall-o-matics
+- Added some under-the-hood support for other tileGroups blockers
+- Switching draw modes now updates help text properly for multi-click elements
+- Fixed an oversight with cleaning up incomplete portals
+
 ## 0.2.1
 Mostly some under-the-hood changes to make future additions easier:
 - Fixed a bug that allowed drawing dispensers while the layer is hidden
