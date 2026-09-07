@@ -4,6 +4,7 @@
 You can now draw and delete citrus chews!
 - Added help text for drawing citrus chews
 - Fixed an off-by-one error in drawing cake bombs, preventing out-of-bounds array mutations
+- Fixed a bug that allowed cake bombs to be drawn over empty tiles
 - The editor now tracks your previously selected element. This is used to eliminate excess rendering from clearing incomplete elements.
 - Generalized the mall-o-matic deletion function to handle all tileGroups blockers
 

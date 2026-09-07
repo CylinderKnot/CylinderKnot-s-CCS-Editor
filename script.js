@@ -611,14 +611,16 @@ function drawTileAt(boardRow, boardCol) {
 
 function drawCakeBombAt(boardRow, boardCol) {
   if (boardRow < currentBoardRows - 1 && boardCol < currentBoardColumns - 1) {
-    deleteCandyOrBlockerAt(boardRow, boardCol);
-    deleteCandyOrBlockerAt(boardRow, boardCol + 1);
-    deleteCandyOrBlockerAt(boardRow + 1, boardCol);
-    deleteCandyOrBlockerAt(boardRow + 1, boardCol + 1);
-    candiesBlockersLayerContents[boardRow][boardCol] = 'cake_bomb_top_left';
-    candiesBlockersLayerContents[boardRow][boardCol + 1] = 'cake_bomb_top_right';
-    candiesBlockersLayerContents[boardRow + 1][boardCol] = 'cake_bomb_bottom_left';
-    candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'cake_bomb_bottom_right';
+    if (tilesLayerContents[boardRow][boardCol] !== 'empty' && tilesLayerContents[boardRow][boardCol + 1] !== 'empty' && tilesLayerContents[boardRow + 1][boardCol] !== 'empty' && tilesLayerContents[boardRow + 1][boardCol + 1] !== 'empty') {
+      deleteCandyOrBlockerAt(boardRow, boardCol);
+      deleteCandyOrBlockerAt(boardRow, boardCol + 1);
+      deleteCandyOrBlockerAt(boardRow + 1, boardCol);
+      deleteCandyOrBlockerAt(boardRow + 1, boardCol + 1);
+      candiesBlockersLayerContents[boardRow][boardCol] = 'cake_bomb_top_left';
+      candiesBlockersLayerContents[boardRow][boardCol + 1] = 'cake_bomb_top_right';
+      candiesBlockersLayerContents[boardRow + 1][boardCol] = 'cake_bomb_bottom_left';
+      candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'cake_bomb_bottom_right';
+    }
   }
 }
 
@@ -723,16 +725,18 @@ function drawMallOMaticTailUntil(boardRow, boardCol) {
 
 function drawCitrusChewAt(boardRow, boardCol) {
   if (boardRow < currentBoardRows - 1 && boardCol < currentBoardColumns - 1) {
-    deleteCandyOrBlockerAt(boardRow, boardCol);
-    deleteCandyOrBlockerAt(boardRow, boardCol + 1);
-    deleteCandyOrBlockerAt(boardRow + 1, boardCol);
-    deleteCandyOrBlockerAt(boardRow + 1, boardCol + 1);
-    candiesBlockersLayerContents[boardRow][boardCol] = 'citrus_chew_top_left';
-    candiesBlockersLayerContents[boardRow][boardCol + 1] = 'citrus_chew_top_right';
-    candiesBlockersLayerContents[boardRow + 1][boardCol] = 'citrus_chew_bottom_left';
-    candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'citrus_chew_bottom_right';
+    if (tilesLayerContents[boardRow][boardCol] !== 'empty' && tilesLayerContents[boardRow][boardCol + 1] !== 'empty' && tilesLayerContents[boardRow + 1][boardCol] !== 'empty' && tilesLayerContents[boardRow + 1][boardCol + 1] !== 'empty') {
+      deleteCandyOrBlockerAt(boardRow, boardCol);
+      deleteCandyOrBlockerAt(boardRow, boardCol + 1);
+      deleteCandyOrBlockerAt(boardRow + 1, boardCol);
+      deleteCandyOrBlockerAt(boardRow + 1, boardCol + 1);
+      candiesBlockersLayerContents[boardRow][boardCol] = 'citrus_chew_top_left';
+      candiesBlockersLayerContents[boardRow][boardCol + 1] = 'citrus_chew_top_right';
+      candiesBlockersLayerContents[boardRow + 1][boardCol] = 'citrus_chew_bottom_left';
+      candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'citrus_chew_bottom_right';
 
-    tileGroupBlockers.push({'type': 'heavyLayered', 'tiles': [[boardCol, boardRow],[boardCol + 1, boardRow],[boardCol, boardRow + 1],[boardCol + 1, boardRow + 1]], 'params': {'strength': 11}}); // x and y screen coordinates
+      tileGroupBlockers.push({'type': 'heavyLayered', 'tiles': [[boardCol, boardRow],[boardCol + 1, boardRow],[boardCol, boardRow + 1],[boardCol + 1, boardRow + 1]], 'params': {'strength': 11}}); // x and y screen coordinates
+    }
   }
 }
 
