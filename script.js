@@ -937,7 +937,7 @@ function deleteCandyOrBlockerAt(boardRow, boardCol) {
   const tileGroupsBlockerPrefixes = ['mall-o-matic_', 'citrus_chew_'];
   for (let i = 0; i < tileGroupsBlockerPrefixes.length; i++) {
     if (candiesBlockersLayerContents[boardRow][boardCol].includes(tileGroupsBlockerPrefixes[i])) {
-      deleteTileGroupBlockerAt(boardRow, boardCol);
+      deleteTileGroupsBlockerAt(boardRow, boardCol);
     }
   }
 
@@ -950,7 +950,7 @@ function deleteCandyOrBlockerAt(boardRow, boardCol) {
   }
 }
 
-function deleteTileGroupBlockerAt(boardRow, boardCol) {
+function deleteTileGroupsBlockerAt(boardRow, boardCol) {
   for (let blockerIndex = 0; blockerIndex < tileGroupBlockers.length; blockerIndex++) {
     for (let blockerTilesIndex = 0; blockerTilesIndex < tileGroupBlockers[blockerIndex]['tiles'].length; blockerTilesIndex++) {
       const [currentX, currentY] = tileGroupBlockers[blockerIndex]['tiles'][blockerTilesIndex];
