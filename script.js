@@ -513,6 +513,8 @@ function updateSelection(object, element, layer) {
     largeBlockersHelpText.innerText = '^ To draw a cake bomb, click where its upper-left corner will be.';
   } else if (element === 'mall-o-matic_head') {
     largeBlockersHelpText.innerText = '^ To draw a mall-o-matic, first click where its head will be.';
+  } else if (element === 'citrus_chew_ui') {
+    largeBlockersHelpText.innerText = '^ To draw a citrus chew, click where its upper-left corner will be.';
   } else {
     largeBlockersHelpText.innerText = '';
   }
@@ -579,6 +581,8 @@ function drawElement(boardRow, boardCol) {
       drawCakeBombAt(boardRow, boardCol);
     } else if (currentlySelectedElement === 'mall-o-matic_head') {
       drawMallOMaticAt(boardRow, boardCol);
+    } else if (currentlySelectedElement === 'citrus_chew_ui') {
+      drawCitrusChewAt(boardRow, boardCol);
     } else {
       drawCandyOrBlockerAt(boardRow, boardCol);
     }
@@ -717,6 +721,21 @@ function drawMallOMaticTailUntil(boardRow, boardCol) {
   largeBlockersHelpText.innerText = '^ To draw a mall-o-matic, first click where its head will be.';
 }
 
+function drawCitrusChewAt(boardRow, boardCol) {
+  if (boardRow < currentBoardRows - 1 && boardCol < currentBoardColumns - 1) {
+    deleteCandyOrBlockerAt(boardRow, boardCol);
+    deleteCandyOrBlockerAt(boardRow, boardCol + 1);
+    deleteCandyOrBlockerAt(boardRow + 1, boardCol);
+    deleteCandyOrBlockerAt(boardRow + 1, boardCol + 1);
+    candiesBlockersLayerContents[boardRow][boardCol] = 'citrus_chew_top_left';
+    candiesBlockersLayerContents[boardRow][boardCol + 1] = 'citrus_chew_top_right';
+    candiesBlockersLayerContents[boardRow + 1][boardCol] = 'citrus_chew_bottom_left';
+    candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'citrus_chew_bottom_right';
+
+    tileGroupBlockers.push({'type': 'heavyLayered', 'tiles': [[boardCol, boardRow],[boardCol + 1, boardRow],[boardCol, boardRow + 1],[boardCol + 1, boardRow + 1]], 'params': {'strength': 11}}); // x and y screen coordinates
+  }
+}
+
 function drawCandyOrBlockerAt(boardRow, boardCol) {
   // only add something if a tile is present
   if (tilesLayerContents[boardRow][boardCol] !== 'empty') {
@@ -750,7 +769,7 @@ function drawCandyOrBlockerAt(boardRow, boardCol) {
 
     } else { // we're doing regular drawing
       // multi-tile blockers: delete them first
-      const multiTileBlockerPrefixes = ['cake_bomb_', 'mall-o-matic_'];
+      const multiTileBlockerPrefixes = ['cake_bomb_', 'mall-o-matic_', 'citrus_chew_'];
       for (let i = 0; i < multiTileBlockerPrefixes.length; i++) {
         if (candiesBlockersLayerContents[boardRow][boardCol].includes(multiTileBlockerPrefixes[i])) {
           deleteCandyOrBlockerAt(boardRow, boardCol);
@@ -910,9 +929,12 @@ function deleteCandyOrBlockerAt(boardRow, boardCol) {
     candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
   }
 
-  // if we have a mall-o-matic:
-  if (candiesBlockersLayerContents[boardRow][boardCol].includes('mall-o-matic_')) {
-    deleteMallOMaticAt(boardRow, boardCol);
+  // if we have a tileGroups blocker:
+  const tileGroupBlockerPrefixes = ['mall-o-matic_', 'citrus_chew_'];
+  for (let i = 0; i < tileGroupBlockerPrefixes.length; i++) {
+    if (candiesBlockersLayerContents[boardRow][boardCol].includes(tileGroupBlockerPrefixes[i])) {
+      deleteTileGroupBlockerAt(boardRow, boardCol);
+    }
   }
 
   // delete only the candy or blocker
@@ -924,7 +946,7 @@ function deleteCandyOrBlockerAt(boardRow, boardCol) {
   }
 }
 
-function deleteMallOMaticAt(boardRow, boardCol) {
+function deleteTileGroupBlockerAt(boardRow, boardCol) {
   for (let blockerIndex = 0; blockerIndex < tileGroupBlockers.length; blockerIndex++) {
     for (let blockerTilesIndex = 0; blockerTilesIndex < tileGroupBlockers[blockerIndex]['tiles'].length; blockerTilesIndex++) {
       const [currentX, currentY] = tileGroupBlockers[blockerIndex]['tiles'][blockerTilesIndex];
@@ -1178,6 +1200,7 @@ function exportLevel() {
         'gumball_machine': '230',
         'cake_bomb_top_left': '035', 'cake_bomb_top_right': '035', 'cake_bomb_bottom_left': '035', 'cake_bomb_bottom_right': '035',
         'mall-o-matic_head': '231', 'mall-o-matic_tail': '231',
+        'citrus_chew_top_left': '233', 'citrus_chew_top_right': '233', 'citrus_chew_bottom_left': '233', 'citrus_chew_bottom_right': '233',
         'bonbon_blitz_striped_horizontal_1': '186', 'bonbon_blitz_striped_horizontal_2': '187', 'bonbon_blitz_striped_horizontal_3': '188', 'bonbon_blitz_striped_horizontal_4': '189',
         'bonbon_blitz_striped_vertical_1': '190', 'bonbon_blitz_striped_vertical_2': '191', 'bonbon_blitz_striped_vertical_3': '192', 'bonbon_blitz_striped_vertical_4': '193',
         'bonbon_blitz_wrapped_1': '198', 'bonbon_blitz_wrapped_2': '199', 'bonbon_blitz_wrapped_3': '200', 'bonbon_blitz_wrapped_4': '201',
