@@ -92,6 +92,7 @@ let placedPortalEntranceOnly = false;
 let tileGroupBlockers = [];
 let placedMallOMaticHeadOnly = false;
 
+let previouslySelectedElement = 'regular_tile';
 let currentlySelectedElement = 'regular_tile';
 
 let isMouseDown = false;
@@ -502,6 +503,7 @@ function updateSelection(object, element, layer) {
 
   // set current element
   object.classList.add("element-selected");
+  previouslySelectedElement = currentlySelectedElement;
   currentlySelectedElement = element;
   console.log(`current element is ${currentlySelectedElement}`);
 
@@ -509,11 +511,9 @@ function updateSelection(object, element, layer) {
 
   if (element === 'cake_bomb_ui') {
     largeBlockersHelpText.innerText = '^ To draw a cake bomb, click where its upper-left corner will be.';
-    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
   } else if (element === 'mall-o-matic_head') {
     largeBlockersHelpText.innerText = '^ To draw a mall-o-matic, first click where its head will be.';
   } else {
-    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
     largeBlockersHelpText.innerText = '';
   }
 
@@ -522,8 +522,14 @@ function updateSelection(object, element, layer) {
   if (element === 'portal_entrance') {
     portalsHelpText.innerText = '^ Click the board where you want the entrance to be.'
   } else {
-    deleteIncompletePortalsAndRestartPortalDrawing();
     portalsHelpText.innerText = '';
+  }
+
+  if (previouslySelectedElement === 'mall-o-matic_head') {
+    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
+  }
+  if (previouslySelectedElement === 'portal_entrance') {
+    deleteIncompletePortalsAndRestartPortalDrawing();
   }
 
   // set current layer
@@ -569,7 +575,9 @@ function drawElement(boardRow, boardCol) {
   // conveyor_belts: TODO
   
   if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
-    if (currentlySelectedElement === 'mall-o-matic_head') {
+    if (currentlySelectedElement === 'cake_bomb_ui') {
+      drawCakeBombAt(boardRow, boardCol);
+    } else if (currentlySelectedElement === 'mall-o-matic_head') {
       drawMallOMaticAt(boardRow, boardCol);
     } else {
       drawCandyOrBlockerAt(boardRow, boardCol);
@@ -595,6 +603,19 @@ function drawElement(boardRow, boardCol) {
 
 function drawTileAt(boardRow, boardCol) {
   tilesLayerContents[boardRow][boardCol] = currentlySelectedElement;
+}
+
+function drawCakeBombAt(boardRow, boardCol) {
+  if (boardRow < currentBoardRows - 1 && boardCol < currentBoardColumns - 1) {
+    deleteCandyOrBlockerAt(boardRow, boardCol);
+    deleteCandyOrBlockerAt(boardRow, boardCol + 1);
+    deleteCandyOrBlockerAt(boardRow + 1, boardCol);
+    deleteCandyOrBlockerAt(boardRow + 1, boardCol + 1);
+    candiesBlockersLayerContents[boardRow][boardCol] = 'cake_bomb_top_left';
+    candiesBlockersLayerContents[boardRow][boardCol + 1] = 'cake_bomb_top_right';
+    candiesBlockersLayerContents[boardRow + 1][boardCol] = 'cake_bomb_bottom_left';
+    candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'cake_bomb_bottom_right';
+  }
 }
 
 function drawMallOMaticAt(boardRow, boardCol) {
@@ -741,19 +762,6 @@ function drawCandyOrBlockerAt(boardRow, boardCol) {
       // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
       if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[boardRow][boardCol].includes('sugar_coat_')) {
         deleteEncasingAt(boardRow, boardCol);
-      }
-
-      if (currentlySelectedElement === 'cake_bomb_ui') {
-        if (boardRow < currentBoardRows && boardCol < currentBoardColumns) {
-          deleteCandyOrBlockerAt(boardRow, boardCol);
-          deleteCandyOrBlockerAt(boardRow, boardCol + 1);
-          deleteCandyOrBlockerAt(boardRow + 1, boardCol);
-          deleteCandyOrBlockerAt(boardRow + 1, boardCol + 1);
-          candiesBlockersLayerContents[boardRow][boardCol] = 'cake_bomb_top_left';
-          candiesBlockersLayerContents[boardRow][boardCol + 1] = 'cake_bomb_top_right';
-          candiesBlockersLayerContents[boardRow + 1][boardCol] = 'cake_bomb_bottom_left';
-          candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'cake_bomb_bottom_right';
-        }
       }
     }
   }
