@@ -934,9 +934,9 @@ function deleteCandyOrBlockerAt(boardRow, boardCol) {
   }
 
   // if we have a tileGroups blocker:
-  const tileGroupBlockerPrefixes = ['mall-o-matic_', 'citrus_chew_'];
-  for (let i = 0; i < tileGroupBlockerPrefixes.length; i++) {
-    if (candiesBlockersLayerContents[boardRow][boardCol].includes(tileGroupBlockerPrefixes[i])) {
+  const tileGroupsBlockerPrefixes = ['mall-o-matic_', 'citrus_chew_'];
+  for (let i = 0; i < tileGroupsBlockerPrefixes.length; i++) {
+    if (candiesBlockersLayerContents[boardRow][boardCol].includes(tileGroupsBlockerPrefixes[i])) {
       deleteTileGroupBlockerAt(boardRow, boardCol);
     }
   }
