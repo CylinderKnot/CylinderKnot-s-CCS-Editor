@@ -76,6 +76,7 @@ let lockDrawing = false;
 let tilesLayerContents = [[]];
 let rapidsPathsLayerContents = [[]];
 let conveyorBeltsLayerContents = [[]];
+let conveyorPortalsLayerContents = [[]];
 let candiesBlockersLayerContents = [[]];
 let encasingsLayerContents = [[]];
 let orderLocksLayerContents = [[]];
@@ -88,6 +89,22 @@ let dispensersElementsLayerContents = [[]];
 
 let portalPaths = [];
 let placedPortalEntranceOnly = false;
+
+let conveyorBelts = [];
+let placedConveyorBeltOriginOnly = false;
+let conveyorBeltDirections = {
+  0: 'up',
+  1: 'right',
+  2: 'down',
+  3: 'left',
+  9: 'unknown'
+};
+let conveyorPortalColors = {
+  0: 'empty',
+  1: 'purple',
+  2: 'blue',
+  3: 'green'
+};
 
 let tileGroupBlockers = [];
 let placedMallOMaticHeadOnly = false;
@@ -233,6 +250,7 @@ function createNewBoard() {
   tilesLayerContents = initializeLayerDimensions(tilesLayerContents);
   rapidsPathsLayerContents = initializeLayerDimensions(rapidsPathsLayerContents);
   conveyorBeltsLayerContents = initializeLayerDimensions(conveyorBeltsLayerContents);
+  conveyorPortalsLayerContents = initializeLayerDimensions(conveyorPortalsLayerContents);
   candiesBlockersLayerContents = initializeLayerDimensions(candiesBlockersLayerContents);
   encasingsLayerContents = initializeLayerDimensions(encasingsLayerContents);
   orderLocksLayerContents = initializeLayerDimensions(orderLocksLayerContents);
@@ -249,6 +267,7 @@ function createNewBoard() {
       tilesLayerContents[boardRow][boardCol] = 'regular_tile';
       rapidsPathsLayerContents[boardRow][boardCol] = 'empty';
       conveyorBeltsLayerContents[boardRow][boardCol] = 'empty';
+      conveyorPortalsLayerContents[boardRow][boardCol] = 'empty';
       candiesBlockersLayerContents[boardRow][boardCol] = 'candy_random';
       encasingsLayerContents[boardRow][boardCol] = 'empty';
       orderLocksLayerContents[boardRow][boardCol] = 'empty';
@@ -507,6 +526,14 @@ function updateSelection(object, element, layer) {
   currentlySelectedElement = element;
   console.log(`current element is ${currentlySelectedElement}`);
 
+  let conveyorBeltsHelpText = document.getElementById('conveyor-belts-help-text');
+
+  if (element === 'conveyor_unknown') {
+    conveyorBeltsHelpText.innerText = '^ To draw a conveyor belt, first click its starting location.'
+  } else {
+    conveyorBeltsHelpText.innerText = '';
+  }
+
   let largeBlockersHelpText = document.getElementById('large-blockers-help-text');
 
   if (element === 'cake_bomb_ui') {
@@ -527,6 +554,9 @@ function updateSelection(object, element, layer) {
     portalsHelpText.innerText = '';
   }
 
+  if (previouslySelectedElement === 'conveyor_unknown') {
+    deleteIncompleteConveyorTilesAndRestartConveyorBeltDrawing();
+  }
   if (previouslySelectedElement === 'mall-o-matic_head') {
     deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
   }
@@ -574,7 +604,9 @@ function drawElement(boardRow, boardCol) {
 
   // rapids_paths: TODO
 
-  // conveyor_belts: TODO
+  if (currentLayer === 'conveyor_belts' && layerOfCurrentlySelectedElement === 'conveyor_belts' && document.getElementById('visible_conveyor_belts').checked) {
+    drawConveyorBeltAt(boardRow, boardCol);
+  }
   
   if (currentLayer === 'candies_blockers' && layerOfCurrentlySelectedElement === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
     if (currentlySelectedElement === 'cake_bomb_ui') {
@@ -607,6 +639,38 @@ function drawElement(boardRow, boardCol) {
 
 function drawTileAt(boardRow, boardCol) {
   tilesLayerContents[boardRow][boardCol] = currentlySelectedElement;
+}
+
+function drawConveyorBeltAt(boardRow, boardCol) {
+  if (lockDrawing === false) {
+    lockDrawing = true;
+
+    if (!placedConveyorBeltOriginOnly) {
+      setConveyorBeltOriginAt(boardRow, boardCol);
+    } else {
+      setConveyorBeltDestinationAt(boardRow, boardCol);
+      updateConveyorBeltImages();
+    }
+  }
+}
+
+function setConveyorBeltOriginAt(boardRow, boardCol) {
+  placedConveyorBeltOriginOnly = true;
+
+  // delete the conveyor belt that already exists
+  deleteConveyorBeltAt(boardRow, boardCol);
+
+  conveyorBelts.push([[boardCol, boardRow], [-1, -1], [9], [0]]);
+
+  let conveyorBeltsHelpText = document.getElementById('conveyor-belts-help-text');
+  conveyorBeltsHelpText.innerText = '^ To finish drawing a conveyor belt, click the ending location.';
+}
+
+function setConveyorBeltDestinationAt(boardRow, boardCol) {
+  placedConveyorBeltOriginOnly = false;
+
+  let conveyorBeltsHelpText = document.getElementById('conveyor-belts-help-text');
+  conveyorBeltsHelpText.innerText = '^ To draw a conveyor belt, first click its starting location.'
 }
 
 function drawCakeBombAt(boardRow, boardCol) {
@@ -874,6 +938,10 @@ function deleteElement(boardRow, boardCol) {
     deleteTileAt(boardRow, boardCol);
   }
 
+  if (currentLayer === 'conveyor_belts' && document.getElementById('visible_conveyor_belts').checked) {
+    deleteConveyorBeltAt(boardRow, boardCol);
+  }
+
   if (currentLayer === 'candies_blockers' && document.getElementById('visible_candies_blockers').checked) {
     deleteCandyOrBlockerAt(boardRow, boardCol);
   }
@@ -883,7 +951,6 @@ function deleteElement(boardRow, boardCol) {
   }
 
   if (currentLayer === 'portals' && document.getElementById('visible_portals').checked) {
-    console.log('attempting to delete portals');
     deletePortalsAt(boardRow, boardCol);
   }
 
@@ -904,6 +971,13 @@ function deleteTileAt(boardRow, boardCol) {
   deletePortalsAt(boardRow, boardCol);
   deleteIngredientExitAt(boardRow, boardCol);
   deleteDispenserAt(boardRow, boardCol);
+}
+
+function deleteConveyorBeltAt(boardRow, boardCol) {
+
+
+
+  updateConveyorBeltImages();
 }
 
 function deleteCandyOrBlockerAt(boardRow, boardCol) {
