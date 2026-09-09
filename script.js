@@ -529,7 +529,7 @@ function updateSelection(object, element, layer) {
   let conveyorBeltsHelpText = document.getElementById('conveyor-belts-help-text');
 
   if (element === 'conveyor_unknown') {
-    conveyorBeltsHelpText.innerText = '^ To draw a conveyor belt, first click its starting location.'
+    conveyorBeltsHelpText.innerText = '^ To start drawing a conveyor belt, first click its starting location.';
   } else {
     conveyorBeltsHelpText.innerText = '';
   }
@@ -656,6 +656,7 @@ function drawConveyorBeltAt(boardRow, boardCol) {
 
 function setConveyorBeltOriginAt(boardRow, boardCol) {
   placedConveyorBeltOriginOnly = true;
+  console.log('set origin');
 
   // delete the conveyor belt that already exists
   deleteConveyorBeltAt(boardRow, boardCol);
@@ -668,9 +669,10 @@ function setConveyorBeltOriginAt(boardRow, boardCol) {
 
 function setConveyorBeltDestinationAt(boardRow, boardCol) {
   placedConveyorBeltOriginOnly = false;
+  console.log('set destination');
 
   let conveyorBeltsHelpText = document.getElementById('conveyor-belts-help-text');
-  conveyorBeltsHelpText.innerText = '^ To draw a conveyor belt, first click its starting location.'
+  conveyorBeltsHelpText.innerText = '^ To start drawing a conveyor belt, first click its starting location.'
 }
 
 function drawCakeBombAt(boardRow, boardCol) {
@@ -977,7 +979,7 @@ function deleteConveyorBeltAt(boardRow, boardCol) {
 
 
 
-  updateConveyorBeltImages();
+  // updateConveyorBeltImages();
 }
 
 function deleteCandyOrBlockerAt(boardRow, boardCol) {
