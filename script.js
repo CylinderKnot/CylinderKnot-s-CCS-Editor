@@ -1633,7 +1633,11 @@ function exportLevel() {
   level['protocolVersion'] = '0.3';
   level['randomSeed'] = 0;
   level['portals'] = portalPaths;
-  level['gates'] = [];
+
+  if (conveyorBelts.length > 0) {
+    level['gates'] = conveyorBelts;
+  }
+
   level['orlocks'] = [];
   level['skulls'] = [];
 
