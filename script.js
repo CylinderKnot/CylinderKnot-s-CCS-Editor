@@ -106,6 +106,8 @@ let conveyorPortalColors = {
   3: 'green'
 };
 
+let editingConveyorBeltAt = [-1, -1]; // row and column
+
 let tileGroupBlockers = [];
 let placedMallOMaticHeadOnly = false;
 
@@ -605,6 +607,9 @@ function updateTile(object) {
   if (currentDrawingMode === 'draw') {
     drawElement(boardRow, boardCol);
   }
+  if (currentDrawingMode === 'edit') {
+    editElement(boardRow, boardCol);
+  }
   if (currentDrawingMode === 'delete') {
     deleteElement(boardRow, boardCol);
   }
@@ -717,7 +722,7 @@ function setConveyorBeltDestinationAt(boardRow, boardCol) {
     const previousDirectionNumber = conveyorBelts[previousConveyorBeltIndex][2][0];
 
     // adjusting the direction if a conveyor belt is a two-tile loop
-    if ((previousDirectionNumber + 2) % 4 === directionNumber) {
+    if (previousDirectionNumber >= 0 && (previousDirectionNumber + 2) % 4 === directionNumber) {
       conveyorBelts[conveyorBelts.length - 1][2] = [previousDirectionNumber];
     }
   }
@@ -781,12 +786,6 @@ function updateConveyorBeltImages() {
     if (previousConveyorBeltIndex >= 0) {
       previousDirectionNumber = conveyorBelts[previousConveyorBeltIndex][2][0];
     }
-
-    // if (currentDirection === previousDirection) { // if previous direction and current direction are the same
-    //   conveyorBeltsLayerContents[currentFromY][currentFromX] = `conveyor_${currentDirection}`;
-    // } else if (previousDirection === -1) { // if no previous direction exists
-    //   conveyorBeltsLayerContents[currentFromY][currentFromX] = `conveyor_${currentDirection}`;
-    // } else if (currentDirection)
 
     // if current direction is unknown:
     if (currentDirectionNumber === -1) {
@@ -1074,13 +1073,76 @@ function drawDispenserAt(boardRow, boardCol) {
   }
 }
 
+function editElement(boardRow, boardCol) {
+  if (currentLayer === 'conveyor_belts') {
+    if (conveyorBeltsLayerContents[boardRow][boardCol] !== 'empty') {
+      editConveyorBeltAt(boardRow, boardCol);
+    }
+  }
+}
+
+function closeAllPopups() {
+  document.querySelectorAll('.popup-menu').forEach(function(element) {
+    element.style.display = 'none';
+  });
+}
+
+function clearAllEditModeState() {
+  editingConveyorBeltAt = [-1, -1];
+}
+
+function editConveyorBeltAt(boardRow, boardCol) {
+  closeAllPopups();
+  clearAllEditModeState();
+
+  editingConveyorBeltAt = [boardRow, boardCol];
+
+  const helpText = document.getElementById('edit-conveyor-belt-coordinates');
+  helpText.innerText = `Editing conveyor belt at row ${boardRow}, column ${boardCol}`;
+
+  document.getElementById('edit-conveyor-belt-menu').style.display = 'block';
+}
+
+function stopEditing() {
+  closeAllPopups();
+  clearAllEditModeState();
+}
+
+function finishEditingConveyorBelt() {
+  const [boardRow, boardCol] = editingConveyorBeltAt;
+  const newDirection = Number(document.getElementById('conveyor-belt-direction-dropdown').value);
+
+  let conveyorBeltIndex = -1;
+  for (let i = 0; i < conveyorBelts.length; i++) {
+    if (conveyorBelts[i][0][0] === boardCol && conveyorBelts[i][0][1] === boardRow) {
+      conveyorBeltIndex = i;
+      break;
+    }
+  }
+
+  const previousConveyorBeltIndex = getIndexOfPreviousConveyorBelt(boardRow, boardCol);
+
+  if (conveyorBeltIndex >= 0 && isPreviousConveyorBeltAdjacentToCurrent(conveyorBeltIndex)) {
+    // don't do anything if you point the new direction backwards
+    if ((conveyorBelts[previousConveyorBeltIndex][2][0] + 2) % 4 === newDirection) {
+      // nothing
+    } else {
+      conveyorBelts[conveyorBeltIndex][2][0] = newDirection;
+      updateConveyorBeltImages();
+      renderNewBoardFromLayers();
+    }
+  }
+
+  closeAllPopups();
+  clearAllEditModeState();
+}
+
 function deleteElement(boardRow, boardCol) {
   if (currentLayer === 'tiles' && document.getElementById('visible_tiles').checked) {
     deleteTileAt(boardRow, boardCol);
   }
 
   if (currentLayer === 'conveyor_belts' && document.getElementById('visible_conveyor_belts').checked) {
-    console.log('ding dong');
     deleteConveyorBeltByOriginAt(boardRow, boardCol);
   }
 
@@ -1767,6 +1829,9 @@ function exportLevel() {
 }
 
 function displayExportLevelPopup() {
+  closeAllPopups();
+  clearAllEditModeState();
+
   let level = exportLevel();
   document.getElementById('export-field').value = JSON.stringify(level);
   document.getElementById('export-menu').style.display = 'block';
