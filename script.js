@@ -1074,7 +1074,7 @@ function drawDispenserAt(boardRow, boardCol) {
 }
 
 function editElement(boardRow, boardCol) {
-  if (currentLayer === 'conveyor_belts') {
+  if (currentLayer === 'conveyor_belts' && document.getElementById('visible_conveyor_belts').checked) {
     if (conveyorBeltsLayerContents[boardRow][boardCol] !== 'empty') {
       editConveyorBeltAt(boardRow, boardCol);
     }
