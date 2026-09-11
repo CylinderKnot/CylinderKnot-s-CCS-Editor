@@ -144,6 +144,10 @@
   z-index: 15;
 }
 
+.board-area td img.conveyor-belt {
+  z-index: 35;
+}
+
 .board-area td img.candy-blocker {
   z-index: 45;
 }
