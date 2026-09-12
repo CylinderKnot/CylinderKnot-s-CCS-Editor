@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0
+You can now draw, edit, and delete conveyor belts!
+- Added help text for drawing conveyor belts
+- Overwriting a conveyor belt's origin or destination deletes the corresponding conveyor belt
+- Deleting a conveyor belt by using the Delete mode will only delete the conveyor belt beginning on that tile
+- Finally implemented an Edit mode to change the direction of conveyor belts
+- Popups now close existing popups before appearing
+
 ## 0.3.1
 You can now draw and delete citrus chews!
 - Added help text for drawing citrus chews

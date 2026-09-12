@@ -21,7 +21,7 @@
       <div class="navbar">
         <div class="navbar-item-container">
           <div class="navbar-flex">
-            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.3.1</p>
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.4.0</p>
           </div>
           <div class="navbar-flex">
             <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
@@ -108,7 +108,13 @@
             </tr>
             <tr id="dropdown_conveyor_belts" class="dropdown-contents" style="display: none">
               <td colspan="3">
-                <p>Conveyors (not yet implemented)</p>
+                <p>Conveyor Belts</p>
+                <div class="elements-container">
+                  <div class="select-element" element="conveyor_unknown" gamelayer="conveyor_belts"></div>
+                </div>
+                <p id="conveyor-belts-help-text" class="element-help-text"></p>
+                <p>If a conveyor belt direction is unknown (shows a question mark), click on it in Edit mode to set the direction. (not implemented yet)</p>
+                <p>Click on a conveyor belt portal in Edit mode to change the color. (not implemented yet)</p>
               </td>
             </tr>
             <tr>
@@ -890,9 +896,43 @@
         </div>
       </div>
 
+      <!-- Edit conveyor belt -->
+      <div id="edit-conveyor-belt-menu" class="popup-menu" style="display: none;">
+        <div class="popup-contents">
+          <p id="edit-conveyor-belt-coordinates"></p>
+          <table>
+            <tr>
+              <td>Direction:</td>
+              <td>
+                <select id="conveyor-belt-direction-dropdown">
+                  <option value="0">Up</option>
+                  <option value="1">Right</option>
+                  <option value="2">Down</option>
+                  <option value="3">Left</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Portal color:</td>
+              <td>TODO</td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td>
+                <button onclick="stopEditing()">Close</button>
+              </td>
+              <td>
+                <button onclick="finishEditingConveyorBelt()">Save changes</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
       <!-- Export popup -->
-      <div id="export-menu" style="display: none;">
-        <div class="popup">
+      <div id="export-menu" class="popup-menu" style="display: none;">
+        <div class="popup-contents">
           <label for="export-field">Level code:</label>
           <textarea id="export-field" name="export-field" readonly></textarea>
           <label for="export-warnings">Warnings:</label>

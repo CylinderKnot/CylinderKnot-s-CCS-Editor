@@ -144,6 +144,10 @@
   z-index: 15;
 }
 
+.board-area td img.conveyor-belt {
+  z-index: 35;
+}
+
 .board-area td img.candy-blocker {
   z-index: 45;
 }
@@ -402,7 +406,7 @@
   width: 100%;
 }
 
-.popup {
+.popup-contents {
   width: 40%;
   height: 50%;
   margin: auto;
@@ -419,11 +423,19 @@
   justify-content: center;
 }
 
-.popup label {
+.popup-contents p {
+  color: #ddd;
+}
+
+.popup-contents td {
+  color: #ddd;
+}
+
+.popup-contents label {
   color: #fff;
 }
 
-.popup textarea {
+.popup-contents textarea {
   background-color: #464646;
   width: 90%;
   height: 30%;
