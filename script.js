@@ -691,6 +691,8 @@ function setConveyorBeltDestinationAt(boardRow, boardCol) {
   placedConveyorBeltOriginOnly = false;
   console.log('set destination');
 
+  let conveyorBeltsHelpText = document.getElementById('conveyor-belts-help-text');
+
   // delete previous conveyor belt that already exists
   deleteConveyorBeltByDestinationAt(boardRow, boardCol);
 
@@ -701,6 +703,8 @@ function setConveyorBeltDestinationAt(boardRow, boardCol) {
   
   if (fromX === toX && fromY === toY) {
     deleteIncompleteConveyorTilesAndRestartConveyorBeltDrawing();
+    conveyorBeltsHelpText.innerText = '^ To start drawing a conveyor belt, first click its starting location.';
+    return;
   } else if (fromX === toX && fromY - toY === 1) {
     directionNumber = conveyorBeltDirections['up'];
   } else if (fromX === toX && fromY - toY === -1) {
@@ -727,8 +731,7 @@ function setConveyorBeltDestinationAt(boardRow, boardCol) {
     }
   }
 
-  let conveyorBeltsHelpText = document.getElementById('conveyor-belts-help-text');
-  conveyorBeltsHelpText.innerText = '^ To start drawing a conveyor belt, first click its starting location.'
+  conveyorBeltsHelpText.innerText = '^ To start drawing a conveyor belt, first click its starting location.';
 }
 
 function getIndexOfPreviousConveyorBelt(boardRow, boardCol) {
