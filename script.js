@@ -758,12 +758,21 @@ function getIndexOfPreviousConveyorBeltByCurrentIndex(currentIndex) {
 }
 
 function isPreviousConveyorBeltAdjacentToCurrent(currentIndex) {
-  const index = getIndexOfPreviousConveyorBeltByCurrentIndex(currentIndex);
-  if (index >= 0) {
-    const [previousFromX, previousFromY] = conveyorBelts[index][0];
-    const [previousToX, previousToY] = conveyorBelts[index][1];
+  const previousIndex = getIndexOfPreviousConveyorBeltByCurrentIndex(currentIndex);
+  if (previousIndex >= 0) {
+    const [currentFromX, currentFromY] = conveyorBelts[currentIndex][0];
+    const [previousFromX, previousFromY] = conveyorBelts[previousIndex][0];
+    const [previousDirectionNumber] = conveyorBelts[previousIndex][2];
 
-    return Math.sqrt((previousFromX - previousToX) ** 2 + (previousFromY - previousToY) ** 2) === 1;
+    if (previousDirectionNumber === 0) { // previous points up, so check if current is above
+      return (previousFromX === currentFromX) && (previousFromY === currentFromY + 1);
+    } else if (previousDirectionNumber === 1) { // previous points right, so check if current is to the right
+      return (previousFromX === currentFromX - 1) && (previousFromY === currentFromY);
+    } else if (previousDirectionNumber === 2) { // previous points down, so check if current is below
+      return (previousFromX === currentFromX) && (previousFromY === currentFromY - 1);
+    } else if (previousDirectionNumber === 3) { // previous points left, so check if current is to the left
+      return (previousFromX === currentFromX + 1) && (previousFromY === currentFromY);
+    }
   }
   return false;
 }
