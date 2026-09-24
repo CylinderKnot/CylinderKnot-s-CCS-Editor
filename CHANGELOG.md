@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.1
+Conveyor belt adjacency detection bug fix:
+- Adjacency checking no longer uses the distance formula. It now checks the location of the current conveyor belt based on the previous conveyor belt's direction.
+- This will enable proper conveyor belt portal editing once it is implemented.
+
 ## 0.4.0
 You can now draw, edit, and delete conveyor belts!
 - Added help text for drawing conveyor belts
