@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2
+"Licorice whells" aren't an element:
+- Fixed a typo in the exporter for three-hit licorice shells
+
 ## 0.4.1
 Conveyor belt adjacency detection bug fix:
 - Adjacency checking no longer uses the distance formula. It now checks the location of the current conveyor belt based on the previous conveyor belt's direction.
