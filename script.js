@@ -1518,7 +1518,7 @@ function exportLevel() {
         'chocolate': '009',
         'chocolate_spawner': '024',
         'licorice_swirl': '017',
-        'licorice_shell_1': '157', 'licorice_shell_2': '158', 'licorice_whell_3': '054',
+        'licorice_shell_1': '157', 'licorice_shell_2': '158', 'licorice_shell_3': '054',
         'jelly_jar_1': '220', 'jelly_jar_2': '221',
         'bobber': '066',
         'magic_mixer': '062',
