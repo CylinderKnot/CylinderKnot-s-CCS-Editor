@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.3
+The conveyor belt portals update:
+- You can now set the colors of conveyor belt portals.
+- Updated conveyor belt help text to let users know about setting conveyor belt portal colors
+
 ## 0.4.2
 "Licorice whells" aren't an element:
 - Fixed a typo in the exporter for three-hit licorice shells
