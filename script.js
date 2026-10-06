@@ -100,10 +100,10 @@ let conveyorBeltDirections = {
   'left': 3,
 };
 let conveyorPortalColors = {
-  0: 'empty',
-  1: 'purple',
-  2: 'blue',
-  3: 'green'
+  'empty': 0,
+  'red': 1,
+  'blue': 2,
+  'green': 3
 };
 
 let editingConveyorBeltAt = [-1, -1]; // row and column
@@ -363,6 +363,29 @@ function renderNewBoardFromLayers() {
         image.src = `elements/conveyor_belts/${conveyorBeltsLayerContents[boardRow][boardCol]}.png`;
         image.classList.add('conveyor-belt');
         rowCell.appendChild(image);
+
+        if (conveyorPortalsLayerContents[boardRow][boardCol] !== 'empty') {
+          let portalImage = document.createElement('img');
+          portalImage.setAttribute('draggable', false);
+          portalImage.src = `elements/conveyor_belts/${conveyorPortalsLayerContents[boardRow][boardCol]}.png`;
+
+          // compute the direction and add it...
+          portalImage.classList.add('conveyor-portal');
+
+          if (conveyorBeltsLayerContents[boardRow][boardCol] !== 'conveyor_unknown') {
+            // if previous is adjacent to current: we're at the end, so just use the direction
+            // otherwise: we're at the beginning, so flip it 180 degrees
+            const currentConveyorIndex = getIndexOfCurrentConveyorBelt(boardRow, boardCol);
+            let displayDirectionNumber = conveyorBelts[currentConveyorIndex][2][0];
+            if (!isPreviousConveyorBeltAdjacentToCurrent(currentConveyorIndex)) {
+              displayDirectionNumber = (displayDirectionNumber + 2) % 4;
+            }
+
+            portalImage.classList.add(`conveyor-portal-${Object.keys(conveyorBeltDirections).find(key => conveyorBeltDirections[key] === displayDirectionNumber)}`);
+          }
+
+          rowCell.appendChild(portalImage);
+        }
       }
 
       // candies blockers
@@ -734,6 +757,17 @@ function setConveyorBeltDestinationAt(boardRow, boardCol) {
   conveyorBeltsHelpText.innerText = '^ To start drawing a conveyor belt, first click its starting location.';
 }
 
+function getIndexOfCurrentConveyorBelt(boardRow, boardCol) {
+  let index = -1;
+  for (let i = 0; i < conveyorBelts.length; i++) {
+    if (conveyorBelts[i][0][0] === boardCol && conveyorBelts[i][0][1] === boardRow) {
+      index = i;
+      break;
+    }
+  }
+  return index;
+}
+
 function getIndexOfPreviousConveyorBelt(boardRow, boardCol) {
   let index = -1;
   for (let i = 0; i < conveyorBelts.length; i++) {
@@ -791,6 +825,7 @@ function updateConveyorBeltImages() {
   for (let currentConveyorBeltIndex = 0; currentConveyorBeltIndex < conveyorBelts.length; currentConveyorBeltIndex++) {
 
     const currentDirectionNumber = conveyorBelts[currentConveyorBeltIndex][2][0];
+    const currentPortalNumber = conveyorBelts[currentConveyorBeltIndex][3][0];
     const [currentFromX, currentFromY] = conveyorBelts[currentConveyorBeltIndex][0];
     const previousConveyorBeltIndex = getIndexOfPreviousConveyorBelt(currentFromY, currentFromX);
     let previousDirectionNumber = -1;
@@ -802,7 +837,6 @@ function updateConveyorBeltImages() {
     // if current direction is unknown:
     if (currentDirectionNumber === -1) {
       conveyorBeltsLayerContents[currentFromY][currentFromX] = `conveyor_unknown`;
-
     // if previous direction is unknown or previous doesn't exist:
     } else if (previousDirectionNumber === -1) {
       conveyorBeltsLayerContents[currentFromY][currentFromX] = `conveyor_${Object.keys(conveyorBeltDirections).find(key => conveyorBeltDirections[key] === currentDirectionNumber)}`;
@@ -812,6 +846,13 @@ function updateConveyorBeltImages() {
     // otherwise, just use the current direction
     } else {
       conveyorBeltsLayerContents[currentFromY][currentFromX] = `conveyor_${Object.keys(conveyorBeltDirections).find(key => conveyorBeltDirections[key] === currentDirectionNumber)}`;
+    }
+
+    // if a conveyor belt portal exists, put it in its layer. handle the rendering in the rendering function
+    if (currentPortalNumber !== 0) {
+      conveyorPortalsLayerContents[currentFromY][currentFromX] = `conveyor_portal_${Object.keys(conveyorPortalColors).find(key => conveyorPortalColors[key] === currentPortalNumber)}`;
+    } else {
+      conveyorPortalsLayerContents[currentFromY][currentFromX] = 'empty';
     }
   }
 
@@ -1123,6 +1164,7 @@ function stopEditing() {
 function finishEditingConveyorBelt() {
   const [boardRow, boardCol] = editingConveyorBeltAt;
   const newDirection = Number(document.getElementById('conveyor-belt-direction-dropdown').value);
+  const newPortalColor = Number(document.getElementById('conveyor-belt-portal-dropdown').value);
 
   let conveyorBeltIndex = -1;
   for (let i = 0; i < conveyorBelts.length; i++) {
@@ -1140,10 +1182,13 @@ function finishEditingConveyorBelt() {
       // nothing
     } else {
       conveyorBelts[conveyorBeltIndex][2][0] = newDirection;
-      updateConveyorBeltImages();
-      renderNewBoardFromLayers();
     }
   }
+
+  conveyorBelts[conveyorBeltIndex][3][0] = newPortalColor;
+
+  updateConveyorBeltImages();
+  renderNewBoardFromLayers();
 
   closeAllPopups();
   clearAllEditModeState();

@@ -148,6 +148,29 @@
   z-index: 35;
 }
 
+.board-area td img.conveyor-portal {
+  z-index: 36;
+  pointer-events: none;
+}
+
+.conveyor-portal.conveyor-portal-left {
+  left: -30px;
+}
+
+.conveyor-portal.conveyor-portal-right {
+  left: 30px;
+}
+
+.conveyor-portal.conveyor-portal-up {
+  top: -30px;
+  transform: rotate(90deg);
+}
+
+.conveyor-portal.conveyor-portal-down {
+  top: 30px;
+  transform: rotate(90deg);
+}
+
 .board-area td img.candy-blocker {
   z-index: 45;
 }
