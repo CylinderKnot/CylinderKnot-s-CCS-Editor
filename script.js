@@ -371,7 +371,19 @@ function renderNewBoardFromLayers() {
 
           // compute the direction and add it...
           portalImage.classList.add('conveyor-portal');
-          // ...
+
+          if (conveyorBeltsLayerContents[boardRow][boardCol] !== 'conveyor_unknown') {
+            // if previous is adjacent to current: we're at the end, so just use the direction
+            // otherwise: we're at the beginning, so flip it 180 degrees
+            const currentConveyorIndex = getIndexOfCurrentConveyorBelt(boardRow, boardCol);
+            let displayDirectionNumber = conveyorBelts[currentConveyorIndex][2][0];
+            if (!isPreviousConveyorBeltAdjacentToCurrent(currentConveyorIndex)) {
+              displayDirectionNumber = (displayDirectionNumber + 2) % 4;
+            }
+
+            portalImage.classList.add(`conveyor-portal-${Object.keys(conveyorBeltDirections).find(key => conveyorBeltDirections[key] === displayDirectionNumber)}`);
+          }
+
           rowCell.appendChild(portalImage);
         }
       }
@@ -743,6 +755,17 @@ function setConveyorBeltDestinationAt(boardRow, boardCol) {
   }
 
   conveyorBeltsHelpText.innerText = '^ To start drawing a conveyor belt, first click its starting location.';
+}
+
+function getIndexOfCurrentConveyorBelt(boardRow, boardCol) {
+  let index = -1;
+  for (let i = 0; i < conveyorBelts.length; i++) {
+    if (conveyorBelts[i][0][0] === boardCol && conveyorBelts[i][0][1] === boardRow) {
+      index = i;
+      break;
+    }
+  }
+  return index;
 }
 
 function getIndexOfPreviousConveyorBelt(boardRow, boardCol) {
