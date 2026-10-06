@@ -148,6 +148,11 @@
   z-index: 35;
 }
 
+.board-area td img.conveyor-portal {
+  z-index: 36;
+  pointer-events: none;
+}
+
 .board-area td img.candy-blocker {
   z-index: 45;
 }
