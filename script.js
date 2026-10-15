@@ -1004,7 +1004,7 @@ function drawCandyOrBlockerAt(boardRow, boardCol) {
     
     // we're doing color painting
     if (colorsToPaint.includes(currentlySelectedElement)) {
-      const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
+      const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'mystery_candy_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
       
       let isElementColorable = false;
       for (let i = 0; i < colorableElementPrefixes.length; i++) {
@@ -1544,6 +1544,7 @@ function exportLevel() {
         'wrapped_random': '047', 'wrapped_blue': '047057', 'wrapped_green': '047058', 'wrapped_orange': '047059', 'wrapped_purple': '047060', 'wrapped_red': '047055', 'wrapped_yellow': '047056',
         'bomb_random': '018', 'bomb_blue': '018057', 'bomb_green': '018058', 'bomb_orange': '018059', 'bomb_purple': '018060', 'bomb_red': '018055', 'bomb_yellow': '018056',
         'key_random': '051', 'key_blue': '051057', 'key_green': '051058', 'key_orange': '051059', 'key_purple': '051060', 'key_red': '051055', 'key_yellow': '051056',
+        'mystery_candy_random': '032', 'mystery_candy_blue': '032057', 'mystery_candy_green': '032058', 'mystery_candy_orange': '032059', 'mystery_candy_purple': '032060', 'mystery_candy_red': '032055', 'mystery_candy_yellow': '032056',
         'lucky_candy_random': '052', 'lucky_candy_blue': '052057', 'lucky_candy_green': '052058', 'lucky_candy_orange': '052059', 'lucky_candy_purple': '052060', 'lucky_candy_red': '052055', 'lucky_candy_yellow': '052056',
         'jelly_fish_random': '049', 'jelly_fish_blue': '049057', 'jelly_fish_green': '049058', 'jelly_fish_orange': '049059', 'jelly_fish_purple': '049060', 'jelly_fish_red': '049055', 'jelly_fish_yellow': '049056',
         'jelly_fish_striped_random': '091', 'jelly_fish_striped_blue': '091057', 'jelly_fish_striped_green': '091058', 'jelly_fish_striped_orange': '091059', 'jelly_fish_striped_purple': '091060', 'jelly_fish_striped_red': '091055', 'jelly_fish_striped_yellow': '091056',
@@ -1642,6 +1643,7 @@ function exportLevel() {
         'dispenser_wrapped': '072',
         'dispenser_jelly_fish': '128',
         'dispenser_color_bomb': '127',
+        'dispenser_mystery_candy': '031',
         'dispenser_lucky_candy': '068',
         'dispenser_time_candy': '069',
         'dispenser_key': '030',
@@ -1794,6 +1796,15 @@ function exportLevel() {
   const colorBombInterval = document.getElementById('color-bomb-spawn-interval').value;
   if (colorBombInterval !== '') {
     level['colorBombSpawn'] = Number(colorBombInterval);
+  }
+
+  const mysteryCandyMin = document.getElementById('mystery-candy-spawn-minimum').value;
+  if (mysteryCandyMin !== '') {
+    level['mysteryCandyMax'] = Number(mysteryCandyMin);
+  }
+  const mysteryCandyInterval = document.getElementById('mystery-candy-spawn-interval').value;
+  if (mysteryCandyInterval !== '') {
+    level['mysteryCandySpawn'] = Number(mysteryCandyInterval);
   }
 
   const luckyCandyMin = document.getElementById('lucky-candy-spawn-minimum').value;

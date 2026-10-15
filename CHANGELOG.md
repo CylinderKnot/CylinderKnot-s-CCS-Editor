@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.4
+The mystery candies update:
+- You can now draw, color, and delete mystery candies.
+- You can now draw and delete mystery candy dispensers, and you can change their spawning information.
+
 ## 0.4.3
 The conveyor belt portals update:
 - You can now set the colors of conveyor belt portals.
