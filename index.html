@@ -148,6 +148,7 @@
                   <div class="select-element" element="wrapped_random" gamelayer="candies_blockers"></div>
                   <div class="select-element" element="bomb_random" gamelayer="candies_blockers"></div>
                   <div class="select-element" element="key_random" gamelayer="candies_blockers"></div>
+                  <div class="select-element" element="mystery_candy_random" gamelayer="candies_blockers"></div>
                   <div class="select-element" element="lucky_candy_random" gamelayer="candies_blockers"></div>
                   <div class="select-element" element="jelly_fish_random" gamelayer="candies_blockers"></div>
                   <div class="select-element" element="jelly_fish_striped_random" gamelayer="candies_blockers"></div>
@@ -383,6 +384,7 @@
                   <div class="select-dispenser-element" element="dispenser_wrapped" gamelayer="dispensers"></div>
                   <div class="select-dispenser-element" element="dispenser_jelly_fish" gamelayer="dispensers"></div>
                   <div class="select-dispenser-element" element="dispenser_color_bomb" gamelayer="dispensers"></div>
+                  <div class="select-dispenser-element" element="dispenser_mystery_candy" gamelayer="dispensers"></div>
                   <div class="select-dispenser-element" element="dispenser_lucky_candy" gamelayer="dispensers"></div>
                   <div class="select-dispenser-element" element="dispenser_time_candy" gamelayer="dispensers"></div>
                   <div class="select-dispenser-element" element="dispenser_key" gamelayer="dispensers"></div>
@@ -721,6 +723,25 @@
           <table>
             <thead>
               <tr>
+                <th colspan="3"><img src="elements/dispensers/dispenser_mystery_candy.png" /><span>Mystery candies</span><img src="elements/dispensers/dispenser_mystery_candy.png" /></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Minimum</td>
+                <td>Interval</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="number" class="spawn-information-input" id="mystery-candy-spawn-minimum" /></td>
+                <td><input type="number" class="spawn-information-input" id="mystery-candy-spawn-interval" /></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
                 <th colspan="3"><img src="elements/dispensers/dispenser_lucky_candy.png" /><span>Lucky candies</span><img src="elements/dispensers/dispenser_lucky_candy.png" /></th>
               </tr>
             </thead>
@@ -870,29 +891,6 @@
               </tr>
             </tbody>
           </table>
-          
-          <!-- <table>
-            <thead>
-              <tr>
-                <th colspan="3">Mystery candies</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Minimum</td>
-                <td>Interval</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td><input type="number" class="spawn-information-input" id="mystery-candy-spawn-minimum" /></td>
-                <td><input type="number" class="spawn-information-input" id="mystery-candy-spawn-interval" /></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table> -->
-
-          <!-- and also do moves candies -->
-          
         </div>
       </div>
 
