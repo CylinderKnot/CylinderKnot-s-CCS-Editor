@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.5
+The chameleon candies update:
+- You can now draw, color, and delete chameleon candies.
+- You can now draw and delete chameleon candy dispensers, and you can change their spawning information.
+- Fixed an oversight in which sugar coats could not be added to mystery candies
+
 ## 0.4.4
 The mystery candies update:
 - You can now draw, color, and delete mystery candies.
