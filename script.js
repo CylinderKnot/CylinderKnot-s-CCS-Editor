@@ -49,6 +49,8 @@ const SUGAR_COATABLE = [
   'wrapped_random', 'wrapped_blue', 'wrapped_green', 'wrapped_orange', 'wrapped_purple', 'wrapped_red', 'wrapped_yellow',
   'bomb_random', 'bomb_blue', 'bomb_green', 'bomb_orange', 'bomb_purple', 'bomb_red', 'bomb_yellow',
   'key_random', 'key_blue', 'key_green', 'key_orange', 'key_purple', 'key_red', 'key_yellow',
+  'mystery_candy_random', 'mystery_candy_blue', 'mystery_candy_green', 'mystery_candy_orange', 'mystery_candy_purple', 'mystery_candy_red', 'mystery_candy_yellow',
+  'chameleon_candy_random', 'chameleon_candy_blue', 'chameleon_candy_green', 'chameleon_candy_orange', 'chameleon_candy_purple', 'chameleon_candy_red', 'chameleon_candy_yellow',
   'lucky_candy_random', 'lucky_candy_blue', 'lucky_candy_green', 'lucky_candy_orange', 'lucky_candy_purple', 'lucky_candy_red', 'lucky_candy_yellow',
   'jelly_fish_random', 'jelly_fish_blue', 'jelly_fish_green', 'jelly_fish_orange', 'jelly_fish_purple', 'jelly_fish_red', 'jelly_fish_yellow',
   'jelly_fish_striped_random', 'jelly_fish_striped_blue', 'jelly_fish_striped_green', 'jelly_fish_striped_orange', 'jelly_fish_striped_purple', 'jelly_fish_striped_red', 'jelly_fish_striped_yellow',
@@ -1004,7 +1006,7 @@ function drawCandyOrBlockerAt(boardRow, boardCol) {
     
     // we're doing color painting
     if (colorsToPaint.includes(currentlySelectedElement)) {
-      const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'mystery_candy_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
+      const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'mystery_candy_', 'chameleon_candy_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
       
       let isElementColorable = false;
       for (let i = 0; i < colorableElementPrefixes.length; i++) {
@@ -1545,6 +1547,7 @@ function exportLevel() {
         'bomb_random': '018', 'bomb_blue': '018057', 'bomb_green': '018058', 'bomb_orange': '018059', 'bomb_purple': '018060', 'bomb_red': '018055', 'bomb_yellow': '018056',
         'key_random': '051', 'key_blue': '051057', 'key_green': '051058', 'key_orange': '051059', 'key_purple': '051060', 'key_red': '051055', 'key_yellow': '051056',
         'mystery_candy_random': '032', 'mystery_candy_blue': '032057', 'mystery_candy_green': '032058', 'mystery_candy_orange': '032059', 'mystery_candy_purple': '032060', 'mystery_candy_red': '032055', 'mystery_candy_yellow': '032056',
+        'chameleon_candy_random': '033', 'chameleon_candy_blue': '033057', 'chameleon_candy_green': '033058', 'chameleon_candy_orange': '033059', 'chameleon_candy_purple': '033060', 'chameleon_candy_red': '033055', 'chameleon_candy_yellow': '033056',
         'lucky_candy_random': '052', 'lucky_candy_blue': '052057', 'lucky_candy_green': '052058', 'lucky_candy_orange': '052059', 'lucky_candy_purple': '052060', 'lucky_candy_red': '052055', 'lucky_candy_yellow': '052056',
         'jelly_fish_random': '049', 'jelly_fish_blue': '049057', 'jelly_fish_green': '049058', 'jelly_fish_orange': '049059', 'jelly_fish_purple': '049060', 'jelly_fish_red': '049055', 'jelly_fish_yellow': '049056',
         'jelly_fish_striped_random': '091', 'jelly_fish_striped_blue': '091057', 'jelly_fish_striped_green': '091058', 'jelly_fish_striped_orange': '091059', 'jelly_fish_striped_purple': '091060', 'jelly_fish_striped_red': '091055', 'jelly_fish_striped_yellow': '091056',
@@ -1644,6 +1647,7 @@ function exportLevel() {
         'dispenser_jelly_fish': '128',
         'dispenser_color_bomb': '127',
         'dispenser_mystery_candy': '031',
+        'dispenser_chameleon_candy': '067',
         'dispenser_lucky_candy': '068',
         'dispenser_time_candy': '069',
         'dispenser_key': '030',
@@ -1805,6 +1809,15 @@ function exportLevel() {
   const mysteryCandyInterval = document.getElementById('mystery-candy-spawn-interval').value;
   if (mysteryCandyInterval !== '') {
     level['mysteryCandySpawn'] = Number(mysteryCandyInterval);
+  }
+
+  const chameleonCandyMin = document.getElementById('chameleon-candy-spawn-minimum').value;
+  if (chameleonCandyMin !== '') {
+    level['chameleonCandyMax'] = Number(chameleonCandyMin);
+  }
+  const chameleonCandyInterval = document.getElementById('chameleon-candy-spawn-interval').value;
+  if (chameleonCandyInterval !== '') {
+    level['chameleonCandySpawn'] = Number(chameleonCandyInterval);
   }
 
   const luckyCandyMin = document.getElementById('lucky-candy-spawn-minimum').value;
