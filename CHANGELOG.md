@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.6
+The extra time and extra moves candies update:
+- You can now draw, color, and delete extra time and extra moves candies.
+- You can now draw and delete dispensers for those elements, and you can change their spawning information.
+- Standardized the naming of chameleon candies and extra time candies in the files and in the HTML
+
 ## 0.4.5
 The chameleon candies update:
 - You can now draw, color, and delete chameleon candies.
