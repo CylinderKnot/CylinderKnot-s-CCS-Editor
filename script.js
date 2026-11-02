@@ -51,6 +51,8 @@ const SUGAR_COATABLE = [
   'key_random', 'key_blue', 'key_green', 'key_orange', 'key_purple', 'key_red', 'key_yellow',
   'mystery_candy_random', 'mystery_candy_blue', 'mystery_candy_green', 'mystery_candy_orange', 'mystery_candy_purple', 'mystery_candy_red', 'mystery_candy_yellow',
   'chameleon_candy_random', 'chameleon_candy_blue', 'chameleon_candy_green', 'chameleon_candy_orange', 'chameleon_candy_purple', 'chameleon_candy_red', 'chameleon_candy_yellow',
+  'extra_time_candy_random', 'extra_time_candy_blue', 'extra_time_candy_green', 'extra_time_candy_orange', 'extra_time_candy_purple', 'extra_time_candy_red', 'extra_time_candy_yellow',
+  'extra_moves_candy_random', 'extra_moves_candy_blue', 'extra_moves_candy_green', 'extra_moves_candy_orange', 'extra_moves_candy_purple', 'extra_moves_candy_red', 'extra_moves_candy_yellow',
   'lucky_candy_random', 'lucky_candy_blue', 'lucky_candy_green', 'lucky_candy_orange', 'lucky_candy_purple', 'lucky_candy_red', 'lucky_candy_yellow',
   'jelly_fish_random', 'jelly_fish_blue', 'jelly_fish_green', 'jelly_fish_orange', 'jelly_fish_purple', 'jelly_fish_red', 'jelly_fish_yellow',
   'jelly_fish_striped_random', 'jelly_fish_striped_blue', 'jelly_fish_striped_green', 'jelly_fish_striped_orange', 'jelly_fish_striped_purple', 'jelly_fish_striped_red', 'jelly_fish_striped_yellow',
@@ -1006,7 +1008,7 @@ function drawCandyOrBlockerAt(boardRow, boardCol) {
     
     // we're doing color painting
     if (colorsToPaint.includes(currentlySelectedElement)) {
-      const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'mystery_candy_', 'chameleon_candy_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
+      const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'mystery_candy_', 'chameleon_candy_', 'extra_time_candy_', 'extra_moves_candy_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
       
       let isElementColorable = false;
       for (let i = 0; i < colorableElementPrefixes.length; i++) {
@@ -1548,6 +1550,8 @@ function exportLevel() {
         'key_random': '051', 'key_blue': '051057', 'key_green': '051058', 'key_orange': '051059', 'key_purple': '051060', 'key_red': '051055', 'key_yellow': '051056',
         'mystery_candy_random': '032', 'mystery_candy_blue': '032057', 'mystery_candy_green': '032058', 'mystery_candy_orange': '032059', 'mystery_candy_purple': '032060', 'mystery_candy_red': '032055', 'mystery_candy_yellow': '032056',
         'chameleon_candy_random': '033', 'chameleon_candy_blue': '033057', 'chameleon_candy_green': '033058', 'chameleon_candy_orange': '033059', 'chameleon_candy_purple': '033060', 'chameleon_candy_red': '033055', 'chameleon_candy_yellow': '033056',
+        'extra_time_candy_random': '050', 'extra_time_candy_blue': '050057', 'extra_time_candy_green': '050058', 'extra_time_candy_orange': '050059', 'extra_time_candy_purple': '050060', 'extra_time_candy_red': '050055', 'extra_time_candy_yellow': '050056',
+        'extra_moves_candy_random': '084', 'extra_moves_candy_blue': '084057', 'extra_moves_candy_green': '084058', 'extra_moves_candy_orange': '084059', 'extra_moves_candy_purple': '084060', 'extra_moves_candy_red': '084055', 'extra_moves_candy_yellow': '084056',
         'lucky_candy_random': '052', 'lucky_candy_blue': '052057', 'lucky_candy_green': '052058', 'lucky_candy_orange': '052059', 'lucky_candy_purple': '052060', 'lucky_candy_red': '052055', 'lucky_candy_yellow': '052056',
         'jelly_fish_random': '049', 'jelly_fish_blue': '049057', 'jelly_fish_green': '049058', 'jelly_fish_orange': '049059', 'jelly_fish_purple': '049060', 'jelly_fish_red': '049055', 'jelly_fish_yellow': '049056',
         'jelly_fish_striped_random': '091', 'jelly_fish_striped_blue': '091057', 'jelly_fish_striped_green': '091058', 'jelly_fish_striped_orange': '091059', 'jelly_fish_striped_purple': '091060', 'jelly_fish_striped_red': '091055', 'jelly_fish_striped_yellow': '091056',
@@ -1648,8 +1652,9 @@ function exportLevel() {
         'dispenser_color_bomb': '127',
         'dispenser_mystery_candy': '031',
         'dispenser_chameleon_candy': '067',
+        'dispenser_extra_time_candy': '069',
+        'dispenser_extra_moves_candy': '085',
         'dispenser_lucky_candy': '068',
-        'dispenser_time_candy': '069',
         'dispenser_key': '030',
         'dispenser_ingredient': '027',
         'dispenser_licorice_swirl': '028',
@@ -1820,6 +1825,24 @@ function exportLevel() {
     level['chameleonCandySpawn'] = Number(chameleonCandyInterval);
   }
 
+  const extraTimeCandyMin = document.getElementById('extra-time-candy-spawn-minimum').value;
+  if (extraTimeCandyMin !== '') {
+    level['timeCandyMax'] = Number(extraTimeCandyMin);
+  }
+  const extraTimeCandyInterval = document.getElementById('extra-time-candy-spawn-interval').value;
+  if (extraTimeCandyInterval !== '') {
+    level['timeCandySpawn'] = Number(extraTimeCandyInterval);
+  }
+
+  const extraMovesCandyMin = document.getElementById('extra-moves-candy-spawn-minimum').value;
+  if (extraMovesCandyMin !== '') {
+    level['extraMovesMin'] = Number(extraMovesCandyMin);
+  }
+  const extraMovesCandyInterval = document.getElementById('extra-moves-candy-spawn-interval').value;
+  if (extraMovesCandyInterval !== '') {
+    level['extraMovesSpawn'] = Number(extraMovesCandyInterval);
+  }
+
   const luckyCandyMin = document.getElementById('lucky-candy-spawn-minimum').value;
   if (luckyCandyMin !== '') {
     level['luckyCandyMax'] = Number(luckyCandyMin);
@@ -1827,15 +1850,6 @@ function exportLevel() {
   const luckyCandyInterval = document.getElementById('lucky-candy-spawn-interval').value;
   if (luckyCandyInterval !== '') {
     level['luckyCandySpawn'] = Number(luckyCandyInterval);
-  }
-
-  const timeCandyMin = document.getElementById('time-candy-spawn-minimum').value;
-  if (timeCandyMin !== '') {
-    level['timeCandyMax'] = Number(timeCandyMin);
-  }
-  const timeCandyInterval = document.getElementById('time-candy-spawn-interval').value;
-  if (timeCandyInterval !== '') {
-    level['timeCandySpawn'] = Number(timeCandyInterval);
   }
 
   const keyMin = document.getElementById('key-spawn-minimum').value;
