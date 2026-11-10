@@ -1576,6 +1576,7 @@ function exportLevel() {
         'bobber': '066',
         'magic_mixer': '062',
         'gumball_machine': '230',
+        'toffee_tornado': '037',
         'cake_bomb_top_left': '035', 'cake_bomb_top_right': '035', 'cake_bomb_bottom_left': '035', 'cake_bomb_bottom_right': '035',
         'mall-o-matic_head': '231', 'mall-o-matic_tail': '231',
         'citrus_chew_top_left': '233', 'citrus_chew_top_right': '233', 'citrus_chew_bottom_left': '233', 'citrus_chew_bottom_right': '233',
