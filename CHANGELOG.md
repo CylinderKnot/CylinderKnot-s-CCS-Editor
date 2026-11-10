@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.7
+The toffee tornadoes update:
+- You can now draw and delete toffee tornadoes. That's it.
+
 ## 0.4.6
 The extra time and extra moves candies update:
 - You can now draw, color, and delete extra time and extra moves candies.
