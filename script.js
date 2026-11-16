@@ -12,8 +12,8 @@ const BOARD_LAYERS = [
   "candies_blockers",
   "encasings",
   "order_locks",
-  "walls",
   "crystals",
+  "walls",
   "portals",
   "ingredient_exits",
   "dispensers",
@@ -30,11 +30,11 @@ const VISUAL_LAYERS = [
   'encasings',
   'order_locks',
   'order_locks_icons',
+  'crystals',
   'walls_up',
   'walls_down',
   'walls_left',
   'walls_right',
-  'crystals',
   'portals',
   'ingredient_exits',
   'dispensers',
@@ -260,8 +260,8 @@ function createNewBoard() {
   candiesBlockersLayerContents = initializeLayerDimensions(candiesBlockersLayerContents);
   encasingsLayerContents = initializeLayerDimensions(encasingsLayerContents);
   orderLocksLayerContents = initializeLayerDimensions(orderLocksLayerContents);
-  wallsLayerContents = initializeLayerDimensions(wallsLayerContents);
   crystalsLayerContents = initializeLayerDimensions(crystalsLayerContents);
+  wallsLayerContents = initializeLayerDimensions(wallsLayerContents);
   portalsLayerContents = initializeLayerDimensions(portalsLayerContents);
   ingredientExitsLayerContents = initializeLayerDimensions(ingredientExitsLayerContents);
   dispensersLayerContents = initializeLayerDimensions(dispensersLayerContents);
@@ -277,8 +277,8 @@ function createNewBoard() {
       candiesBlockersLayerContents[boardRow][boardCol] = 'candy_random';
       encasingsLayerContents[boardRow][boardCol] = 'empty';
       orderLocksLayerContents[boardRow][boardCol] = 'empty';
-      wallsLayerContents[boardRow][boardCol] = 'empty';
       crystalsLayerContents[boardRow][boardCol] = 'empty';
+      wallsLayerContents[boardRow][boardCol] = 'empty';
       portalsLayerContents[boardRow][boardCol] = ['empty', 'empty'];
       ingredientExitsLayerContents[boardRow][boardCol] = 'empty';
       dispensersLayerContents[boardRow][boardCol] = 'empty';
@@ -421,8 +421,8 @@ function renderNewBoardFromLayers() {
         rowCell.appendChild(image);
       }
       // order locks
-      // walls
       // crystals
+      // walls
       // portals
       if (document.getElementById('visible_portals').checked) {
         for (let i = 0; i < portalsLayerContents[boardRow][boardCol].length; i++) {
@@ -570,43 +570,7 @@ function updateSelection(object, element, layer) {
   currentlySelectedElement = element;
   console.log(`current element is ${currentlySelectedElement}`);
 
-  let conveyorBeltsHelpText = document.getElementById('conveyor-belts-help-text');
-
-  if (element === 'conveyor_unknown') {
-    conveyorBeltsHelpText.innerText = '^ To start drawing a conveyor belt, first click its starting location.';
-  } else {
-    conveyorBeltsHelpText.innerText = '';
-  }
-
-  let largeBlockersHelpText = document.getElementById('large-blockers-help-text');
-
-  if (element === 'cake_bomb_ui') {
-    largeBlockersHelpText.innerText = '^ To draw a cake bomb, click where its upper-left corner will be.';
-  } else if (element === 'mall-o-matic_head') {
-    largeBlockersHelpText.innerText = '^ To draw a mall-o-matic, first click where its head will be.';
-  } else if (element === 'citrus_chew_ui') {
-    largeBlockersHelpText.innerText = '^ To draw a citrus chew, click where its upper-left corner will be.';
-  } else {
-    largeBlockersHelpText.innerText = '';
-  }
-
-  let portalsHelpText = document.getElementById('portals-help-text');
-
-  if (element === 'portal_entrance') {
-    portalsHelpText.innerText = '^ Click the board where you want the entrance to be.'
-  } else {
-    portalsHelpText.innerText = '';
-  }
-
-  if (previouslySelectedElement === 'conveyor_unknown') {
-    deleteIncompleteConveyorTilesAndRestartConveyorBeltDrawing();
-  }
-  if (previouslySelectedElement === 'mall-o-matic_head') {
-    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
-  }
-  if (previouslySelectedElement === 'portal_entrance') {
-    deleteIncompletePortalsAndRestartPortalDrawing();
-  }
+  resetHelpTextsAndDrawStatesOnSelection();
 
   // set current layer
   let layerRadio = document.getElementById(`selected_${layer}`);
@@ -624,6 +588,69 @@ function updateDispenserElementSelection(object, element, layer) {
     object.classList.remove('dispenser-element-selected');
   } else {
     object.classList.add('dispenser-element-selected');
+  }
+
+  // update current selection to dispenser
+  try {
+    document.querySelector(".element-selected").classList.remove("element-selected");
+  } catch {
+
+  }
+
+  let dispenserButton = document.querySelector('button[data-element="dispenser"]');
+  dispenserButton.classList.add("element-selected");
+  previouslySelectedElement = currentlySelectedElement;
+  currentlySelectedElement = 'dispenser';
+  console.log(`current element is ${currentlySelectedElement}`);
+
+  resetHelpTextsAndDrawStatesOnSelection();
+
+  // set current layer
+  let layerRadio = document.getElementById(`selected_${layer}`);
+  layerRadio.checked = true;
+  currentLayer = layer;
+  layerOfCurrentlySelectedElement = layer;
+  console.log(`current layer is ${currentLayer}`);
+  console.log(`layer of currently selected element is ${layerOfCurrentlySelectedElement}`)
+}
+
+function resetHelpTextsAndDrawStatesOnSelection() {
+  let conveyorBeltsHelpText = document.getElementById('conveyor-belts-help-text');
+
+  if (currentlySelectedElement === 'conveyor_unknown') {
+    conveyorBeltsHelpText.innerText = '^ To start drawing a conveyor belt, first click its starting location.';
+  } else {
+    conveyorBeltsHelpText.innerText = '';
+  }
+
+  let largeBlockersHelpText = document.getElementById('large-blockers-help-text');
+
+  if (currentlySelectedElement === 'cake_bomb_ui') {
+    largeBlockersHelpText.innerText = '^ To draw a cake bomb, click where its upper-left corner will be.';
+  } else if (currentlySelectedElement === 'mall-o-matic_head') {
+    largeBlockersHelpText.innerText = '^ To draw a mall-o-matic, first click where its head will be.';
+  } else if (currentlySelectedElement === 'citrus_chew_ui') {
+    largeBlockersHelpText.innerText = '^ To draw a citrus chew, click where its upper-left corner will be.';
+  } else {
+    largeBlockersHelpText.innerText = '';
+  }
+
+  let portalsHelpText = document.getElementById('portals-help-text');
+
+  if (currentlySelectedElement === 'portal_entrance') {
+    portalsHelpText.innerText = '^ Click the board where you want the entrance to be.'
+  } else {
+    portalsHelpText.innerText = '';
+  }
+
+  if (previouslySelectedElement === 'conveyor_unknown') {
+    deleteIncompleteConveyorTilesAndRestartConveyorBeltDrawing();
+  }
+  if (previouslySelectedElement === 'mall-o-matic_head') {
+    deleteIncompleteMallOMaticsAndRestartMallOMaticDrawing();
+  }
+  if (previouslySelectedElement === 'portal_entrance') {
+    deleteIncompletePortalsAndRestartPortalDrawing();
   }
 }
 
@@ -1155,7 +1182,7 @@ function editConveyorBeltAt(boardRow, boardCol) {
   editingConveyorBeltAt = [boardRow, boardCol];
 
   const helpText = document.getElementById('edit-conveyor-belt-coordinates');
-  helpText.innerText = `Editing conveyor belt at row ${boardRow}, column ${boardCol}`;
+  helpText.innerText = `Editing conveyor belt at row ${boardRow + 1}, column ${boardCol + 1}`;
 
   document.getElementById('edit-conveyor-belt-menu').style.display = 'block';
 }
@@ -1443,6 +1470,7 @@ document.querySelectorAll(".select-element").forEach(function(element) {
   image.src = `elements/${layer}/${elementName}.png`;
 
   // handle clicking on new elements...
+  button.setAttribute('data-element', elementName);
   button.setAttribute('onclick', `updateSelection(this, \"${elementName}\", \"${layer}\")`);
 
   element.remove();

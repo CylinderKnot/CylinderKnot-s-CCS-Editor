@@ -290,6 +290,22 @@
             </tr>
             <tr>
               <td>
+                <input type="radio" name="selected_layer" id="selected_crystals" onclick="selectLayerViaRadio(this)" value="crystals" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_crystals" onclick="updateLayerVisibilities()" value="crystals" checked />
+              </td>
+              <td>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_crystals">Crystals</button>
+              </td>
+            </tr>
+            <tr id="dropdown_crystals" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Crystals (not yet implemented)</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <input type="radio" name="selected_layer" id="selected_walls" onclick="selectLayerViaRadio(this)" value="walls" />
               </td>
               <td>
@@ -305,22 +321,6 @@
                 <p>Candy Cane Curls (not yet implemented)</p>
                 <p>Licorice Fences (not yet implemented)</p>
                 <p>Licorice Curls (not yet implemented)</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="radio" name="selected_layer" id="selected_crystals" onclick="selectLayerViaRadio(this)" value="crystals" />
-              </td>
-              <td>
-                <input type="checkbox" name="visible_layer" id="visible_crystals" onclick="updateLayerVisibilities()" value="crystals" checked />
-              </td>
-              <td>
-                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_crystals">Crystals</button>
-              </td>
-            </tr>
-            <tr id="dropdown_crystals" class="dropdown-contents" style="display: none">
-              <td colspan="3">
-                <p>Crystals (not yet implemented)</p>
               </td>
             </tr>
             <tr>
