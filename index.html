@@ -21,7 +21,7 @@
       <div class="navbar">
         <div class="navbar-item-container">
           <div class="navbar-flex">
-            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.4.7</p>
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.4.8</p>
           </div>
           <div class="navbar-flex">
             <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
@@ -290,6 +290,22 @@
             </tr>
             <tr>
               <td>
+                <input type="radio" name="selected_layer" id="selected_crystals" onclick="selectLayerViaRadio(this)" value="crystals" />
+              </td>
+              <td>
+                <input type="checkbox" name="visible_layer" id="visible_crystals" onclick="updateLayerVisibilities()" value="crystals" checked />
+              </td>
+              <td>
+                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_crystals">Crystals</button>
+              </td>
+            </tr>
+            <tr id="dropdown_crystals" class="dropdown-contents" style="display: none">
+              <td colspan="3">
+                <p>Crystals (not yet implemented)</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <input type="radio" name="selected_layer" id="selected_walls" onclick="selectLayerViaRadio(this)" value="walls" />
               </td>
               <td>
@@ -305,22 +321,6 @@
                 <p>Candy Cane Curls (not yet implemented)</p>
                 <p>Licorice Fences (not yet implemented)</p>
                 <p>Licorice Curls (not yet implemented)</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="radio" name="selected_layer" id="selected_crystals" onclick="selectLayerViaRadio(this)" value="crystals" />
-              </td>
-              <td>
-                <input type="checkbox" name="visible_layer" id="visible_crystals" onclick="updateLayerVisibilities()" value="crystals" checked />
-              </td>
-              <td>
-                <button class="dropdown" onclick="toggleDropdown(this)" associd="dropdown_crystals">Crystals</button>
-              </td>
-            </tr>
-            <tr id="dropdown_crystals" class="dropdown-contents" style="display: none">
-              <td colspan="3">
-                <p>Crystals (not yet implemented)</p>
               </td>
             </tr>
             <tr>
@@ -569,7 +569,6 @@
           <p>No requirements can be specified.</p>
         </div>
         <div class="config-panel-section" id="config-panel-orders-requirements" style="display: none;">
-          <p>Orders:</p>
           <table id="orders-table">
             <thead>
               <tr>
@@ -594,8 +593,11 @@
           </table>
         </div>
         <div class="config-panel-section" id="config-panel-ingredients-requirements" style="display: none;">
-          <p>Ingredients:</p>
           <table id="ingredients-table">
+            <thead>
+              <th>Ingredient</th>
+              <th>Amount</th>
+            </thead>
             <tbody id="ingredients-table-body">
               <tr>
                 <td><p>Hazelnuts</p></td>

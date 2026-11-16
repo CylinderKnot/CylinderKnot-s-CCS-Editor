@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.8
+A whole bunch of UI improvements:
+- Switched the order of the Crystals and Walls layers to reflect how they are in-game
+- Clicking on a dispenser element now automatically selects the dispenser itself, eliminating the need to click it separately.
+- The conveyor belt edit mode dialog now uses one-based row and column indices. Future dialogs will do this as well.
+- Standardized the headers for the orders and ingredients tables in the config panel
+- In the orders and ingredients tables, the Amount input now adjusts to page width properly.
+
 ## 0.4.7
 The toffee tornadoes update:
 - You can now draw and delete toffee tornadoes. That's it.

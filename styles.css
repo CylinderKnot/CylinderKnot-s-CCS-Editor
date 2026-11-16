@@ -391,9 +391,17 @@
   flex-direction: column;
 }
 
+.order-requirement-amount {
+  width: 100%;
+}
+
 #config-panel-ingredients-requirements {
   display: flex;
   flex-direction: column;
+}
+
+.ingredient-requirement-amount {
+  width: 100%;
 }
 
 .config-panel-section thead th {
