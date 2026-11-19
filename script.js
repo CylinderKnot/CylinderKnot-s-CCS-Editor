@@ -1543,7 +1543,7 @@ function updateRequirementsSections() {
   }
 }
 
-function generateStatistics() {
+function generateBoardStatistics() {
   let boardStats = {
     'starting_jelly_1': 0, // tiles
     'starting_jelly_2': 0,
@@ -1614,38 +1614,41 @@ function generateStatistics() {
     'starting_bonbon_blitz_2': 0,
     'starting_bonbon_blitz_3': 0,
     'starting_bonbon_blitz_4': 0,
-    'singleSugarChests': 0, // encasings
-    'doubleSugarChests': 0,
-    'tripleSugarChests': 0,
-    'quadrupleSugarChests': 0,
-    'quintupleSugarChests': 0,
-    'startingSingleSugarCoats': 0,
-    'startingDoubleSugarCoats': 0,
-    'startingTripleSugarCoats': 0,
-    'ingredientExits': 0, // ingredient exits
-    'elementSpawnPoints': 0, // dispensers
-    'everythingSpawnPoints': 0,
-    'candySpawnPoints': 0,
-    'stripedHorizontalSpawnPoints': 0,
-    'stripedVerticalSpawnPoints': 0,
-    'stripedEitherSpawnPoints': 0,
-    'wrappedSpawnPoints': 0,
-    'jellyFishSpawnPoints': 0,
-    'colorBombSpawnPoints': 0,
-    'mysteryCandySpawnPoints': 0,
-    'luckyCandySpawnPoints': 0,
-    'keySpawnPoints': 0,
-    'ingredientSpawnPoints': 0,
-    'licoriceSwirlSpawnPoints': 0,
-    'bombSpawnPoints': 0,
-    'toffeeSwirlSpawnPoints': 0,
-    'sugarCoatSpawnPoints': 0,
-    'blueSpawnPoints': 0,
-    'greenSpawnPoints': 0,
-    'orangeSpawnPoints': 0,
-    'purpleSpawnPoints': 0,
-    'redSpawnPoints': 0,
-    'yellowSpawnPoints': 0
+    'sugar_chest_1': 0, // encasings
+    'sugar_chest_2': 0,
+    'sugar_chest_3': 0,
+    'sugar_chest_4': 0,
+    'sugar_chest_5': 0,
+    'starting_sugar_coat_1': 0,
+    'starting_sugar_coat_2': 0,
+    'starting_sugar_coat_3': 0,
+    'ingredient_exit': 0, // ingredient exits
+    'element_spawn_point': 0, // dispensers
+    'everything_spawn_point': 0,
+    'dispenser_candy_spawn': 0,
+    'dispenser_striped_horizontal': 0,
+    'dispenser_striped_vertical': 0,
+    'dispenser_striped_either': 0,
+    'dispenser_wrapped': 0,
+    'dispenser_jelly_fish': 0,
+    'dispenser_color_bomb': 0,
+    'dispenser_mystery_candy': 0,
+    'dispenser_chameleon_candy': 0,
+    'dispenser_extra_time_candy': 0,
+    'dispenser_extra_moves_candy': 0,
+    'dispenser_lucky_candy': 0,
+    'dispenser_key': 0,
+    'dispenser_ingredient': 0,
+    'dispenser_licorice_swirl': 0,
+    'dispenser_bomb': 0,
+    'dispenser_toffee_swirl': 0,
+    'dispenser_sugar_coat': 0,
+    'dispenser_blue': 0,
+    'dispenser_green': 0,
+    'dispenser_orange': 0,
+    'dispenser_purple': 0,
+    'dispenser_red': 0,
+    'dispenser_yellow': 0
   };
 
   // tiles
@@ -1668,7 +1671,6 @@ function generateStatistics() {
       for (let i = 0; i < colorSuffixes.length; i++) {
         if (element.includes(colorSuffixes[i])) {
           boardStats[`fixed${colorSuffixes[i]}`]++;
-          console.log('I hit fixed colors');
         }
       }
 
@@ -1691,20 +1693,17 @@ function generateStatistics() {
             statKey = statKey.slice(0, statKey.length - 1); // remove the underscore at the end of the prefix
             boardStats[`starting_${statKey}`]++;
           }
-          console.log('I hit colorable elements');
         }
       }
 
       if (element === 'color_bomb') {
         boardStats['starting_color_bomb']++;
-        console.log('I hit color bomb');
       }
 
       const ingredients = ['hazelnut', 'cherry'];
       for (let i = 0; i < ingredients.length; i++) {
         if (element === ingredients[i]) {
           boardStats[`starting_${element}`]++;
-          console.log('I hit ingredients');
         }
       }
 
@@ -1720,7 +1719,6 @@ function generateStatistics() {
           }
 
           boardStats[`starting_${element}`]++;
-          console.log('I hit spawnable normal blockers');
         }
       }
 
@@ -1736,27 +1734,22 @@ function generateStatistics() {
           }
 
           boardStats[element]++;
-          console.log('I hit non-spawnable normal blockers');
         }
       }
 
       if (element === 'cake_bomb_top_left') {
         boardStats['cake_bomb']++;
-        console.log('I hit cake bomb');
       }
       if (element === 'mall-o-matic_head') {
         boardStats['mall-o-matic']++;
-        console.log('I hit mall-o-matic');
       }
       if (element === 'citrus_chew_top_left') {
         boardStats['citrus_chew']++;
-        console.log('I hit citrus chew');
       }
 
       if (element.indexOf('bonbon_blitz_') === 0) {
         let hits = element.slice(element.length - 1);
         boardStats[`starting_bonbon_blitz_${hits}`]++;
-        console.log('I hit bonbon blitz');
       }
     }
   }
@@ -1766,30 +1759,12 @@ function generateStatistics() {
     for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
       let element = encasingsLayerContents[boardRow][boardCol];
 
-      if (element === 'sugar_chest_1') {
-        boardStats['singleSugarChests']++;
-      }
-      if (element === 'sugar_chest_2') {
-        boardStats['doubleSugarChests']++;
-      }
-      if (element === 'sugar_chest_3') {
-        boardStats['tripleSugarChests']++;
-      }
-      if (element === 'sugar_chest_4') {
-        boardStats['quadrupleSugarChests']++;
-      }
-      if (element === 'sugar_chest_5') {
-        boardStats['quintupleSugarChests']++;
+      if (element.indexOf('sugar_chest_') === 0) {
+        boardStats[element]++;
       }
 
-      if (element === 'sugar_coat_1') {
-        boardStats['startingSingleSugarCoats']++;
-      }
-      if (element === 'sugar_coat_2') {
-        boardStats['startingDoubleSugarCoats']++;
-      }
-      if (element === 'sugar_coat_3') {
-        boardStats['startingTripleSugarCoats']++;
+      if (element.indexOf('sugar_coat_') === 0) {
+        boardStats[`starting_${element}`];
       }
     }
   }
@@ -1800,85 +1775,25 @@ function generateStatistics() {
       let element = ingredientExitsLayerContents[boardRow][boardCol];
 
       if (element === 'ingredient_exit') {
-        boardStats['ingredientExits']++;
+        boardStats[element]++;
       }
     }
   }
 
   // dispensers
   for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
-    for  (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
       let element = dispensersLayerContents[boardRow][boardCol];
       let dispenserElements = dispensersElementsLayerContents[boardRow][boardCol];
 
       if (element === 'dispenser') {
-        boardStats['elementSpawnPoints']++;
+        boardStats['element_spawn_point']++;
 
         if (dispenserElements.length === 0) {
-          boardStats['everythingSpawnPoints']++;
+          boardStats['everything_spawn_point']++;
         } else {
-          if (dispenserElements.includes('dispenser_candy_spawn')) {
-            boardStats['candySpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_striped_horizontal')) {
-            boardStats['stripedHorizontalSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_striped_vertical')) {
-            boardStats['stripedVerticalSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_striped_either')) {
-            boardStats['stripedEitherSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_wrapped')) {
-            boardStats['wrappedSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_jelly_fish')) {
-            boardStats['jellyFishSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_color_bomb')) {
-            boardStats['colorBombSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_mystery_candy')) {
-            boardStats['mysteryCandySpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_lucky_candy')) {
-            boardStats['luckyCandySpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_key')) {
-            boardStats['keySpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_ingredient')) {
-            boardStats['ingredientSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_licorice_swirl')) {
-            boardStats['licoriceSwirlSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_bomb')) {
-            boardStats['bombSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_toffee_swirl')) {
-            boardStats['toffeeSwirlSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_sugar_coat')) {
-            boardStats['sugarCoatSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_blue')) {
-            boardStats['blueSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_green')) {
-            boardStats['greenSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_orange')) {
-            boardStats['orangeSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_purple')) {
-            boardStats['purpleSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_red')) {
-            boardStats['redSpawnPoints']++;
-          }
-          if (dispenserElements.includes('dispenser_yellow')) {
-            boardStats['yellowSpawnPoints']++;
+          for (let i = 0; i < dispenserElements.length; i++) {
+            boardStats[dispenserElements[i]]++;
           }
         }
       }
@@ -1892,10 +1807,10 @@ function displayStatisticsPopup() {
   closeAllPopups();
   clearAllEditModeState();
 
-  let boardStats = generateStatistics();
+  let boardStats = generateBoardStatistics();
   console.log(boardStats);
 
-  // do this later
+  // do the actual displaying later
 }
 
 function exportLevel() {
