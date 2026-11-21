@@ -42,6 +42,14 @@ const VISUAL_LAYERS = [
   'selection_image'
 ];
 
+const COLORABLE = [
+  'candy_random', 'striped_horizontal_random', 'striped_vertical_random', 'wrapped_random', 'bomb_random', 'key_random',
+  'mystery_candy_random', 'chameleon_candy_random', 'extra_time_candy_random', 'extra_moves_candy_random', 'lucky_candy_random',
+  'jelly_fish_random', 'jelly_fish_striped_random', 'jelly_fish_wrapped_random', 'jelly_fish_color_bomb_random'
+];
+
+const COLORS_TO_PAINT = ['candy_random_ui', 'candy_blue', 'candy_green', 'candy_orange', 'candy_purple', 'candy_red', 'candy_yellow'];
+
 const SUGAR_COATABLE = [
   'candy_random', 'candy_blue', 'candy_green', 'candy_orange', 'candy_purple', 'candy_red', 'candy_yellow',
   'striped_horizontal_random', 'striped_horizontal_blue', 'striped_horizontal_green', 'striped_horizontal_orange', 'striped_horizontal_purple', 'striped_horizontal_red', 'striped_horizontal_yellow',
@@ -81,6 +89,8 @@ let tilesLayerContents = [[]];
 let rapidsPathsLayerContents = [[]];
 let conveyorBeltsLayerContents = [[]];
 let conveyorPortalsLayerContents = [[]];
+let colorableElementsLayerContents = [[]];
+let colorsLayerContents = [[]];
 let candiesBlockersLayerContents = [[]];
 let encasingsLayerContents = [[]];
 let orderLocksLayerContents = [[]];
@@ -257,6 +267,8 @@ function createNewBoard() {
   rapidsPathsLayerContents = initializeLayerDimensions(rapidsPathsLayerContents);
   conveyorBeltsLayerContents = initializeLayerDimensions(conveyorBeltsLayerContents);
   conveyorPortalsLayerContents = initializeLayerDimensions(conveyorPortalsLayerContents);
+  colorableElementsLayerContents = initializeLayerDimensions(colorableElementsLayerContents);
+  colorsLayerContents = initializeLayerDimensions(colorsLayerContents);
   candiesBlockersLayerContents = initializeLayerDimensions(candiesBlockersLayerContents);
   encasingsLayerContents = initializeLayerDimensions(encasingsLayerContents);
   orderLocksLayerContents = initializeLayerDimensions(orderLocksLayerContents);
@@ -274,6 +286,8 @@ function createNewBoard() {
       rapidsPathsLayerContents[boardRow][boardCol] = 'empty';
       conveyorBeltsLayerContents[boardRow][boardCol] = 'empty';
       conveyorPortalsLayerContents[boardRow][boardCol] = 'empty';
+      colorableElementsLayerContents[boardRow][boardCol] = 'candy_random';
+      colorsLayerContents[boardRow][boardCol] = 'random';
       candiesBlockersLayerContents[boardRow][boardCol] = 'candy_random';
       encasingsLayerContents[boardRow][boardCol] = 'empty';
       orderLocksLayerContents[boardRow][boardCol] = 'empty';
@@ -1031,32 +1045,22 @@ function drawCitrusChewAt(boardRow, boardCol) {
 function drawCandyOrBlockerAt(boardRow, boardCol) {
   // only add something if a tile is present
   if (tilesLayerContents[boardRow][boardCol] !== 'empty') {
-    const colorsToPaint = ['candy_random_ui', 'candy_blue', 'candy_green', 'candy_orange', 'candy_purple', 'candy_red', 'candy_yellow'];
     
     // we're doing color painting
-    if (colorsToPaint.includes(currentlySelectedElement)) {
-      const colorableElementPrefixes = ['candy_', 'striped_horizontal_', 'striped_vertical_', 'wrapped_', 'bomb_', 'key_', 'mystery_candy_', 'chameleon_candy_', 'extra_time_candy_', 'extra_moves_candy_', 'lucky_candy_', 'jelly_fish_', 'jelly_fish_striped_', 'jelly_fish_wrapped_', 'jelly_fish_color_bomb_'];
-      
-      let isElementColorable = false;
-      for (let i = 0; i < colorableElementPrefixes.length; i++) {
-        if (candiesBlockersLayerContents[boardRow][boardCol].indexOf(colorableElementPrefixes[i]) === 0) {
-          isElementColorable = true;
-        }
-      }
+    if (COLORS_TO_PAINT.includes(currentlySelectedElement)) {      
+      // is the element colorable? let's find out
+      const colorableElementToCheck = colorableElementsLayerContents[boardRow][boardCol];
 
-      if (isElementColorable) {
+      if (COLORABLE.includes(colorableElementToCheck)) {
         // get color after last underscore of selected color
         let colorToSet = currentlySelectedElement.split('_').pop();
         if (colorToSet === 'ui') {
           colorToSet = 'random';
         }
 
-        // replace
-        let currentCandy = candiesBlockersLayerContents[boardRow][boardCol];
-        let currentCandyArray = currentCandy.split('_');
-        currentCandyArray[currentCandyArray.length - 1] = colorToSet;
-        let newCandy = currentCandyArray.join('_');
-        candiesBlockersLayerContents[boardRow][boardCol] = newCandy;
+        colorsLayerContents[boardRow][boardCol] = colorToSet;
+        let colorableElementWithoutSuffix = colorableElementsLayerContents[boardRow][boardCol].replace('_random', '');
+        candiesBlockersLayerContents[boardRow][boardCol] = `${colorableElementWithoutSuffix}_${colorToSet}`;
       }
 
     } else { // we're doing regular drawing
@@ -1068,7 +1072,18 @@ function drawCandyOrBlockerAt(boardRow, boardCol) {
         }
       }
 
-      candiesBlockersLayerContents[boardRow][boardCol] = currentlySelectedElement;
+      // if currently selected element is colorable, put it in the colorableElementsLayerContents and preserve its color
+      if (COLORABLE.includes(currentlySelectedElement)) {
+        colorableElementsLayerContents[boardRow][boardCol] = currentlySelectedElement;
+        let colorableElementWithoutSuffix = colorableElementsLayerContents[boardRow][boardCol].replace('_random', '');
+        let color = colorsLayerContents[boardRow][boardCol];
+        candiesBlockersLayerContents[boardRow][boardCol] = `${colorableElementWithoutSuffix}_${color}`;
+      } else {
+        // otherwise, remove the element from colorableElementsLayerContents and set the color to random
+        colorableElementsLayerContents[boardRow][boardCol] = 'empty';
+        colorsLayerContents[boardRow][boardCol] = 'random';
+        candiesBlockersLayerContents[boardRow][boardCol] = currentlySelectedElement;
+      }
 
       // however, if sugar coats are present, remove them if a blocker cannot be sugar coated
       if (!SUGAR_COATABLE.includes(currentlySelectedElement) && encasingsLayerContents[boardRow][boardCol].includes('sugar_coat_')) {
@@ -1306,27 +1321,71 @@ function deleteIncompleteConveyorTilesAndRestartConveyorBeltDrawing() {
 function deleteCandyOrBlockerAt(boardRow, boardCol) {
   // if we have a cake bomb:
   if (candiesBlockersLayerContents[boardRow][boardCol] === 'cake_bomb_top_left') {
+    colorableElementsLayerContents[boardRow][boardCol] === 'empty';
+    colorsLayerContents[boardRow][boardCol] = 'random';
     candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
+
+    colorableElementsLayerContents[boardRow][boardCol + 1] = 'empty';
+    colorsLayerContents[boardRow][boardCol + 1] = 'random';
     candiesBlockersLayerContents[boardRow][boardCol + 1] = 'empty';
+
+    colorableElementsLayerContents[boardRow + 1][boardCol] = 'empty';
+    colorsLayerContents[boardRow + 1][boardCol] = 'random';
     candiesBlockersLayerContents[boardRow + 1][boardCol] = 'empty';
+
+    colorableElementsLayerContents[boardRow + 1][boardCol + 1] = 'empty';
+    colorsLayerContents[boardRow + 1][boardCol + 1] = 'random';
     candiesBlockersLayerContents[boardRow + 1][boardCol + 1] = 'empty';
   }
   if (candiesBlockersLayerContents[boardRow][boardCol] === 'cake_bomb_top_right') {
+    colorableElementsLayerContents[boardRow][boardCol - 1] = 'empty';
+    colorsLayerContents[boardRow][boardCol - 1] = 'random';
     candiesBlockersLayerContents[boardRow][boardCol - 1] = 'empty';
+
+    colorableElementsLayerContents[boardRow][boardCol] === 'empty';
+    colorsLayerContents[boardRow][boardCol] = 'random';
     candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
+
+    colorableElementsLayerContents[boardRow + 1][boardCol - 1] = 'empty';
+    colorsLayerContents[boardRow + 1][boardCol - 1] = 'random';
     candiesBlockersLayerContents[boardRow + 1][boardCol - 1] = 'empty';
+
+    colorableElementsLayerContents[boardRow + 1][boardCol] = 'empty';
+    colorsLayerContents[boardRow + 1][boardCol] = 'random';
     candiesBlockersLayerContents[boardRow + 1][boardCol] = 'empty';
   }
   if (candiesBlockersLayerContents[boardRow][boardCol] === 'cake_bomb_bottom_left') {
+    colorableElementsLayerContents[boardRow - 1][boardCol] = 'empty';
+    colorsLayerContents[boardRow - 1][boardCol] = 'random';
     candiesBlockersLayerContents[boardRow - 1][boardCol] = 'empty';
+
+    colorableElementsLayerContents[boardRow - 1][boardCol + 1] = 'empty';
+    colorsLayerContents[boardRow - 1][boardCol + 1] = 'random';
     candiesBlockersLayerContents[boardRow - 1][boardCol + 1] = 'empty';
+
+    colorableElementsLayerContents[boardRow][boardCol] === 'empty';
+    colorsLayerContents[boardRow][boardCol] = 'random';
     candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
+
+    colorableElementsLayerContents[boardRow][boardCol + 1] = 'empty';
+    colorsLayerContents[boardRow][boardCol + 1] = 'random';
     candiesBlockersLayerContents[boardRow][boardCol + 1] = 'empty';
   }
   if (candiesBlockersLayerContents[boardRow][boardCol] === 'cake_bomb_bottom_right') {
+    colorableElementsLayerContents[boardRow - 1][boardCol - 1] = 'empty';
+    colorsLayerContents[boardRow - 1][boardCol - 1] = 'random';
     candiesBlockersLayerContents[boardRow - 1][boardCol - 1] = 'empty';
+
+    colorableElementsLayerContents[boardRow - 1][boardCol] = 'empty';
+    colorsLayerContents[boardRow - 1][boardCol] = 'random';
     candiesBlockersLayerContents[boardRow - 1][boardCol] = 'empty';
+
+    colorableElementsLayerContents[boardRow][boardCol - 1] = 'empty';
+    colorsLayerContents[boardRow][boardCol - 1] = 'random';
     candiesBlockersLayerContents[boardRow][boardCol - 1] = 'empty';
+
+    colorableElementsLayerContents[boardRow][boardCol] === 'empty';
+    colorsLayerContents[boardRow][boardCol] = 'random';
     candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
   }
 
@@ -1339,6 +1398,8 @@ function deleteCandyOrBlockerAt(boardRow, boardCol) {
   }
 
   // delete only the candy or blocker
+  colorableElementsLayerContents[boardRow][boardCol] = 'empty';
+  colorsLayerContents[boardRow][boardCol] = 'random';
   candiesBlockersLayerContents[boardRow][boardCol] = 'empty';
 
   // however, if a sugar coat is present, delete it as well
@@ -1357,6 +1418,8 @@ function deleteTileGroupsBlockerAt(boardRow, boardCol) {
         const blockerTilesToDelete = tileGroupBlockers[blockerIndex]['tiles'];
         for (let i = 0; i < blockerTilesToDelete.length; i++) {
           const [tileToDeleteX, tileToDeleteY] = blockerTilesToDelete[i];
+          colorableElementsLayerContents[tileToDeleteY][tileToDeleteX] = 'empty';
+          colorsLayerContents[tileToDeleteY][tileToDeleteX] = 'random';
           candiesBlockersLayerContents[tileToDeleteY][tileToDeleteX] = 'empty';
         }
 
@@ -1570,21 +1633,21 @@ function exportLevel() {
 
       // Candies and Blockers layer
       const candiesBlockersCodes = {
-        'candy_random': '002', 'candy_blue': '002057', 'candy_green': '002058', 'candy_orange': '002059', 'candy_purple': '002060', 'candy_red': '002055', 'candy_yellow': '002056',
-        'striped_horizontal_random': '045', 'striped_horizontal_blue': '045057', 'striped_horizontal_green': '045058', 'striped_horizontal_orange': '045059', 'striped_horizontal_purple': '045060', 'striped_horizontal_red': '045055', 'striped_horizontal_yellow': '045056',
-        'striped_vertical_random': '046', 'striped_vertical_blue': '046057', 'striped_vertical_green': '046058', 'striped_vertical_orange': '046059', 'striped_vertical_purple': '046060', 'striped_vertical_red': '046055', 'striped_vertical_yellow': '046056',
-        'wrapped_random': '047', 'wrapped_blue': '047057', 'wrapped_green': '047058', 'wrapped_orange': '047059', 'wrapped_purple': '047060', 'wrapped_red': '047055', 'wrapped_yellow': '047056',
-        'bomb_random': '018', 'bomb_blue': '018057', 'bomb_green': '018058', 'bomb_orange': '018059', 'bomb_purple': '018060', 'bomb_red': '018055', 'bomb_yellow': '018056',
-        'key_random': '051', 'key_blue': '051057', 'key_green': '051058', 'key_orange': '051059', 'key_purple': '051060', 'key_red': '051055', 'key_yellow': '051056',
-        'mystery_candy_random': '032', 'mystery_candy_blue': '032057', 'mystery_candy_green': '032058', 'mystery_candy_orange': '032059', 'mystery_candy_purple': '032060', 'mystery_candy_red': '032055', 'mystery_candy_yellow': '032056',
-        'chameleon_candy_random': '033', 'chameleon_candy_blue': '033057', 'chameleon_candy_green': '033058', 'chameleon_candy_orange': '033059', 'chameleon_candy_purple': '033060', 'chameleon_candy_red': '033055', 'chameleon_candy_yellow': '033056',
-        'extra_time_candy_random': '050', 'extra_time_candy_blue': '050057', 'extra_time_candy_green': '050058', 'extra_time_candy_orange': '050059', 'extra_time_candy_purple': '050060', 'extra_time_candy_red': '050055', 'extra_time_candy_yellow': '050056',
-        'extra_moves_candy_random': '084', 'extra_moves_candy_blue': '084057', 'extra_moves_candy_green': '084058', 'extra_moves_candy_orange': '084059', 'extra_moves_candy_purple': '084060', 'extra_moves_candy_red': '084055', 'extra_moves_candy_yellow': '084056',
-        'lucky_candy_random': '052', 'lucky_candy_blue': '052057', 'lucky_candy_green': '052058', 'lucky_candy_orange': '052059', 'lucky_candy_purple': '052060', 'lucky_candy_red': '052055', 'lucky_candy_yellow': '052056',
-        'jelly_fish_random': '049', 'jelly_fish_blue': '049057', 'jelly_fish_green': '049058', 'jelly_fish_orange': '049059', 'jelly_fish_purple': '049060', 'jelly_fish_red': '049055', 'jelly_fish_yellow': '049056',
-        'jelly_fish_striped_random': '091', 'jelly_fish_striped_blue': '091057', 'jelly_fish_striped_green': '091058', 'jelly_fish_striped_orange': '091059', 'jelly_fish_striped_purple': '091060', 'jelly_fish_striped_red': '091055', 'jelly_fish_striped_yellow': '091056',
-        'jelly_fish_wrapped_random': '092', 'jelly_fish_wrapped_blue': '092057', 'jelly_fish_wrapped_green': '092058', 'jelly_fish_wrapped_orange': '092059', 'jelly_fish_wrapped_purple': '092060', 'jelly_fish_wrapped_red': '092055', 'jelly_fish_wrapped_yellow': '092056',
-        'jelly_fish_color_bomb_random': '093', 'jelly_fish_color_bomb_blue': '093057', 'jelly_fish_color_bomb_green': '093058', 'jelly_fish_color_bomb_orange': '093059', 'jelly_fish_color_bomb_purple': '093060', 'jelly_fish_color_bomb_red': '093055', 'jelly_fish_color_bomb_yellow': '093056',
+        'candy_random': '002',
+        'striped_horizontal_random': '045',
+        'striped_vertical_random': '046',
+        'wrapped_random': '047',
+        'bomb_random': '018',
+        'key_random': '051',
+        'mystery_candy_random': '032',
+        'chameleon_candy_random': '033',
+        'extra_time_candy_random': '050',
+        'extra_moves_candy_random': '084',
+        'lucky_candy_random': '052',
+        'jelly_fish_random': '049',
+        'jelly_fish_striped_random': '091',
+        'jelly_fish_wrapped_random': '092',
+        'jelly_fish_color_bomb_random': '093',
         'color_bomb': '044',
         'coconut_wheel': '043',
         'ufo': '061',
@@ -1615,8 +1678,17 @@ function exportLevel() {
         'bonbon_blitz_color_bomb_1': '182', 'bonbon_blitz_color_bomb_2': '183', 'bonbon_blitz_color_bomb_3': '184', 'bonbon_blitz_color_bomb_4': '185',
       };
 
+      const colorCodes = {
+        'blue': '057', 'green': '058', 'orange': '059', 'purple': '060', 'red': '055', 'yellow': '056', 'random': ''
+      };
+
       if (candiesBlockersLayerContents[boardRow][boardCol] !== 'empty') {
-        rowArray[boardCol] += candiesBlockersCodes[candiesBlockersLayerContents[boardRow][boardCol]];
+        if (COLORABLE.includes(colorableElementsLayerContents[boardRow][boardCol])) {
+          rowArray[boardCol] += candiesBlockersCodes[colorableElementsLayerContents[boardRow][boardCol]];
+          rowArray[boardCol] += colorCodes[colorsLayerContents[boardRow][boardCol]];
+        } else {
+          rowArray[boardCol] += candiesBlockersCodes[candiesBlockersLayerContents[boardRow][boardCol]];
+        }
       }
 
       // Encasings layer
@@ -1631,9 +1703,9 @@ function exportLevel() {
         rowArray[boardCol] += encasingsCodes[encasingsLayerContents[boardRow][boardCol]];
       }
 
-      // Walls layer
-
       // Crystals layer
+      
+      // Walls layer
 
       // Portals layer
       const portalsCodes = {

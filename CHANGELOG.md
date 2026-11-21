@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.9
+The "no more prefix nightmares" update:
+- Split candiesBlockersLayerContents into three layers to make colors and colorable elements easier to handle
+- colorableElementsLayerContents exclusively contains elements that can have color.
+- colorsLayerContents contains the colors to apply to the colorable elements.
+- For colorable elements, their value in candiesBlockersLayerContents is computed based on the two new layers.
+- As a fortunate side effect, changing one colorable element to another no longer resets the color.
+- Updated the level exporter to handle colorable elements more gracefully
+- Checking for "sugar coatable" still uses the old system for now. This may change in the future.
+
 ## 0.4.8
 A whole bunch of UI improvements:
 - Switched the order of the Crystals and Walls layers to reflect how they are in-game
