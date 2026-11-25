@@ -1608,6 +1608,252 @@ function updateRequirementsSections() {
   }
 }
 
+function generateBoardStatistics() {
+  let boardStats = {
+    'regular_tile': 0, // Tiles
+    'jelly_1': 0,
+    'jelly_2': 0,
+    'blue_tile': 0,
+    'black_tile': 0,
+    'fixed_blue': 0, // Candies and Blockers - Colors
+    'fixed_green': 0,
+    'fixed_orange': 0,
+    'fixed_purple': 0,
+    'fixed_red': 0,
+    'fixed_yellow': 0,
+    'candy': 0, // Candies and Blockers - Candies (colorable)
+    'striped_horizontal': 0,
+    'striped_vertical': 0,
+    'wrapped': 0,
+    'bomb': 0,
+    'key': 0,
+    'mystery_candy': 0,
+    'chameleon_candy': 0,
+    'extra_time_candy': 0,
+    'extra_moves_candy': 0,
+    'lucky_candy': 0,
+    'jelly_fish': 0,
+    'jelly_fish_striped': 0,
+    'jelly_fish_wrapped': 0,
+    'jelly_fish_color_bomb': 0,
+    'color_bomb': 0, // Candies and Blockers - Candies (not colorable)
+    'coconut_wheel': 0,
+    'ufo': 0,
+    'hazelnut': 0, // Candies and Blockers - Ingredients/Sprinks
+    'cherry': 0,
+    'frosting_1': 0, // Candies and Blockers - Blockers
+    'frosting_2': 0,
+    'frosting_3': 0,
+    'frosting_4': 0,
+    'frosting_5': 0,
+    'bubblegum_pop_1': 0,
+    'bubblegum_pop_2': 0,
+    'bubblegum_pop_3': 0,
+    'bubblegum_pop_4': 0,
+    'bubblegum_pop_5': 0,
+    'toffee_swirl_1': 0,
+    'toffee_swirl_2': 0,
+    'toffee_swirl_3': 0,
+    'toffee_swirl_4': 0,
+    'toffee_swirl_5': 0,
+    'rainbow_twist_1': 0,
+    'rainbow_twist_2': 0,
+    'rainbow_twist_3': 0,
+    'rainbow_twist_4': 0,
+    'rainbow_twist_5': 0,
+    'dark_chocolate_1': 0,
+    'dark_chocolate_2': 0,
+    'dark_chocolate_3': 0,
+    'dark_chocolate_4': 0,
+    'dark_chocolate_5': 0,
+    'dark_chocolate_spawner_1': 0,
+    'dark_chocolate_spawner_2': 0,
+    'dark_chocolate_spawner_3': 0,
+    'chocolate': 0,
+    'chocolate_spawner': 0,
+    'licorice_swirl': 0,
+    'licorice_shell_1': 0,
+    'licorice_shell_2': 0,
+    'licorice_shell_3': 0,
+    'jelly_jar_1': 0,
+    'jelly_jar_2': 0,
+    'bobber': 0,
+    'magic_mixer': 0,
+    'gumball_machine': 0,
+    'toffee_tornado': 0,
+    'cake_bomb_top_left': 0, // Candies and Blockers - Large Blockers
+    'mall-o-matic_head': 0,
+    'citrus_chew_top_left': 0,
+    'bonbon_blitz_striped_horizontal_1': 0, // Candies and Blockers - Bonbon Blitzes
+    'bonbon_blitz_striped_horizontal_2': 0,
+    'bonbon_blitz_striped_horizontal_3': 0,
+    'bonbon_blitz_striped_horizontal_4': 0,
+    'bonbon_blitz_striped_vertical_1': 0,
+    'bonbon_blitz_striped_vertical_2': 0,
+    'bonbon_blitz_striped_vertical_3': 0,
+    'bonbon_blitz_striped_vertical_4': 0,
+    'bonbon_blitz_wrapped_1': 0,
+    'bonbon_blitz_wrapped_2': 0,
+    'bonbon_blitz_wrapped_3': 0,
+    'bonbon_blitz_wrapped_4': 0,
+    'bonbon_blitz_jelly_fish_1': 0,
+    'bonbon_blitz_jelly_fish_2': 0,
+    'bonbon_blitz_jelly_fish_3': 0,
+    'bonbon_blitz_jelly_fish_4': 0,
+    'bonbon_blitz_color_bomb_1': 0,
+    'bonbon_blitz_color_bomb_2': 0,
+    'bonbon_blitz_color_bomb_3': 0,
+    'bonbon_blitz_color_bomb_4': 0,
+    'licorice_lock': 0, // Encasings - Regular Encasings
+    'marmalade': 0,
+    'sugar_chest_1': 0,
+    'sugar_chest_2': 0,
+    'sugar_chest_3': 0,
+    'sugar_chest_4': 0,
+    'sugar_chest_5': 0,
+    'sugar_coat_1': 0,
+    'sugar_coat_2': 0,
+    'sugar_coat_3': 0,
+    'ingredient_exit': 0, // Ingredient Exits
+    'dispenser': 0, // Dispensers - Dispenser
+    'dispenser_everything': 0,
+    'dispenser_candy_spawn': 0, // Dispensers - Select the element(s) to spawn
+    'dispenser_striped_horizontal': 0,
+    'dispenser_striped_vertical': 0,
+    'dispenser_striped_either': 0,
+    'dispenser_wrapped': 0,
+    'dispenser_jelly_fish': 0,
+    'dispenser_color_bomb': 0,
+    'dispenser_mystery_candy': 0,
+    'dispenser_chameleon_candy': 0,
+    'dispenser_extra_time_candy': 0,
+    'dispenser_extra_moves_candy': 0,
+    'dispenser_lucky_candy': 0,
+    'dispenser_key': 0,
+    'dispenser_ingredient': 0,
+    'dispenser_licorice_swirl': 0,
+    'dispenser_bomb': 0,
+    'dispenser_toffee_swirl': 0,
+    'dispenser_sugar_coat': 0,
+    'dispenser_blue': 0,
+    'dispenser_green': 0,
+    'dispenser_orange': 0,
+    'dispenser_purple': 0,
+    'dispenser_red': 0,
+    'dispenser_yellow': 0
+  };
+
+  // Tiles
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = tilesLayerContents[boardRow][boardCol];
+      if (element !== 'empty') {
+        boardStats[element]++;
+      }
+    }
+  }
+
+  // Candies and Blockers - Colors
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = colorsLayerContents[boardRow][boardCol];
+      if (element !== 'random') {
+        boardStats[`fixed_${element}`]++;
+      }
+    }
+  }
+
+  // Candies and Blockers - Candies (colorable)
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = colorableElementsLayerContents[boardRow][boardCol];
+      if (element !== 'empty') {
+        let elementWithoutRandom = element.replace('_random', '');
+        boardStats[elementWithoutRandom]++;
+      }
+    }
+  }
+
+  // Candies and Blockers - Everything else (not colorable)
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      if (colorableElementsLayerContents[boardRow][boardCol] === 'empty' && candiesBlockersLayerContents[boardRow][boardCol] !== 'empty') { // exclude everything that's colorable
+        const largeBlockersPrefixes = ['cake_bomb_', 'mall-o-matic_', 'citrus_chew_'];
+        
+        let element = candiesBlockersLayerContents[boardRow][boardCol];
+
+        let isElementLargeBlocker = false;
+        for (let i = 0; i < largeBlockersPrefixes.length; i++) {
+          if (element.includes(largeBlockersPrefixes[i])) {
+            isElementLargeBlocker = true;
+          }
+        }
+
+        if (isElementLargeBlocker) {
+          const largeBlockersToCount = ['cake_bomb_top_left', 'mall-o-matic_head', 'citrus_chew_top_left'];
+          if (largeBlockersToCount.includes(element)) {
+            boardStats[element]++;
+          }
+        } else {
+          boardStats[element]++;
+        }
+      }
+    }
+  }
+
+  // Encasings
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = encasingsLayerContents[boardRow][boardCol];
+      if (element !== 'empty') {
+        boardStats[element]++;
+      }
+    }
+  }
+
+  // Ingredient Exits
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = ingredientExitsLayerContents[boardRow][boardCol];
+      if (element !== 'empty') {
+        boardStats[element]++;
+      }
+    }
+  }
+
+  // Dispensers
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = dispensersLayerContents[boardRow][boardCol];
+      let dispenserElements = dispensersElementsLayerContents[boardRow][boardCol];
+
+      if (element !== 'empty') {
+        boardStats[element]++;
+
+        if (dispenserElements.length === 0) {
+          boardStats['dispenser_everything']++;
+        } else {
+          for (let i = 0; i < dispenserElements.length; i++) {
+            boardStats[dispenserElements[i]]++;
+          }
+        }
+      }
+    }
+  }
+
+  return boardStats;
+}
+
+function displayStatisticsPopup() {
+  closeAllPopups();
+  clearAllEditModeState();
+
+  let boardStats = generateBoardStatistics();
+  console.log(boardStats);
+
+  // do the actual displaying later
+}
+
 function exportLevel() {
   let levelArray = [];
 
