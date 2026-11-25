@@ -1615,6 +1615,7 @@ function generateBoardStatistics() {
     'jelly_2': 0,
     'blue_tile': 0,
     'black_tile': 0,
+    'conveyor_unknown': 0, // Conveyor Belts
     'fixed_blue': 0, // Candies and Blockers - Colors
     'fixed_green': 0,
     'fixed_orange': 0,
@@ -1748,6 +1749,16 @@ function generateBoardStatistics() {
     for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
       let element = tilesLayerContents[boardRow][boardCol];
       if (element !== 'empty') {
+        boardStats[element]++;
+      }
+    }
+  }
+
+  // Conveyor Belts
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = conveyorBeltsLayerContents[boardRow][boardCol];
+      if (element === 'conveyor_unknown') {
         boardStats[element]++;
       }
     }
