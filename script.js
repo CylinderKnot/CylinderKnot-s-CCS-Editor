@@ -1608,6 +1608,379 @@ function updateRequirementsSections() {
   }
 }
 
+function generateBoardStatistics() {
+  let boardStats = {
+    'regular_tile': 0, // Tiles
+    'jelly_1': 0,
+    'jelly_2': 0,
+    'blue_tile': 0,
+    'black_tile': 0,
+    'conveyor_unknown': 0, // Conveyor Belts
+    'fixed_blue': 0, // Candies and Blockers - Colors
+    'fixed_green': 0,
+    'fixed_orange': 0,
+    'fixed_purple': 0,
+    'fixed_red': 0,
+    'fixed_yellow': 0,
+    'candy': 0, // Candies and Blockers - Candies (colorable)
+    'striped_horizontal': 0,
+    'striped_vertical': 0,
+    'wrapped': 0,
+    'bomb': 0,
+    'key': 0,
+    'mystery_candy': 0,
+    'chameleon_candy': 0,
+    'extra_time_candy': 0,
+    'extra_moves_candy': 0,
+    'lucky_candy': 0,
+    'jelly_fish': 0,
+    'jelly_fish_striped': 0,
+    'jelly_fish_wrapped': 0,
+    'jelly_fish_color_bomb': 0,
+    'color_bomb': 0, // Candies and Blockers - Candies (not colorable)
+    'coconut_wheel': 0,
+    'ufo': 0,
+    'hazelnut': 0, // Candies and Blockers - Ingredients/Sprinks
+    'cherry': 0,
+    'frosting_1': 0, // Candies and Blockers - Blockers
+    'frosting_2': 0,
+    'frosting_3': 0,
+    'frosting_4': 0,
+    'frosting_5': 0,
+    'bubblegum_pop_1': 0,
+    'bubblegum_pop_2': 0,
+    'bubblegum_pop_3': 0,
+    'bubblegum_pop_4': 0,
+    'bubblegum_pop_5': 0,
+    'toffee_swirl_1': 0,
+    'toffee_swirl_2': 0,
+    'toffee_swirl_3': 0,
+    'toffee_swirl_4': 0,
+    'toffee_swirl_5': 0,
+    'rainbow_twist_1': 0,
+    'rainbow_twist_2': 0,
+    'rainbow_twist_3': 0,
+    'rainbow_twist_4': 0,
+    'rainbow_twist_5': 0,
+    'dark_chocolate_1': 0,
+    'dark_chocolate_2': 0,
+    'dark_chocolate_3': 0,
+    'dark_chocolate_4': 0,
+    'dark_chocolate_5': 0,
+    'dark_chocolate_spawner_1': 0,
+    'dark_chocolate_spawner_2': 0,
+    'dark_chocolate_spawner_3': 0,
+    'chocolate': 0,
+    'chocolate_spawner': 0,
+    'licorice_swirl': 0,
+    'licorice_shell_1': 0,
+    'licorice_shell_2': 0,
+    'licorice_shell_3': 0,
+    'jelly_jar_1': 0,
+    'jelly_jar_2': 0,
+    'bobber': 0,
+    'magic_mixer': 0,
+    'gumball_machine': 0,
+    'toffee_tornado': 0,
+    'cake_bomb_top_left': 0, // Candies and Blockers - Large Blockers
+    'mall-o-matic_head': 0,
+    'citrus_chew_top_left': 0,
+    'bonbon_blitz_striped_horizontal_1': 0, // Candies and Blockers - Bonbon Blitzes
+    'bonbon_blitz_striped_horizontal_2': 0,
+    'bonbon_blitz_striped_horizontal_3': 0,
+    'bonbon_blitz_striped_horizontal_4': 0,
+    'bonbon_blitz_striped_vertical_1': 0,
+    'bonbon_blitz_striped_vertical_2': 0,
+    'bonbon_blitz_striped_vertical_3': 0,
+    'bonbon_blitz_striped_vertical_4': 0,
+    'bonbon_blitz_wrapped_1': 0,
+    'bonbon_blitz_wrapped_2': 0,
+    'bonbon_blitz_wrapped_3': 0,
+    'bonbon_blitz_wrapped_4': 0,
+    'bonbon_blitz_jelly_fish_1': 0,
+    'bonbon_blitz_jelly_fish_2': 0,
+    'bonbon_blitz_jelly_fish_3': 0,
+    'bonbon_blitz_jelly_fish_4': 0,
+    'bonbon_blitz_color_bomb_1': 0,
+    'bonbon_blitz_color_bomb_2': 0,
+    'bonbon_blitz_color_bomb_3': 0,
+    'bonbon_blitz_color_bomb_4': 0,
+    'licorice_lock': 0, // Encasings - Regular Encasings
+    'marmalade': 0,
+    'sugar_chest_1': 0,
+    'sugar_chest_2': 0,
+    'sugar_chest_3': 0,
+    'sugar_chest_4': 0,
+    'sugar_chest_5': 0,
+    'sugar_coat_1': 0,
+    'sugar_coat_2': 0,
+    'sugar_coat_3': 0,
+    'ingredient_exit': 0, // Ingredient Exits
+    'dispenser': 0, // Dispensers - Dispenser
+    'dispenser_everything': 0,
+    'dispenser_candy_spawn': 0, // Dispensers - Select the element(s) to spawn
+    'dispenser_striped_horizontal': 0,
+    'dispenser_striped_vertical': 0,
+    'dispenser_striped_either': 0,
+    'dispenser_wrapped': 0,
+    'dispenser_jelly_fish': 0,
+    'dispenser_color_bomb': 0,
+    'dispenser_mystery_candy': 0,
+    'dispenser_chameleon_candy': 0,
+    'dispenser_extra_time_candy': 0,
+    'dispenser_extra_moves_candy': 0,
+    'dispenser_lucky_candy': 0,
+    'dispenser_key': 0,
+    'dispenser_ingredient': 0,
+    'dispenser_licorice_swirl': 0,
+    'dispenser_bomb': 0,
+    'dispenser_toffee_swirl': 0,
+    'dispenser_sugar_coat': 0,
+    'dispenser_blue': 0,
+    'dispenser_green': 0,
+    'dispenser_orange': 0,
+    'dispenser_purple': 0,
+    'dispenser_red': 0,
+    'dispenser_yellow': 0
+  };
+
+  // Tiles
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = tilesLayerContents[boardRow][boardCol];
+      if (element !== 'empty') {
+        boardStats[element]++;
+      }
+    }
+  }
+
+  // Conveyor Belts
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = conveyorBeltsLayerContents[boardRow][boardCol];
+      if (element === 'conveyor_unknown') {
+        boardStats[element]++;
+      }
+    }
+  }
+
+  // Candies and Blockers - Colors
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = colorsLayerContents[boardRow][boardCol];
+      if (element !== 'random') {
+        boardStats[`fixed_${element}`]++;
+      }
+    }
+  }
+
+  // Candies and Blockers - Candies (colorable)
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = colorableElementsLayerContents[boardRow][boardCol];
+      if (element !== 'empty') {
+        let elementWithoutRandom = element.replace('_random', '');
+        boardStats[elementWithoutRandom]++;
+      }
+    }
+  }
+
+  // Candies and Blockers - Everything else (not colorable)
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      if (colorableElementsLayerContents[boardRow][boardCol] === 'empty' && candiesBlockersLayerContents[boardRow][boardCol] !== 'empty') { // exclude everything that's colorable
+        const largeBlockersPrefixes = ['cake_bomb_', 'mall-o-matic_', 'citrus_chew_'];
+        
+        let element = candiesBlockersLayerContents[boardRow][boardCol];
+
+        let isElementLargeBlocker = false;
+        for (let i = 0; i < largeBlockersPrefixes.length; i++) {
+          if (element.includes(largeBlockersPrefixes[i])) {
+            isElementLargeBlocker = true;
+          }
+        }
+
+        if (isElementLargeBlocker) {
+          const largeBlockersToCount = ['cake_bomb_top_left', 'mall-o-matic_head', 'citrus_chew_top_left'];
+          if (largeBlockersToCount.includes(element)) {
+            boardStats[element]++;
+          }
+        } else {
+          boardStats[element]++;
+        }
+      }
+    }
+  }
+
+  // Encasings
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = encasingsLayerContents[boardRow][boardCol];
+      if (element !== 'empty') {
+        boardStats[element]++;
+      }
+    }
+  }
+
+  // Ingredient Exits
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = ingredientExitsLayerContents[boardRow][boardCol];
+      if (element !== 'empty') {
+        boardStats[element]++;
+      }
+    }
+  }
+
+  // Dispensers
+  for (let boardRow = 0; boardRow < currentBoardRows; boardRow++) {
+    for (let boardCol = 0; boardCol < currentBoardColumns; boardCol++) {
+      let element = dispensersLayerContents[boardRow][boardCol];
+      let dispenserElements = dispensersElementsLayerContents[boardRow][boardCol];
+
+      if (element !== 'empty') {
+        boardStats[element]++;
+
+        if (dispenserElements.length === 0) {
+          boardStats['dispenser_everything']++;
+        } else {
+          for (let i = 0; i < dispenserElements.length; i++) {
+            boardStats[dispenserElements[i]]++;
+          }
+        }
+      }
+    }
+  }
+
+  return boardStats;
+}
+
+function displayStatisticsPopup() {
+  closeAllPopups();
+  clearAllEditModeState();
+
+  let boardStats = generateBoardStatistics();
+  console.log(boardStats);
+
+  const totalJellies = boardStats['jelly_1'] + (2 * boardStats['jelly_2']) + (13 * boardStats['jelly_jar_1']) + (13 * boardStats['jelly_jar_2']);
+  let jelliesAmountText = document.getElementById('statistics-menu-total-jellies');
+  jelliesAmountText.innerText = totalJellies;
+
+  const fixedBlues = boardStats['fixed_blue'];
+  let fixedBluesAmountText = document.getElementById('statistics-menu-fixed-blues');
+  fixedBluesAmountText.innerText = fixedBlues;
+
+  const fixedGreens = boardStats['fixed_green'];
+  let fixedGreensAmountText = document.getElementById('statistics-menu-fixed-greens');
+  fixedGreensAmountText.innerText = fixedGreens;
+
+  const fixedOranges = boardStats['fixed_orange'];
+  let fixedOrangesAmountText = document.getElementById('statistics-menu-fixed-oranges');
+  fixedOrangesAmountText.innerText = fixedOranges;
+
+  const fixedPurples = boardStats['fixed_purple'];
+  let fixedPurplesAmountText = document.getElementById('statistics-menu-fixed-purples');
+  fixedPurplesAmountText.innerText = fixedPurples;
+
+  const fixedReds = boardStats['fixed_red'];
+  let fixedRedsAmountText = document.getElementById('statistics-menu-fixed-reds');
+  fixedRedsAmountText.innerText = fixedReds;
+
+  const fixedYellows = boardStats['fixed_yellow'];
+  let fixedYellowsAmountText = document.getElementById('statistics-menu-fixed-yellows');
+  fixedYellowsAmountText.innerText = fixedYellows;
+
+  const startingBombs = boardStats['bomb'];
+  let startingBombsAmountText = document.getElementById('statistics-menu-starting-bombs');
+  startingBombsAmountText.innerText = startingBombs;
+
+  const startingExtraMovesCandies = boardStats['extra_moves_candy'];
+  let startingExtraMovesCandiesAmountText = document.getElementById('statistics-menu-starting-extra-moves-candies');
+  startingExtraMovesCandiesAmountText.innerText = startingExtraMovesCandies;
+
+  const startingLuckyCandies = boardStats['lucky_candy'];
+  let startingLuckyCandiesAmountText = document.getElementById('statistics-menu-starting-lucky-candies');
+  startingLuckyCandiesAmountText.innerText = startingLuckyCandies;
+
+  const totalStartingJellyFish = boardStats['jelly_fish'] + boardStats['jelly_fish_striped'] + boardStats['jelly_fish_wrapped'] + boardStats['jelly_fish_color_bomb'];
+  let totalStartingJellyFishAmountText = document.getElementById('statistics-menu-total-starting-jelly-fish');
+  totalStartingJellyFishAmountText.innerText = totalStartingJellyFish;
+
+  const startingColorBombs = boardStats['color_bomb'];
+  let startingColorBombsAmountText = document.getElementById('statistics-menu-starting-color-bombs');
+  startingColorBombsAmountText.innerText = startingColorBombs;
+
+  const startingIngredients = boardStats['hazelnut'] + boardStats['cherry'];
+  let startingIngredientsAmountText = document.getElementById('statistics-menu-starting-ingredients');
+  startingIngredientsAmountText.innerText = startingIngredients;
+
+  const startingFrostingLayers = boardStats['frosting_1'] + (2 * boardStats['frosting_2']) + (3 * boardStats['frosting_3']) + (4 * boardStats['frosting_4']) + (5 * boardStats['frosting_5']);
+  let startingFrostingLayersAmountText = document.getElementById('statistics-menu-starting-frosting-layers');
+  startingFrostingLayersAmountText.innerText = startingFrostingLayers;
+
+  const startingBubblegumPopLayers = boardStats['bubblegum_pop_1'] + (2 * boardStats['bubblegum_pop_2']) + (3 * boardStats['bubblegum_pop_3']) + (4 * boardStats['bubblegum_pop_4']) + (5 * boardStats['bubblegum_pop_5']);
+  let startingBubblegumPopLayersAmountText = document.getElementById('statistics-menu-starting-bubblegum-pop-layers');
+  startingBubblegumPopLayersAmountText.innerText = startingBubblegumPopLayers;
+
+  const startingToffeeSwirlLayers = boardStats['toffee_swirl_1'] + (2 * boardStats['toffee_swirl_2']) + (3 * boardStats['toffee_swirl_3']) + (4 * boardStats['toffee_swirl_4']) + (5 * boardStats['toffee_swirl_5']);
+  let startingToffeeSwirlLayersAmountText = document.getElementById('statistics-menu-starting-toffee-swirl-layers');
+  startingToffeeSwirlLayersAmountText.innerText = startingToffeeSwirlLayers;
+
+  const startingRainbowTwistLayers = boardStats['rainbow_twist_1'] + (2 * boardStats['rainbow_twist_2']) + (3 * boardStats['rainbow_twist_3']) + (4 * boardStats['rainbow_twist_4']) + (5 * boardStats['rainbow_twist_5']);
+  let startingRainbowTwistLayersAmountText = document.getElementById('statistics-menu-starting-rainbow-twist-layers');
+  startingRainbowTwistLayersAmountText.innerText = startingRainbowTwistLayers;
+
+  const startingDarkChocolateLayers = boardStats['dark_chocolate_1'] + (2 * boardStats['dark_chocolate_2']) + (3 * boardStats['dark_chocolate_3']) + (4 * boardStats['dark_chocolate_4']) + (5 * boardStats['dark_chocolate_5']);
+  let startingDarkChocolateLayersAmountText = document.getElementById('statistics-menu-starting-dark-chocolate-layers');
+  startingDarkChocolateLayersAmountText.innerText = startingDarkChocolateLayers;
+
+  const startingChocolates = boardStats['chocolate'];
+  let startingChocolatesAmountText = document.getElementById('statistics-menu-starting-chocolates');
+  startingChocolatesAmountText.innerText = startingChocolates;
+
+  const startingLicoriceSwirls = boardStats['licorice_swirl'];
+  let startingLicoriceSwirlsAmountText = document.getElementById('statistics-menu-starting-licorice-swirls');
+  startingLicoriceSwirlsAmountText.innerText = startingLicoriceSwirls;
+
+  const startingLicoriceShells = boardStats['licorice_shell_1'] + boardStats['licorice_shell_2'] + boardStats['licorice_shell_3'];
+  let startingLicoriceShellsAmountText = document.getElementById('statistics-menu-starting-licorice-shells');
+  startingLicoriceShellsAmountText.innerText = startingLicoriceShells;
+
+  const jellyJars = boardStats['jelly_jar_1'] + boardStats['jelly_jar_2'];
+  let jellyJarsAmountText = document.getElementById('statistics-menu-jelly-jars');
+  jellyJarsAmountText.innerText = jellyJars;
+
+  const magicMixers = boardStats['magic_mixer'];
+  let magicMixersAmountText = document.getElementById('statistics-menu-magic-mixers');
+  magicMixersAmountText.innerText = magicMixers;
+
+  const cakeBombs = boardStats['cake_bomb_top_left'];
+  let cakeBombsAmountText = document.getElementById('statistics-menu-cake-bombs');
+  cakeBombsAmountText.innerText = cakeBombs;
+
+  const mallomatics = boardStats['mall-o-matic_head'];
+  let mallomaticsAmountText = document.getElementById('statistics-menu-mall-o-matics');
+  mallomaticsAmountText.innerText = mallomatics;
+
+  const citrusChewHits = (11 * boardStats['citrus_chew_top_left']);
+  let citrusChewHitsAmountText = document.getElementById('statistics-menu-citrus-chew-hits');
+  citrusChewHitsAmountText.innerText = citrusChewHits;
+
+  const totalStartingBonbonBlitzCharges =
+      (1 * (boardStats['bonbon_blitz_striped_horizontal_1'] + boardStats['bonbon_blitz_striped_vertical_1'] + boardStats['bonbon_blitz_wrapped_1'] + boardStats['bonbon_blitz_jelly_fish_1'] + boardStats['bonbon_blitz_color_bomb_1']))
+    + (2 * (boardStats['bonbon_blitz_striped_horizontal_2'] + boardStats['bonbon_blitz_striped_vertical_2'] + boardStats['bonbon_blitz_wrapped_2'] + boardStats['bonbon_blitz_jelly_fish_2'] + boardStats['bonbon_blitz_color_bomb_2']))
+    + (3 * (boardStats['bonbon_blitz_striped_horizontal_3'] + boardStats['bonbon_blitz_striped_vertical_3'] + boardStats['bonbon_blitz_wrapped_3'] + boardStats['bonbon_blitz_jelly_fish_3'] + boardStats['bonbon_blitz_color_bomb_3']))
+    + (4 * (boardStats['bonbon_blitz_striped_horizontal_4'] + boardStats['bonbon_blitz_striped_vertical_4'] + boardStats['bonbon_blitz_wrapped_4'] + boardStats['bonbon_blitz_jelly_fish_4'] + boardStats['bonbon_blitz_color_bomb_4']));
+  let totalStartingBonbonBlitzChargesAmountText = document.getElementById('statistics-menu-total-starting-bonbon-blitz-charges');
+  totalStartingBonbonBlitzChargesAmountText.innerText = totalStartingBonbonBlitzCharges;
+
+  const startingSugarCoatLayers = boardStats['sugar_coat_1'] + (2 * boardStats['sugar_coat_2']) + (3 * boardStats['sugar_coat_3']);
+  let startingSugarCoatLayersAmountText = document.getElementById('statistics-menu-starting-sugar-coat-layers');
+  startingSugarCoatLayersAmountText.innerText = startingSugarCoatLayers;
+
+  document.getElementById('statistics-menu').style.display = 'block';
+}
+
 function exportLevel() {
   let levelArray = [];
 

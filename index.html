@@ -21,7 +21,7 @@
       <div class="navbar">
         <div class="navbar-item-container">
           <div class="navbar-flex">
-            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.4.9</p>
+            <p class="title-text">CYLINDERKNOT'S CCS EDITOR ver. 0.5.0</p>
           </div>
           <div class="navbar-flex">
             <input type="radio" name="drawing-mode" id="drawing-mode-draw" onclick="selectDrawingMode(this)" value="draw" />
@@ -32,6 +32,7 @@
             <label for="drawing-mode-delete">Delete</label>
           </div>
           <div class="navbar-flex">
+            <button onclick="displayStatisticsPopup()">Statistics</button>
             <button>Import</button>
             <button onclick="displayExportLevelPopup()">Export</button>
           </div>
@@ -978,6 +979,108 @@
               </td>
             </tr>
           </table>
+        </div>
+      </div>
+
+      <!-- Statistics popup -->
+      <div id="statistics-menu" class="popup-menu" style="display: none;">
+        <div class="popup-contents">
+          <div class="popup-header">
+            <p>Statistics</p>
+          </div>
+          <div class="popup-body">
+            <table id="statistics-menu-table">
+              <tbody>
+                <tr>
+                  <td><img src="elements/tiles/jelly_1.png" /></td><td><span>Total jellies</span></td><td><span id="statistics-menu-total-jellies"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/candy_blue.png" /></td><td><span>Fixed blues</span></td><td><span id="statistics-menu-fixed-blues"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/candy_green.png" /></td><td><span>Fixed greens</span></td><td><span id="statistics-menu-fixed-greens"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/candy_orange.png" /></td><td><span>Fixed oranges</span></td><td><span id="statistics-menu-fixed-oranges"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/candy_purple.png" /></td><td><span>Fixed purples</span></td><td><span id="statistics-menu-fixed-purples"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/candy_red.png" /></td><td><span>Fixed reds</span></td><td><span id="statistics-menu-fixed-reds"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/candy_yellow.png" /></td><td><span>Fixed yellows</span></td><td><span id="statistics-menu-fixed-yellows"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/bomb_random.png" /></td><td><span>Starting bombs</span></td><td><span id="statistics-menu-starting-bombs"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/extra_moves_candy_random.png" /></td><td><span>Starting extra moves candies</span></td><td><span id="statistics-menu-starting-extra-moves-candies"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/lucky_candy_random.png" /></td><td><span>Starting lucky candies</span></td><td><span id="statistics-menu-starting-lucky-candies"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/jelly_fish_random.png" /></td><td><span>Total starting jelly fish</span></td><td><span id="statistics-menu-total-starting-jelly-fish"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/color_bomb.png" /></td><td><span>Starting color bombs</span></td><td><span id="statistics-menu-starting-color-bombs"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/cherry.png" /></td><td><span>Starting ingredients/Sprinks</span></td><td><span id="statistics-menu-starting-ingredients"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/frosting_5.png" /></td><td><span>Starting frosting layers</span></td><td><span id="statistics-menu-starting-frosting-layers"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/bubblegum_pop_5.png" /></td><td><span>Starting bubblegum pop layers</span></td><td><span id="statistics-menu-starting-bubblegum-pop-layers"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/toffee_swirl_5.png" /></td><td><span>Starting toffee swirl layers</span></td><td><span id="statistics-menu-starting-toffee-swirl-layers"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/rainbow_twist_5.png" /></td><td><span>Starting rainbow twist layers</span></td><td><span id="statistics-menu-starting-rainbow-twist-layers"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/dark_chocolate_3.png" /></td><td><span>Starting dark chocolate layers</span></td><td><span id="statistics-menu-starting-dark-chocolate-layers"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/chocolate.png" /></td><td><span>Starting chocolates</span></td><td><span id="statistics-menu-starting-chocolates"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/licorice_swirl.png" /></td><td><span>Starting licorice swirls</span></td><td><span id="statistics-menu-starting-licorice-swirls"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/licorice_shell_3.png" /></td><td><span>Starting licorice shells</span></td><td><span id="statistics-menu-starting-licorice-shells"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/jelly_jar_2.png" /></td><td><span>Jelly jars</span></td><td><span id="statistics-menu-jelly-jars"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/magic_mixer.png" /></td><td><span>Magic mixers</span></td><td><span id="statistics-menu-magic-mixers"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/cake_bomb_ui.png" /></td><td><span>Cake bombs</span></td><td><span id="statistics-menu-cake-bombs"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/mall-o-matic_head.png" /></td><td><span>Mall-o-matics</span></td><td><span id="statistics-menu-mall-o-matics"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/citrus_chew_ui.png" /></td><td><span>Citrus chew hits</span></td><td><span id="statistics-menu-citrus-chew-hits"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/candies_blockers/bonbon_blitz_wrapped_2.png" /></td><td><span>Total starting bonbon blitz charges</span></td><td><span id="statistics-menu-total-starting-bonbon-blitz-charges"></span></td>
+                </tr>
+                <tr>
+                  <td><img src="elements/encasings/sugar_coat_3.png" /></td><td><span>Starting sugar coat layers</span></td><td><span id="statistics-menu-starting-sugar-coat-layers"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="popup-footer">
+            <button onclick="document.getElementById('statistics-menu').style.display='none'">Close</button>
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+The statistics update is finally here!
+- Added a function that collects and returns statistics based on the board's contents
+- Added a Statistics button that displays a table containing totals for various elements (useful for candy orders and target scores)
+- This update serves as the foundation for the level export warnings update.
+
 ## 0.4.9
 The "no more prefix nightmares" update:
 - Split candiesBlockersLayerContents into three layers to make colors and colorable elements easier to handle
