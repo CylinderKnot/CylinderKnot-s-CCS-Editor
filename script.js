@@ -1862,7 +1862,123 @@ function displayStatisticsPopup() {
   let boardStats = generateBoardStatistics();
   console.log(boardStats);
 
-  // do the actual displaying later
+  const totalJellies = boardStats['jelly_1'] + (2 * boardStats['jelly_2']) + (13 * boardStats['jelly_jar_1']) + (13 * boardStats['jelly_jar_2']);
+  let jelliesAmountText = document.getElementById('statistics-menu-total-jellies');
+  jelliesAmountText.innerText = totalJellies;
+
+  const fixedBlues = boardStats['fixed_blue'];
+  let fixedBluesAmountText = document.getElementById('statistics-menu-fixed-blues');
+  fixedBluesAmountText.innerText = fixedBlues;
+
+  const fixedGreens = boardStats['fixed_green'];
+  let fixedGreensAmountText = document.getElementById('statistics-menu-fixed-greens');
+  fixedGreensAmountText.innerText = fixedGreens;
+
+  const fixedOranges = boardStats['fixed_orange'];
+  let fixedOrangesAmountText = document.getElementById('statistics-menu-fixed-oranges');
+  fixedOrangesAmountText.innerText = fixedOranges;
+
+  const fixedPurples = boardStats['fixed_purple'];
+  let fixedPurplesAmountText = document.getElementById('statistics-menu-fixed-purples');
+  fixedPurplesAmountText.innerText = fixedPurples;
+
+  const fixedReds = boardStats['fixed_red'];
+  let fixedRedsAmountText = document.getElementById('statistics-menu-fixed-reds');
+  fixedRedsAmountText.innerText = fixedReds;
+
+  const fixedYellows = boardStats['fixed_yellow'];
+  let fixedYellowsAmountText = document.getElementById('statistics-menu-fixed-yellows');
+  fixedYellowsAmountText.innerText = fixedYellows;
+
+  const startingBombs = boardStats['bomb'];
+  let startingBombsAmountText = document.getElementById('statistics-menu-starting-bombs');
+  startingBombsAmountText.innerText = startingBombs;
+
+  const startingExtraMovesCandies = boardStats['extra_moves_candy'];
+  let startingExtraMovesCandiesAmountText = document.getElementById('statistics-menu-starting-extra-moves-candies');
+  startingExtraMovesCandiesAmountText.innerText = startingExtraMovesCandies;
+
+  const startingLuckyCandies = boardStats['lucky_candy'];
+  let startingLuckyCandiesAmountText = document.getElementById('statistics-menu-starting-lucky-candies');
+  startingLuckyCandiesAmountText.innerText = startingLuckyCandies;
+
+  const totalStartingJellyFish = boardStats['jelly_fish'] + boardStats['jelly_fish_striped'] + boardStats['jelly_fish_wrapped'] + boardStats['jelly_fish_color_bomb'];
+  let totalStartingJellyFishAmountText = document.getElementById('statistics-menu-total-starting-jelly-fish');
+  totalStartingJellyFishAmountText.innerText = totalStartingJellyFish;
+
+  const startingColorBombs = boardStats['color_bomb'];
+  let startingColorBombsAmountText = document.getElementById('statistics-menu-starting-color-bombs');
+  startingColorBombsAmountText.innerText = startingColorBombs;
+
+  const startingIngredients = boardStats['hazelnut'] + boardStats['cherry'];
+  let startingIngredientsAmountText = document.getElementById('statistics-menu-starting-ingredients');
+  startingIngredientsAmountText.innerText = startingIngredients;
+
+  const startingFrostingLayers = boardStats['frosting_1'] + (2 * boardStats['frosting_2']) + (3 * boardStats['frosting_3']) + (4 * boardStats['frosting_4']) + (5 * boardStats['frosting_5']);
+  let startingFrostingLayersAmountText = document.getElementById('statistics-menu-starting-frosting-layers');
+  startingFrostingLayersAmountText.innerText = startingFrostingLayers;
+
+  const startingBubblegumPopLayers = boardStats['bubblegum_pop_1'] + (2 * boardStats['bubblegum_pop_2']) + (3 * boardStats['bubblegum_pop_3']) + (4 * boardStats['bubblegum_pop_4']) + (5 * boardStats['bubblegum_pop_5']);
+  let startingBubblegumPopLayersAmountText = document.getElementById('statistics-menu-starting-bubblegum-pop-layers');
+  startingBubblegumPopLayersAmountText.innerText = startingBubblegumPopLayers;
+
+  const startingToffeeSwirlLayers = boardStats['toffee_swirl_1'] + (2 * boardStats['toffee_swirl_2']) + (3 * boardStats['toffee_swirl_3']) + (4 * boardStats['toffee_swirl_4']) + (5 * boardStats['toffee_swirl_5']);
+  let startingToffeeSwirlLayersAmountText = document.getElementById('statistics-menu-starting-toffee-swirl-layers');
+  startingToffeeSwirlLayersAmountText.innerText = startingToffeeSwirlLayers;
+
+  const startingRainbowTwistLayers = boardStats['rainbow_twist_1'] + (2 * boardStats['rainbow_twist_2']) + (3 * boardStats['rainbow_twist_3']) + (4 * boardStats['rainbow_twist_4']) + (5 * boardStats['rainbow_twist_5']);
+  let startingRainbowTwistLayersAmountText = document.getElementById('statistics-menu-starting-rainbow-twist-layers');
+  startingRainbowTwistLayersAmountText.innerText = startingRainbowTwistLayers;
+
+  const startingDarkChocolateLayers = boardStats['dark_chocolate_1'] + (2 * boardStats['dark_chocolate_2']) + (3 * boardStats['dark_chocolate_3']) + (4 * boardStats['dark_chocolate_4']) + (5 * boardStats['dark_chocolate_5']);
+  let startingDarkChocolateLayersAmountText = document.getElementById('statistics-menu-starting-dark-chocolate-layers');
+  startingDarkChocolateLayersAmountText.innerText = startingDarkChocolateLayers;
+
+  const startingChocolates = boardStats['chocolate'];
+  let startingChocolatesAmountText = document.getElementById('statistics-menu-starting-chocolates');
+  startingChocolatesAmountText.innerText = startingChocolates;
+
+  const startingLicoriceSwirls = boardStats['licorice_swirl'];
+  let startingLicoriceSwirlsAmountText = document.getElementById('statistics-menu-starting-licorice-swirls');
+  startingLicoriceSwirlsAmountText.innerText = startingLicoriceSwirls;
+
+  const startingLicoriceShells = boardStats['licorice_shell_1'] + boardStats['licorice_shell_2'] + boardStats['licorice_shell_3'];
+  let startingLicoriceShellsAmountText = document.getElementById('statistics-menu-starting-licorice-shells');
+  startingLicoriceShellsAmountText.innerText = startingLicoriceShells;
+
+  const jellyJars = boardStats['jelly_jar_1'] + boardStats['jelly_jar_2'];
+  let jellyJarsAmountText = document.getElementById('statistics-menu-jelly-jars');
+  jellyJarsAmountText.innerText = jellyJars;
+
+  const magicMixers = boardStats['magic_mixer'];
+  let magicMixersAmountText = document.getElementById('statistics-menu-magic-mixers');
+  magicMixersAmountText.innerText = magicMixers;
+
+  const cakeBombs = boardStats['cake_bomb_top_left'];
+  let cakeBombsAmountText = document.getElementById('statistics-menu-cake-bombs');
+  cakeBombsAmountText.innerText = cakeBombs;
+
+  const mallomatics = boardStats['mall-o-matic_head'];
+  let mallomaticsAmountText = document.getElementById('statistics-menu-mall-o-matics');
+  mallomaticsAmountText.innerText = mallomatics;
+
+  const citrusChewHits = (11 * boardStats['citrus_chew_top_left']);
+  let citrusChewHitsAmountText = document.getElementById('statistics-menu-citrus-chew-hits');
+  citrusChewHitsAmountText.innerText = citrusChewHits;
+
+  const totalStartingBonbonBlitzCharges =
+      (1 * (boardStats['bonbon_blitz_striped_horizontal_1'] + boardStats['bonbon_blitz_striped_vertical_1'] + boardStats['bonbon_blitz_wrapped_1'] + boardStats['bonbon_blitz_jelly_fish_1'] + boardStats['bonbon_blitz_color_bomb_1']))
+    + (2 * (boardStats['bonbon_blitz_striped_horizontal_2'] + boardStats['bonbon_blitz_striped_vertical_2'] + boardStats['bonbon_blitz_wrapped_2'] + boardStats['bonbon_blitz_jelly_fish_2'] + boardStats['bonbon_blitz_color_bomb_2']))
+    + (3 * (boardStats['bonbon_blitz_striped_horizontal_3'] + boardStats['bonbon_blitz_striped_vertical_3'] + boardStats['bonbon_blitz_wrapped_3'] + boardStats['bonbon_blitz_jelly_fish_3'] + boardStats['bonbon_blitz_color_bomb_3']))
+    + (4 * (boardStats['bonbon_blitz_striped_horizontal_4'] + boardStats['bonbon_blitz_striped_vertical_4'] + boardStats['bonbon_blitz_wrapped_4'] + boardStats['bonbon_blitz_jelly_fish_4'] + boardStats['bonbon_blitz_color_bomb_4']));
+  let totalStartingBonbonBlitzChargesAmountText = document.getElementById('statistics-menu-total-starting-bonbon-blitz-charges');
+  totalStartingBonbonBlitzChargesAmountText.innerText = totalStartingBonbonBlitzCharges;
+
+  const startingSugarCoatLayers = boardStats['sugar_coat_1'] + (2 * boardStats['sugar_coat_2']) + (3 * boardStats['sugar_coat_3']);
+  let startingSugarCoatLayersAmountText = document.getElementById('statistics-menu-starting-sugar-coat-layers');
+  startingSugarCoatLayersAmountText.innerText = startingSugarCoatLayers;
+
+  document.getElementById('statistics-menu').style.display = 'block';
 }
 
 function exportLevel() {
